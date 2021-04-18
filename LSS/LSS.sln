@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSS.Server", "Server\LSS.Server.csproj", "{D8739388-5562-4C5A-B4D8-C4276DFB9A54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSS.Server", "Server\LSS.Server.csproj", "{D8739388-5562-4C5A-B4D8-C4276DFB9A54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSS.Client", "Client\LSS.Client.csproj", "{7A0D4846-48F6-4397-A63F-F43212B96821}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSS.Client", "Client\LSS.Client.csproj", "{7A0D4846-48F6-4397-A63F-F43212B96821}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSS.Shared", "Shared\LSS.Shared.csproj", "{2991B21C-513F-4248-98C0-212E7C44CD77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSS.Shared", "Shared\LSS.Shared.csproj", "{2991B21C-513F-4248-98C0-212E7C44CD77}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
