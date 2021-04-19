@@ -5,13 +5,14 @@
 			<input type="checkbox" @bind="@displayButtons" class="custom-control-input" id="deleteBtnsSwitch">
 			<label class="custom-control-label" for="deleteBtnsSwitch">Visible Delete Button per Movie</label>
 		</div>
+		@*pass any list (i.e. "Movies" to generic list*@
 		<GenericList List="Movies">
-			<ItemTemplate>
+			<ElementTemplate>
 				<IndividualMovie 
 					Movie="context"
 					DisplayButtons="displayButtons" 
 					DeleteMovie="DeleteMovie" />
-			</ItemTemplate>
+			</ElementTemplate>
 		</GenericList>
 </div>
 
@@ -21,8 +22,33 @@
 
 	bool displayButtons = true;
 
+
 	private void DeleteMovie(Movie movie)
 	{
 		Movies.Remove(movie);
+	}
+
+	protected async override Task OnInitializedAsync()
+	{
+		await Task.Delay(7000);
+		Console.WriteLine("OnInitialized.Movies.Count = " + Movies.Count.ToString());
+	}
+
+	
+	protected override void OnParametersSet()
+	{
+		Console.WriteLine("OnParametersSet. Movies.Count = " + Movies.Count.ToString());
+	}
+
+	
+	protected override void OnAfterRender(bool firstRender)
+	{
+		Console.WriteLine("OnAfterRender. FirstRender = " + firstRender.ToString());
+	}
+
+	
+	protected override bool ShouldRender()
+	{
+		return true;
 	}
 }

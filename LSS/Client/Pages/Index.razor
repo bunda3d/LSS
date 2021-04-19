@@ -1,10 +1,19 @@
 ﻿@page "/"
+@inject SingletonService singleton
+@inject IRepository repository
+
+
 
 <div>
 	<MoviesList Movies="movies"/>
 </div>
+@*<p>Singleton count: @singleton.Value</p>*@
 
-<div>
+<div class="mt-3">
+	<button @onclick="AddNewMovie">Add new movie</button>
+</div>
+
+<div class="mt-3">
 	<DummyTextbox placeholder="movie name" />
 </div>
 
@@ -14,12 +23,11 @@
 
 	protected async override Task OnInitializedAsync()
 	{
-		await Task.Delay(3000);
-		movies = new List<Movie>()
-		{
-			new Movie(){Title = "Spider-Man: Far From Home", ReleaseDate = new DateTime(2019, 7, 2) },
-			new Movie(){Title = "Moana", ReleaseDate = new DateTime(2016, 11, 23) },
-			new Movie(){Title = "Inception", ReleaseDate = new DateTime(2010, 7, 16) }
-		};
+		await Task.Delay(34000);
+		movies = repository.GetMovies();
+	}
+	private void AddNewMovie()
+	{
+		movies.Add(new Movie() { Title = "Movie Sample", ReleaseDate = DateTime.Today });
 	}
 }
