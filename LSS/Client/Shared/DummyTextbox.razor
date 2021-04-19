@@ -1,0 +1,12 @@
+﻿
+<div class="mt-3">
+	<h3>Create a Movie</h3>
+
+	<input type="text" @attributes="AdditionalParameters"/>
+</div>
+
+@code {
+	[Parameter(CaptureUnmatchedValues = true)] 
+	public IDictionary<string, object> AdditionalParameters { get; set; }
+
+}

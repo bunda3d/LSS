@@ -1,32 +1,28 @@
 ﻿<div class="mt-3">
-	<h3>Movie</h3>
-	@if (Movies == null)
-	{
-		<div class="container">
-			<div class="row text-center">
-				<text class="text-info">Loading...</text>
-			</div>
-			<div class="row">
-				<img src="/img/loading.gif" asp-append-version="true" width="300px"/>
-			</div>
-		</div>		
-	}
-	else if (Movies.Count == 0)
-	{
-		<div>
-			<text class="text-info">There are no records to show.</text>
+	<h2>Movies</h2>
+		@*<input type="checkbox" @onchange="@(() => displayButtons = !displayButtons)" />*@
+		<div class="custom-control custom-switch">
+			<input type="checkbox" @bind="@displayButtons" class="custom-control-input" id="deleteBtnsSwitch">
+			<label class="custom-control-label" for="deleteBtnsSwitch">Visible Delete Button per Movie</label>
 		</div>
-	}
-	else
-	{
-			@foreach (var movie in Movies)
-			{
-				<IndividualMovie Movie="movie"/>
-			}
-	}
+		<GenericList List="Movies">
+			<ItemTemplate>
+				<IndividualMovie 
+					Movie="context"
+					DisplayButtons="displayButtons" 
+					DeleteMovie="DeleteMovie" />
+			</ItemTemplate>
+		</GenericList>
 </div>
 
 
 @code {
 	[Parameter] public List<Movie> Movies { get; set; }
+
+	bool displayButtons = true;
+
+	private void DeleteMovie(Movie movie)
+	{
+		Movies.Remove(movie);
+	}
 }
