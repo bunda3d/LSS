@@ -1,4 +1,6 @@
-﻿<div class="mt-3">
+﻿@inject IJSRuntime js
+
+<div class="mt-3">
 	<h2>Movies</h2>
 		@*<input type="checkbox" @onchange="@(() => displayButtons = !displayButtons)" />*@
 		<div class="custom-control custom-switch">
@@ -23,9 +25,18 @@
 	bool displayButtons = true;
 
 
-	private void DeleteMovie(Movie movie)
+	private async Task DeleteMovie(Movie movie)
 	{
-		Movies.Remove(movie);
+		await js.ConfirmDeleteMsg("Confirm delete modie modal");
+		var confirmed = await js.Confirm(
+			$"Are you sure you want to delete {movie.Title}?"
+		);
+
+		if (confirmed) 
+		{
+			Movies.Remove(movie);
+		}
+		
 	}
 
 	protected async override Task OnInitializedAsync()
