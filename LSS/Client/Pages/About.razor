@@ -1,0 +1,53 @@
+﻿@page "/about"
+@using LSS.Shared
+@inject HttpClient Http
+
+<h1>About Larry's Sartorial Shoppe</h1>
+
+<h3>We Make You Look Your Best </h3>
+
+<p>Larry's was started by Larry Fitzpatrick over 30 years ago in Seattle, Washington.</p> 
+<p>Success was had relatively quickly, which Larry attributes to liking his work and being a fair, but profitable businessperson</p>
+<p>Larry also understands the value of people and that he couldn't run Larry's without his talented staff.</p>
+
+
+
+
+@if (aboutLarrys == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Photo</th>
+                <th>Name</th>
+                <th>Title</th>
+                <th>Years at Larry's</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var aboutLarry in aboutLarrys)
+            {
+                <tr>
+                    <td>@aboutLarry.Date.ToShortDateString()</td>
+                    <td>@aboutLarry.EmpName</td>
+                    <td>@aboutLarry.EmpTitle</td>
+                    <td>@aboutLarry.EmpYrsOfService</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private LSS.Shared.Entities.About[] aboutLarrys;
+
+    protected override async Task OnInitializedAsync()
+    {
+        aboutLarrys = await Http.GetFromJsonAsync<LSS.Shared.Entities.About[]>("About");
+    }
+
+}

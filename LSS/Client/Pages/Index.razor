@@ -1,8 +1,12 @@
 ﻿@page "/"
+@using static LSS.Client.Shared.MainLayout
 @inject SingletonService singleton
 @inject IRepository repository
 
 
+<h1 style="color: @AppState.Color; padding-left: @AppState.LeftPad">
+Larry's Sartorial Shoppe
+</h1>
 
 <div>
 	<MoviesList Movies="movies"/>
@@ -20,7 +24,7 @@
 
 
 @code{
-
+	[CascadingParameter] public AppState AppState { get; set; }
 	private List<Movie> movies;
 
 	protected async override Task OnInitializedAsync()

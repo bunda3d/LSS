@@ -11,7 +11,30 @@
         </div>
 
         <div class="content px-4">
-            @Body
+          @* when multiple CascVals of same data type, must name *@
+          <CascadingValue Value="@appState">
+              @Body
+          </CascadingValue>
+        </div>
+        <div class="footer px-4">
+          <footer>
+            &copy; @CopyrightMsg
+          </footer>
         </div>
     </div>
 </div>
+
+@code{
+  AppState appState = new AppState();
+  public class AppState
+  {
+    public string Color { get; set; } = "white";
+    public string LeftPad { get; set; } = ".5rem";
+  }
+  @* when the cascVals were declared here *@
+    private string Color = "white";
+    private string LeftPad = ".5rem";
+
+    public string CopyrightMsg { get; set; } = 
+    $"Larry's Sartorial Shoppe 1980 - {@DateTime.Today.Year}";
+}
