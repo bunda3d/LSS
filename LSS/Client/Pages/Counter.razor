@@ -7,8 +7,10 @@
 <p>Singleton count: @singleton.Value</p>
 <p>Transient count: @transient.Value</p>
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<button class="btn btn-primary" @onclick="IncrementCountAsync">Click me</button>
+
+<button class="btn btn-primary" @onclick="IncrementCountJavaScript">Click me JS</button>
 
 <input type="number" @bind="currentCount" />
 
-<MoviesList Movies="movies"/>
+@*<MoviesList Movies="movies"/>*@

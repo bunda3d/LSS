@@ -18,26 +18,46 @@
 		</GenericList>
 </div>
 
+@* a modal dialog *@
+<Confirmation @ref="confirmation" onCancel="onCancel" onConfirm="onConfirm">
+	<div>Do you wish to delete @movieToBeDeleted.Title?</div>
+</Confirmation> 
 
 @code {
+	Confirmation confirmation;
 	[Parameter] public List<Movie> Movies { get; set; }
 
 	bool displayButtons = true;
 
-
+	Movie movieToBeDeleted;
 	private async Task DeleteMovie(Movie movie)
 	{
-		await js.ConfirmDeleteMsg("Confirm delete modie modal");
-		var confirmed = await js.Confirm(
-			$"Are you sure you want to delete {movie.Title}?"
-		);
+		movieToBeDeleted = movie;
+		confirmation.Show();
+		
+		//await js.ConfirmDeleteMsg("Confirm delete movie modal");
+		//var confirmed = await js.Confirm(
+		//	$"Are you sure you want to delete {movie.Title}?"
+		//);
 
-		if (confirmed) 
+		//if (confirmed) 
+		//{
+		//	Movies.Remove(movie);
+		//}
+	}
+		void onConfirm()
 		{
-			Movies.Remove(movie);
+			Movies.Remove(movieToBeDeleted);
+			confirmation.Hide();
+			movieToBeDeleted = null;
 		}
 		
-	}
+		void onCancel()
+		{
+			confirmation.Hide();
+			movieToBeDeleted = null;
+		}
+
 
 	protected async override Task OnInitializedAsync()
 	{
