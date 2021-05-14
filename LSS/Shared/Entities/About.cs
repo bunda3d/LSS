@@ -7,6 +7,7 @@ namespace LSS.Shared.Entities
 		public string EmpName { get; set; }
 		public string EmpTitle { get; set; }
 		public int EmpYrsOfService { get; set; }
+		public string EmpImg { get; set; }
 
 		public DateTime Date { get; set; }
 

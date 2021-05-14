@@ -45,19 +45,20 @@
 		//	Movies.Remove(movie);
 		//}
 	}
-		void onConfirm()
-		{
-			Movies.Remove(movieToBeDeleted);
-			confirmation.Hide();
-			movieToBeDeleted = null;
-		}
-		
-		void onCancel()
-		{
-			confirmation.Hide();
-			movieToBeDeleted = null;
-		}
 
+	void onConfirm()
+	{
+		Movies.Remove(movieToBeDeleted);
+		confirmation.Hide();
+		movieToBeDeleted = null;
+	}
+		
+	void onCancel()
+	{
+		confirmation.Hide();
+		movieToBeDeleted = null;
+	}
+	
 
 	protected async override Task OnInitializedAsync()
 	{
