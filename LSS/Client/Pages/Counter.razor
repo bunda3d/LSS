@@ -1,40 +1,10 @@
 ﻿@page "/counter"
 
 
-
-<h1 style="color: @AppState.Color; padding-left: @AppState.LeftPad">Counter</h1>
-
-<div style="display:flex">
-	<div style="width:250px">
-		<select @bind="AppState.Color" 
-			class="form-control" 
-			style="margin-top: 2rem">
-			<option value="white">White</option>
-			<option value="cyan">Cyan</option>
-			<option value="orange">Orange</option>
-		</select>
-	</div>
-		<div style="width:250px">
-		<select @bind="AppState.LeftPad" 
-			class="form-control" 
-			style="margin-top: 2rem">
-			<option value="0.5rem">0.5rem</option>
-			<option value="0.75rem">0.75rem</option>
-			<option value="1rem">1rem</option>
-		</select>
-	</div>
-</div>
-
-
+<h1>Counter</h1>
 
 <p>Current count: @currentCount</p>
-<p>Singleton count: @singleton.Value</p>
-<p>Transient count: @transient.Value</p>
 
-<button class="btn btn-primary" @onclick="IncrementCountAsync">Click me</button>
-
-<button class="btn btn-primary" @onclick="IncrementCountJavaScript">Click me JS</button>
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
 <input type="number" @bind="currentCount" />
-
-@*<MoviesList Movies="movies"/>*@

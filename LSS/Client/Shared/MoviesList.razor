@@ -2,85 +2,30 @@
 
 <div class="mt-3">
 	<h2>Movies</h2>
-		@*<input type="checkbox" @onchange="@(() => displayButtons = !displayButtons)" />*@
-		<div class="custom-control custom-switch">
-			<input type="checkbox" @bind="@displayButtons" class="custom-control-input" id="deleteBtnsSwitch">
-			<label class="custom-control-label" for="deleteBtnsSwitch">Visible Delete Button per Movie</label>
-		</div>
 		@*pass any list (i.e. "Movies" to generic list*@
 		<GenericList List="Movies">
 			<ElementTemplate>
 				<IndividualMovie 
 					Movie="context"
-					DisplayButtons="displayButtons" 
 					DeleteMovie="DeleteMovie" />
 			</ElementTemplate>
 		</GenericList>
 </div>
 
-@* a modal dialog *@
-<Confirmation @ref="confirmation" onCancel="onCancel" onConfirm="onConfirm">
-	<div>Do you wish to delete @movieToBeDeleted.Title?</div>
-</Confirmation> 
-
 @code {
-	Confirmation confirmation;
 	[Parameter] public List<Movie> Movies { get; set; }
 
-	bool displayButtons = true;
-
-	Movie movieToBeDeleted;
 	private async Task DeleteMovie(Movie movie)
 	{
-		movieToBeDeleted = movie;
-		confirmation.Show();
-		
-		//await js.ConfirmDeleteMsg("Confirm delete movie modal");
-		//var confirmed = await js.Confirm(
-		//	$"Are you sure you want to delete {movie.Title}?"
-		//);
 
-		//if (confirmed) 
-		//{
-		//	Movies.Remove(movie);
-		//}
-	}
+		await js.ConfirmDeleteMsg("Confirm delete movie modal");
+		var confirmed = await js.Confirm(
+			$"Are you sure you want to delete {movie.Title}?"
+		);
 
-	void onConfirm()
-	{
-		Movies.Remove(movieToBeDeleted);
-		confirmation.Hide();
-		movieToBeDeleted = null;
-	}
-		
-	void onCancel()
-	{
-		confirmation.Hide();
-		movieToBeDeleted = null;
-	}
-	
-
-	protected async override Task OnInitializedAsync()
-	{
-		await Task.Delay(7000);
-		Console.WriteLine("OnInitialized.Movies.Count = " + Movies.Count.ToString());
-	}
-
-	
-	protected override void OnParametersSet()
-	{
-		Console.WriteLine("OnParametersSet. Movies.Count = " + Movies.Count.ToString());
-	}
-
-	
-	protected override void OnAfterRender(bool firstRender)
-	{
-		Console.WriteLine("OnAfterRender. FirstRender = " + firstRender.ToString());
-	}
-
-	
-	protected override bool ShouldRender()
-	{
-		return true;
+		if (confirmed) 
+		{
+			Movies.Remove(movie);
+		}
 	}
 }
