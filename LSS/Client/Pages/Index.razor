@@ -5,15 +5,15 @@
 <h1>Larry's Sartorial Shoppe</h1>
 
 <div>
-	<MoviesList Movies="movies"/>
+	<SuitsList Suits="suits"/>
 </div>
 
 
 @code{
-	private List<Movie> movies;
+	private List<Suit> suits;
 
 	protected async override Task OnInitializedAsync()
 	{
-		movies = repository.GetMovies();
+		suits = repository.GetSuits();
 	}
 }

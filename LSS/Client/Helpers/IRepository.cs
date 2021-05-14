@@ -8,6 +8,6 @@ namespace LSS.Client.Helpers
 {
 	public interface IRepository
 	{
-		List<Movie> GetMovies();
+		List<Suit> GetSuits();
 	}
 }

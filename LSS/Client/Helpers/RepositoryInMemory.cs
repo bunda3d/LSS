@@ -8,13 +8,13 @@ namespace LSS.Client.Helpers
 {
 	public class RepositoryInMemory : IRepository
 	{
-		public List<Movie> GetMovies()
+		public List<Suit> GetSuits()
 		{
-			return new List<Movie>()
+			return new List<Suit>()
 			{
-				new Movie(){Title = "Spider-Man: Far From Home", ReleaseDate = new DateTime(2019, 7, 2) },
-				new Movie(){Title = "Moana", ReleaseDate = new DateTime(2016, 11, 23) },
-				new Movie(){Title = "Inception", ReleaseDate = new DateTime(2010, 7, 16) }
+				new Suit(){Title = "Spider-Man: Far From Home", ReleaseDate = new DateTime(2019, 7, 2) },
+				new Suit(){Title = "Moana", ReleaseDate = new DateTime(2016, 11, 23) },
+				new Suit(){Title = "Inception", ReleaseDate = new DateTime(2010, 7, 16) }
 			};
 		}
 	}

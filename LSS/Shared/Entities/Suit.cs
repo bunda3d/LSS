@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LSS.Shared.Entities
 {
-	public class Movie
+	public class Suit
 	{
 		public string Title { get; set; }
 		public DateTime ReleaseDate { get; set; }

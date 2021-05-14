@@ -1,0 +1,16 @@
+﻿<div>
+	<p>Title: <b>@Suit.Title</b></p>
+	<p>Release Date: <b>@Suit.ReleaseDate.ToString("yyyy.MM.dd")</b></p>
+	@if (DisplayButtons)
+	{
+		<div>
+			<button @onclick="@(() => DeleteSuit.InvokeAsync(Suit))">Delete</button>
+		</div>
+	}
+ </div>
+
+@code {
+	[Parameter] public Suit Suit { get; set; }
+	[Parameter] public bool DisplayButtons { get; set; } = false;
+	[Parameter] public EventCallback<Suit> DeleteSuit { get; set; }
+	}
