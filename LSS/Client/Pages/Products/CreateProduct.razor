@@ -1,7 +1,17 @@
-﻿@page "/products/create"
+﻿@page "/product/create"
+@inject NavigationManager navigationManager
 
 <h3>Create Product</h3>
 
+<button class="btn btn-primary" @onclick="SaveProduct">Save Product</button>
+
+
 @code {
+	private void SaveProduct()
+	{
+		// Save product
+		Console.WriteLine(navigationManager.Uri);
+		navigationManager.NavigateTo("product");
+	}
 
 }

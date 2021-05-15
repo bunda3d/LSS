@@ -1,7 +1,15 @@
-﻿@page "/sales/receipt/edit"
+﻿@page "/sales/edit/{ReceiptId:int}"
 
 <h3>Edit Sales Receipt</h3>
 
 @code {
+	
+	[Parameter] public int ReceiptId { get; set; }
+	[Parameter] public int ReceiptNumber { get; set; }
 
+	protected override void OnInitialized()
+	{
+		Console.WriteLine($"The receipt ID is: {ReceiptId}");
+		Console.WriteLine($"The receipt number is: {ReceiptNumber}");
+	}
 }

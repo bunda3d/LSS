@@ -1,7 +1,18 @@
-﻿@page "/products/detail"
+﻿@page "/product/{ProductId:int}"
+@page "/product/{ProductId:int}/{ProductName}"
+
+
 
 <h3>Product Details</h3>
 
 @code {
+	[Parameter] public int ProductId { get; set; }
+	[Parameter] public string ProductName { get; set; }
 
+
+	protected override void OnInitialized()
+	{
+		Console.WriteLine($"The product ID is: {ProductId}");
+		Console.WriteLine($"The product name is: {ProductName}");
+	}
 }

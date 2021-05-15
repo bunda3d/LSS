@@ -9,7 +9,7 @@
 	height: 24rem;
 }
 
-.individual-product-container p:first-of-type {
+.product-title {
 	max-width: 16rem;
 	padding-top: .5rem;
 	margin-bottom: 1rem;

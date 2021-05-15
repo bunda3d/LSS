@@ -1,0 +1,16 @@
+﻿@page "/category/create"
+@inject NavigationManager navigationManager
+
+<h3>Create Category</h3>
+
+@code {
+	
+	[Parameter] public int CategoryId { get; set; }
+	[Parameter] public string CategoryName { get; set; }
+
+	protected override void OnInitialized()
+	{
+		Console.WriteLine($"The category ID is: {CategoryId}");
+		Console.WriteLine($"The category name is: {CategoryName}");
+	}
+}

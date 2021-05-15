@@ -1,15 +1,17 @@
-﻿
+﻿@using System.Text.RegularExpressions
 
 <div class="individual-product-container">
-	<a>
+	<a href="@productURL">
 	 <img src="@Product.Poster" alt="hero image" class="product-poster" />
  </a>
- <p>@Product.TitleBrief</p>
+ <a href="@productURL">
+ <p class="product-title">@Product.TitleBrief</p>
+</a>
  <p class="product-price">@Product.Price</p>
  <div>
 	 <a class="btn btn-info">Edit</a>
 	 <button type="button" class="btn btn-danger"
-	 @onclick="@(() => DeleteProduct.InvokeAsync(Product))">
+			@onclick="@(() => DeleteProduct.InvokeAsync(Product))">
 		 Delete		
 	</button>
  </div>
@@ -24,6 +26,8 @@
 
   protected override void OnInitialized()
   {
-      productURL = $"product/{Product.Id}/{Product.Title.Replace(" ", "-")}";
+      productURL = $"product/{Product.Id}/{@StringUtilities.removeSpecialCharsPath(Product.Title)}";
+
+			//{Product.Id}/{Product.Title.Replace(" ", "-")}
   }
 }

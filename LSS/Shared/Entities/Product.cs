@@ -9,7 +9,8 @@ namespace LSS.Shared.Entities
 {
 	public class Product
 	{
-		public int Id { get; set; }
+		public int Id { get; set; } = 1;
+
 		public string Title { get; set; }
 
 		public DateTime ReleaseDate { get; set; }

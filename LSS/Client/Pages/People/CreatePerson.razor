@@ -1,0 +1,17 @@
+﻿@page "/person/create"
+@inject NavigationManager navigationManager
+
+<h3>Create Person</h3>
+
+<button class="btn btn-primary" @onclick="SavePerson">Save Person</button>
+
+
+@code {
+	private void SavePerson()
+	{
+		// Save person
+		Console.WriteLine(navigationManager.Uri);
+		navigationManager.NavigateTo("person");
+	}
+
+}

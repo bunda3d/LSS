@@ -1,0 +1,18 @@
+﻿@page "/person/{PersonId:int}"
+@page "/person/{PersonId:int}/{PersonName}"
+
+
+
+<h3>Person Details</h3>
+
+@code {
+	[Parameter] public int PersonId { get; set; }
+	[Parameter] public string PersonName { get; set; }
+
+
+	protected override void OnInitialized()
+	{
+		Console.WriteLine($"The person ID is: {PersonId}");
+		Console.WriteLine($"The person name is: {PersonName}");
+	}
+}
