@@ -10,7 +10,7 @@ namespace LSS.Client.Helpers
 	{
 		public static async ValueTask<bool> Confirm(this IJSRuntime js, string message)
 		{
-			await js.InvokeVoidAsync("console.log", "user deleting suit");
+			await js.InvokeVoidAsync("console.log", "user deleting product");
 			return await js.InvokeAsync<bool>("confirm", message);
 		}
 		public static async ValueTask ConfirmDeleteMsg(this IJSRuntime js, string message)

@@ -1,0 +1,32 @@
+﻿@inject IJSRuntime js
+
+<h2>Products</h2>
+<div class="products-container mt-3">
+	
+		@*pass any list (i.e. "Products" to generic list*@
+		<GenericList List="Products">
+			<ElementTemplate>
+				<IndividualProduct 
+					Product="context"
+					DeleteProduct="DeleteProduct" />
+			</ElementTemplate>
+		</GenericList>
+</div>
+
+@code {
+	[Parameter] public List<Product> Products { get; set; }
+
+	private async Task DeleteProduct(Product product)
+	{
+
+		await js.ConfirmDeleteMsg("Confirm delete product modal");
+		var confirmed = await js.Confirm(
+			$"Are you sure you want to delete {product.Title}?"
+		);
+
+		if (confirmed) 
+		{
+			Products.Remove(product);
+		}
+	}
+}

@@ -1,9 +1,6 @@
 ﻿@*make parameter generic to render any data type*@
 @typeparam TItem
 
-
-
-
 	@if (List == null)
 	{
 		@if (@NullTemplate != null)
@@ -37,14 +34,11 @@
 	}
 	else
 	{
-
 			@foreach (var item in List)
 			{
 					@ElementTemplate(item)
 			}
 	}
-
-
 
 @code {
 	[Parameter] public RenderFragment NullTemplate { get; set; }

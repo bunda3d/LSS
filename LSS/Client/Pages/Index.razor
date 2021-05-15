@@ -1,19 +1,20 @@
 ﻿@page "/"
+@page "/index"
 @inject IRepository repository
 
 
 <h1>Larry's Sartorial Shoppe</h1>
 
 <div>
-	<SuitsList Suits="suits"/>
+	<ProductList Products="products"/>
 </div>
 
 
 @code{
-	private List<Suit> suits;
+	private List<Product> products;
 
 	protected async override Task OnInitializedAsync()
 	{
-		suits = repository.GetSuits();
+		products = repository.GetProducts();
 	}
 }

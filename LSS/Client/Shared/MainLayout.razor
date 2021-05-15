@@ -15,14 +15,15 @@
         </div>
         <div class="footer px-4">
           <footer>
-            &copy; @CopyrightMsg
+            <small>&copy; @CopyrightMsg</small>
           </footer>
         </div>
     </div>
 </div>
 
 @code{
-
+  
     public string CopyrightMsg { get; set; } = 
     $"Larry's Sartorial Shoppe 1990 - {@DateTime.Today.Year}";
+  
 }

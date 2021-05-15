@@ -1,15 +1,15 @@
-﻿.individual-suit-container {
+﻿.individual-product-container {
 	margin-right: 2%;
 	margin-bottom: 1rem;
 	text-align: center;
 }
 
-.suit-poster {
+.product-poster {
 	width: 16rem;
 	height: 24rem;
 }
 
-.individual-suit-container p:first-of-type {
+.individual-product-container p:first-of-type {
 	max-width: 16rem;
 	padding-top: .5rem;
 	margin-bottom: 1rem;
@@ -18,23 +18,25 @@
 	font-weight: bold;
 	text-overflow: ellipsis;
 }
-.suit-price {
+.product-price {
 	content: "$";
 	max-width: 16rem;
 	padding-right: .5rem;
 	height: 1.5rem;
 	font-size: 16px;
 	font-weight: bold;
-	color:white;
-	background:black;
+	color: white;
+	background: linear-gradient(45deg, cyan 10%, #0E2161);
+	border-radius: 3px;
 	text-align: right;
 }
-	.suit-price::before {
+	.product-price::before {
 		content: "$";
 	}
 
-.suits-container {
+.products-container {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
+	justify-content: space-between;
 }

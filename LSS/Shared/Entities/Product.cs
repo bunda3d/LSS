@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace LSS.Shared.Entities
 {
-	public class Suit
+	public class Product
 	{
+		public int Id { get; set; }
 		public string Title { get; set; }
 
 		public DateTime ReleaseDate { get; set; }
