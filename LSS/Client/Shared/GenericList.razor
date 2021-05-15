@@ -1,8 +1,9 @@
 ﻿@*make parameter generic to render any data type*@
 @typeparam TItem
 
-<div class="mt-3">
-<h3>Generic List</h3>
+
+
+
 	@if (List == null)
 	{
 		@if (@NullTemplate != null)
@@ -42,7 +43,9 @@
 					@ElementTemplate(item)
 			}
 	}
-</div>
+
+
+
 @code {
 	[Parameter] public RenderFragment NullTemplate { get; set; }
 	[Parameter]	public RenderFragment EmptyTemplate { get; set; }
