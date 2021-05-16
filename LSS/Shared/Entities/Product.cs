@@ -11,7 +11,7 @@ namespace LSS.Shared.Entities
 	{
 		public int Id { get; set; } = 1;
 
-		[Required]
+		[Required(ErrorMessage = "This field cannot be blank")]
 		public string Title { get; set; }
 
 		public DateTime ReleaseDate { get; set; }

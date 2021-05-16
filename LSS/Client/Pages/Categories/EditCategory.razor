@@ -2,7 +2,27 @@
 
 <h3>Edit Product Category</h3>
 
+@if (category != null)
+{
+	<CategoryForm Category="category" OnValidSubmit="Edit"	/>
+}
+
 
 @code {
 	[Parameter] public int CategoryId { get; set; }
+	
+	public Category category;
+
+	protected override void OnInitialized()
+	{
+		category = new Category() { Id = CategoryId, Name = "Suit" };
+	}
+
+	private void Edit()
+	{
+		Console.WriteLine("Edit method: ");
+		Console.WriteLine($"Id = {category.Id}");
+		Console.WriteLine($"Name = {category.Name}");
+	}
+
 }

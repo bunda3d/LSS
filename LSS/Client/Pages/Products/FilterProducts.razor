@@ -1,0 +1,121 @@
+﻿@page "/product/search"
+
+
+<h3>Search Products</h3>
+
+
+<div class="col form col-xl-8 col-lg-10 col-md-12 py-3 px-0">
+<div class="row">
+  <div class ="col-md my-3 form-group">
+    <label for="title" class="sr-only">Title</label>
+    <input type="text" 
+      class="form-control" 
+      id="title" 
+      placeholder="Product Title"
+      @bind-value="title" 
+      @bind-value:event="oninput"
+      @onkeypress="@((KeyboardEventArgs e) => TitleKeyPress(e))"
+    />
+  </div>
+  <div class="col-md my-3 form-group">
+    <select class="form-control" @bind="selectedCategory">
+      <option value="0">
+        --Select a Category--
+      </option>
+      @foreach (var category in Categories)
+      {
+        <option value="@category.Id">@category.Name</option>
+      }
+    </select>
+  </div>
+  </div>
+  <div class="row">
+    
+      @*  
+      <div class="col form-group mx-sm-3 mb-2">
+      <input type="checkbox" 
+        class="form-check-input" 
+        id="markedDown" 
+        @bind="markedDown" 
+        @onchange="@(() => 
+          searchMarkedDowns = !searchMarkedDowns)" 
+      />
+      *@
+
+		  <div class="col-md form-group my-3">
+        <div class="custom-control custom-switch">
+			  <input type="checkbox" @bind="@isMarkedDownFlag" 
+        class="custom-control-input" id="isMarkedDownFlag">
+
+			  <label class="custom-control-label" for="isMarkedDownFlag">
+          Sale items
+        </label>
+        </div>
+		  </div>
+
+      <div class="col-md form-group my-3">
+        <div class="custom-control custom-switch">
+			  <input type="checkbox" @bind="@onClearanceFlag" 
+        class="custom-control-input" id="onClearanceFlag">
+
+			  <label class="custom-control-label" for="onClearanceFlag">
+          Clearance items
+        </label>
+        </div>
+		  </div>
+    </div>
+
+    <div class="row my-3">
+      <button type="button" 
+        class="btn btn-outline-primary mb-2 mx-sm-3" 
+        @onclick="SearchForProducts">
+          Filter
+       </button>
+
+     
+      <button type="button" 
+        class="btn btn-outline-danger mb-2 mx-sm-3" 
+        @onclick="ClearSearch">
+          Clear
+       </button>
+     </div>
+</div>
+
+
+
+
+@code {
+  string title = "";
+  string selectedCategory = "0";
+  bool isMarkedDownFlag = false;
+  bool onClearanceFlag = false;
+  private List<Category> Categories = new List<Category>()
+  { 
+    new Category() {Id=1, Name="Suits"},
+    new Category() {Id=1, Name="Pants"}    
+  };
+
+  private void SearchForProducts()
+  {
+    Console.WriteLine($"title: {title}");
+    Console.WriteLine($"selectedCategory: {selectedCategory}");
+    Console.WriteLine($"isMarkedDownFlag: {isMarkedDownFlag}");
+    Console.WriteLine($"OnClearanceFlag: {onClearanceFlag}");
+  }
+  
+  private void ClearSearch()
+  {
+    title = "";
+    selectedCategory = "0";
+    isMarkedDownFlag = false;
+    onClearanceFlag = false;
+  }
+
+  private void TitleKeyPress(KeyboardEventArgs e)
+  {
+    if (e.Key == "Enter")
+    {
+      //
+    }
+  }
+}
