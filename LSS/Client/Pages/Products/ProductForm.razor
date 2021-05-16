@@ -1,0 +1,154 @@
+﻿
+<div class="form my-4">
+	<EditForm Model="Product" OnValidSubmit="OnValidSubmit">
+		<DataAnnotationsValidator />
+
+		<!--IDs-->
+		<div class="form-group">
+			<p>		 
+				<label for="ProductID">Product ID:
+					<InputNumber class="form-control" @bind-Value="@Product.ProductId"/>
+					<ValidationMessage For="@(() => Product.ProductId)" />	 
+				</label>
+			</p>
+		</div>
+
+		<div class="form-group">
+			<p>		 
+				<label for="Title">Title:
+					<InputText class="form-control" @bind-Value="@Product.Title"/>
+					<ValidationMessage For="@(() => Product.Title)" />	 
+				</label>
+			</p>
+		</div>
+		
+		<!--Sales Switches-->
+
+		<div class="row">
+		  <div class="col-md form-group my-3">
+        <div class="custom-control custom-switch">
+			    <input type="checkbox" @bind="@Product.IsMarkedDownFlag" 
+            class="custom-control-input" id="isMarkedDownFlag">
+
+			    <label class="custom-control-label" for="isMarkedDownFlag">
+            Sale Item? (marked-down up-to 25%)
+          </label>
+        </div>
+		  </div>
+
+      <div class="col-md form-group my-3">
+        <div class="custom-control custom-switch">
+			    <input type="checkbox" @bind="@Product.OnClearanceFlag" 
+            class="custom-control-input" id="onClearanceFlag">
+
+			    <label class="custom-control-label" for="onClearanceFlag">
+            Clearance Item? (marked-down over 25%)
+          </label>
+        </div>
+		  </div>
+    </div>
+
+		<!--Price-->
+
+		<div class="col-md form-group my-3">
+			<div class="form-group">
+				<p>		 
+					<label for="Price">List Price:
+						<InputNumber class="form-control" @bind-Value="@Product.Price"/>
+						<ValidationMessage For="@(() => Product.Price)" />	 
+					</label>
+				</p>
+			</div>
+		</div>
+
+		<!--Dates-->
+	  
+		<div class="row">
+		  <div class="col-md form-group my-3">
+				<div class="form-group">
+					<p>		 
+						<label for="SellStartDate">Sell Start Date:
+							<InputDate class="form-control" @bind-Value="@Product.SellStartDate"/>
+							<ValidationMessage For="@(() => Product.SellStartDate)" />	 
+						</label>
+					</p>
+				</div>
+			</div>
+			<div class="col-md form-group my-3">
+				<div class="form-group">
+					<p>		 
+						<label for="DiscontinuedDate">Discontinued Date:
+							<InputDate class="form-control" @bind-Value="@Product.DiscontinuedDate"/>
+							<ValidationMessage For="@(() => Product.DiscontinuedDate)" />	 
+						</label>
+					</p>
+				</div>
+			</div>
+		<div class="col-md form-group my-3">
+			<div class="form-group">
+				<p>		 
+					<label for="DaysToManufacture">Days To Manufacture (Est. from PO to Shipment):
+						<InputNumber class="form-control" @bind-Value="@Product.DaysToManufacture"/>
+						<ValidationMessage For="@(() => Product.DaysToManufacture)" />	 
+					</label>
+				</p>
+			</div>
+		</div>
+	</div>
+
+		<!--File upload-->
+	  
+		<div class="form-group">
+			<p>
+				<InputImg Label="Main Product Image Upload:" 
+					OnSelectedImage="PosterSelected" ImageURL="@imageURL" />
+				<ValidationMessage For="@(() => Product.Poster)" />	 
+			</p>
+		</div>
+
+		<!--Product Video URL (YouTube)-->
+		
+		<div class="form-group">
+			<p>		 
+				<label for="Video">Product Video:
+					<InputText class="form-control" @bind-Value="@Product.Video"/>
+					<ValidationMessage For="@(() => Product.Video)" />	 
+				</label>
+			</p>
+		</div>
+		
+		<!--Summary Markdown-->
+
+    <div class="form-group form-markdown">
+			<p>
+        <InputMarkdown @bind-Value="Product.Summary" 
+					Label="Summary (write a product description in Markdown):" 
+					For="@(() => Product.Summary)" />
+			</p>
+    </div>
+
+		<button class="btn btn-success my-3" type="submit">Submit</button>
+
+	</EditForm>
+</div>
+
+@code {
+	[Parameter] public Product Product { get; set; }
+  [Parameter] public EventCallback OnValidSubmit { get; set; }
+	private string imageURL;
+
+	//make it so both photo boxes do not show at same time.
+	protected override void OnInitialized()
+	{
+		if (!string.IsNullOrEmpty(Product.Poster))
+		{
+			imageURL = Product.Poster;
+			Product.Poster = null;
+		}
+	}
+	private void PosterSelected(string imageBase64)
+	{
+		Product.Poster = imageBase64;
+		imageURL = null;
+	}
+}

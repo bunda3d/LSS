@@ -3,15 +3,16 @@
 
 <h3>Create Person</h3>
 
-<button class="btn btn-primary" @onclick="SavePerson">Save Person</button>
-
+<PersonForm Person="Person"	OnValidSubmit="Create" />
 
 @code {
-	private void SavePerson()
+	private Person Person = new Person();
+
+	private void Create()
 	{
-		// Save person
-		Console.WriteLine(navigationManager.Uri);
-		navigationManager.NavigateTo("person");
+		Console.WriteLine("Creating person: ");
+		Console.WriteLine($"{Person.NameFirst} {Person.NameMI} {Person.NameLast}");
+		Console.WriteLine($"{Person.DateOfBirth} {Person.Biography}");
 	}
 
 }

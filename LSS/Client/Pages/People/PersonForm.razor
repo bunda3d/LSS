@@ -1,0 +1,89 @@
+﻿
+<div class="form my-4">
+	<EditForm Model="Person" OnValidSubmit="OnValidSubmit">
+		<DataAnnotationsValidator />
+
+		<!--Names-->
+		<div class="form-group">
+			<p>		 
+				<label for="nameFirst">First Name:
+					<InputText class="form-control" @bind-Value="@Person.NameFirst"/>
+					<ValidationMessage For="@(() => Person.NameFirst)" />	 
+				</label>
+			</p>
+		</div>
+
+		<div class="form-group">
+			<p>		 
+				<label for="nameMI">Middle Initial:
+					<InputText class="form-control" @bind-Value="@Person.NameMI"/>
+					<ValidationMessage For="@(() => Person.NameMI)" />	 
+				</label>
+			</p>
+		</div>
+	  
+		<div class="form-group">
+			<p>		 
+				<label for="nameLast">Last Name:
+					<InputText class="form-control" @bind-Value="@Person.NameLast"/>
+					<ValidationMessage For="@(() => Person.NameLast)" />	 
+				</label>
+			</p>
+		</div>
+
+		<!--Dates-->
+	  
+		<div class="form-group">
+			<p>		 
+				<label for="dateOfBirth">Date of Birth:
+					<InputDate class="form-control" @bind-Value="@Person.DateOfBirth"/>
+					<ValidationMessage For="@(() => Person.DateOfBirth)" />	 
+				</label>
+			</p>
+		</div>
+
+		<!--File upload-->
+	  
+		<div class="form-group">
+			<p>
+				<InputImg Label="Photo Upload (avatar image of you):" 
+					OnSelectedImage="OnSelectedImage" ImageURL="@imageURL" />
+				<ValidationMessage For="@(() => Person.Photo)" />	 
+			</p>
+		</div>
+		
+		<!--Bio Markdown-->
+
+    <div class="form-group form-markdown">
+			<p>
+        <InputMarkdown @bind-Value="Person.Biography" 
+					Label="Biography	 (a sentence or two about you):" 
+					For="@(() => Person.Biography)" />
+			</p>
+    </div>
+
+		<button class="btn btn-success my-3" type="submit">Submit</button>
+
+	</EditForm>
+</div>
+
+@code {
+	[Parameter] public Person Person { get; set; }
+  [Parameter] public EventCallback OnValidSubmit { get; set; }
+	string imageURL;
+
+	//make it so both photo boxes do not show at same time.
+	protected override void OnInitialized()
+	{
+		if (!string.IsNullOrEmpty(Person.Photo))
+		{
+			imageURL = Person.Photo;
+			Person.Photo = null;
+		}
+	}
+	private void OnSelectedImage(string imageBase64)
+	{
+		Person.Photo = imageBase64;
+		imageURL = null;
+	}
+}

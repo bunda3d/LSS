@@ -1,0 +1,29 @@
+﻿@inherits InputTextArea
+@using System.Linq.Expressions
+@typeparam TValue
+
+<div class="row my-3 mx-0">
+  <p>Markdown syntax formatting <a title="formatting reference from markdown-guide.org" 
+    href="https://www.markdownguide.org/cheat-sheet">cheatsheet</a>
+  </p>
+  <div class="col-md-6">
+    <p>
+      <label>@Label</label>
+        <div>
+          <InputTextArea @bind-Value="CurrentValue" />
+          <ValidationMessage For="For" />
+        </div>
+    </p>
+  </div>
+  <div class="col-md-6">
+    <label>@Label (preview):</label>
+    <div class="markdown-container">
+      <RenderMarkdown MarkdownContent="@CurrentValue"/>
+    </div>
+  </div>
+</div>
+
+@code {
+  [Parameter] public Expression<Func<TValue>> For { get; set; }
+  [Parameter] public string Label { get; set; }
+}

@@ -1,5 +1,5 @@
 ﻿@page "/product/search"
-
+@inject IRepository repository
 
 <h3>Search Products</h3>
 
@@ -29,38 +29,27 @@
     </select>
   </div>
   </div>
-  <div class="row">
-    
-      @*  
-      <div class="col form-group mx-sm-3 mb-2">
-      <input type="checkbox" 
-        class="form-check-input" 
-        id="markedDown" 
-        @bind="markedDown" 
-        @onchange="@(() => 
-          searchMarkedDowns = !searchMarkedDowns)" 
-      />
-      *@
+    <div class="row">
 
 		  <div class="col-md form-group my-3">
         <div class="custom-control custom-switch">
-			  <input type="checkbox" @bind="@isMarkedDownFlag" 
-        class="custom-control-input" id="isMarkedDownFlag">
+			    <input type="checkbox" @bind="@isMarkedDownFlag" 
+            class="custom-control-input" id="isMarkedDownFlag">
 
-			  <label class="custom-control-label" for="isMarkedDownFlag">
-          Sale items
-        </label>
+			    <label class="custom-control-label" for="isMarkedDownFlag">
+            Sale items
+          </label>
         </div>
 		  </div>
 
       <div class="col-md form-group my-3">
         <div class="custom-control custom-switch">
-			  <input type="checkbox" @bind="@onClearanceFlag" 
-        class="custom-control-input" id="onClearanceFlag">
+			    <input type="checkbox" @bind="@onClearanceFlag" 
+            class="custom-control-input" id="onClearanceFlag">
 
-			  <label class="custom-control-label" for="onClearanceFlag">
-          Clearance items
-        </label>
+			    <label class="custom-control-label" for="onClearanceFlag">
+            Clearance items
+          </label>
         </div>
 		  </div>
     </div>
@@ -79,12 +68,16 @@
           Clear
        </button>
      </div>
+     <hr/>
 </div>
 
-
-
+<!--display search results-->
+<ProductList Products="Products"></ProductList>
 
 @code {
+  //vars to display search results:
+  private List<Product> Products;
+  //vars for search form:
   string title = "";
   string selectedCategory = "0";
   bool isMarkedDownFlag = false;
@@ -95,8 +88,16 @@
     new Category() {Id=1, Name="Pants"}    
   };
 
+  protected override void OnInitialized()
+  {
+    Products = repository.GetProducts();
+  }
+
   private void SearchForProducts()
   {
+    //always making a cleared filter
+    Products = repository.GetProducts().Where(x => x.Title.Contains(title)).ToList();
+    //console logging
     Console.WriteLine($"title: {title}");
     Console.WriteLine($"selectedCategory: {selectedCategory}");
     Console.WriteLine($"isMarkedDownFlag: {isMarkedDownFlag}");
@@ -105,6 +106,9 @@
   
   private void ClearSearch()
   {
+    //clear repo
+    Products = repository.GetProducts();
+    //clear vals
     title = "";
     selectedCategory = "0";
     isMarkedDownFlag = false;
@@ -115,7 +119,7 @@
   {
     if (e.Key == "Enter")
     {
-      //
+      SearchForProducts();
     }
   }
 }
