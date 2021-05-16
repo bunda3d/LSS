@@ -1,4 +1,5 @@
-﻿@inject IJSRuntime JS
+﻿@page "/about/map"
+@inject IJSRuntime JS
 @implements IAsyncDisposable
 
 <h3>Map</h3>
@@ -6,13 +7,14 @@
 <div @ref="mapElement" style='width: 100%; height: 300px;'></div>
 
 <button class="btn btn-outline-info mt-2 mb-5"
-@onclick="() => ShowAsync(47.608013, -122.335167)">Show Larry's Shoppe</button>
+@onclick="() => ShowAsync(47.608013, -122.335167, 15)">Center on Larry's Shoppe</button>
 
 @code
 {
-    ElementReference mapElement;
+  ElementReference mapElement;
     IJSObjectReference mapModule;
     IJSObjectReference mapInstance;
+    //IJSObjectReference mapNavControl;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -22,16 +24,19 @@
                 "import", "./js/mapComponent.js");
             mapInstance = await mapModule.InvokeAsync<IJSObjectReference>(
                 "addMapToElement", mapElement);
+            //mapNavControl = await mapModule.InvokeAsync<IJSObjectReference>(
+                //"addMapControl", mapInstance);
         }
     }
 
-    Task ShowAsync(double latitude, double longitude)
+    Task ShowAsync(double latitude, double longitude, int zoom)
         => mapModule.InvokeVoidAsync("setMapCenter", mapInstance, latitude, 
-            longitude).AsTask();
+            longitude, zoom).AsTask();
 
     async ValueTask IAsyncDisposable.DisposeAsync()
     {
         await mapInstance.DisposeAsync();
         await mapModule.DisposeAsync();
+        //await mapNavControl.DisposeAsync();
     }
 }

@@ -1,4 +1,18 @@
-﻿.individual-product-container {
+﻿h1 {
+	color: #fff;
+	background: linear-gradient(135deg, #0E2161 60%, cyan);
+	padding-left: .5rem;
+	border-radius: 5px;
+}
+
+h3 {
+	color: #fff;
+	background: linear-gradient(135deg, #0E2161 60%, cyan);
+	padding: 0 0 .25rem .5rem;
+	border-radius: 5px;
+}
+
+.individual-product-container {
 	margin-right: 2%;
 	margin-bottom: 1rem;
 	text-align: center;

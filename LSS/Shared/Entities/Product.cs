@@ -11,6 +11,7 @@ namespace LSS.Shared.Entities
 	{
 		public int Id { get; set; } = 1;
 
+		[Required]
 		public string Title { get; set; }
 
 		public DateTime ReleaseDate { get; set; }

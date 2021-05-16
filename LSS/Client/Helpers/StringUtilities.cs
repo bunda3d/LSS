@@ -11,18 +11,25 @@ namespace LSS.Client.Helpers
 	{
 		public static string toAllCaps(string value) => value.ToUpper();
 
-		public static string removeSpecialCharsPath(string specialCharsStr)
+		public static string removeSpecialCharsPath(string uriPath)
 		{
-			char[] invalidPathChars = Path.GetInvalidPathChars().ToArray();
-			var unwanteds = invalidPathChars.Select(c => c.ToString()).ToList();
+      //return string.Join("_", uriPath.Split(Path.GetInvalidPathChars()));
 
-			StringBuilder sb = new StringBuilder(specialCharsStr);
-			foreach (string unwanted in unwanteds)
-			{
-				sb.Replace(unwanted, string.Empty).Replace(" ", "-");
-			}
-			return sb.ToString();
-		}
+
+
+
+
+      char[] invalidPathChars = Path.GetInvalidPathChars().ToArray();
+      var unwanteds = invalidPathChars.Select(c => c.ToString()).ToList();
+
+      StringBuilder sb = new StringBuilder(uriPath);
+      for (int i = 0; i < unwanteds.Count; i++)
+      {
+        string unwanted = unwanteds[i];
+        sb.Replace(unwanted, string.Empty).Replace(" ", "-");
+      }
+      return sb.ToString();
+    }
 
 	}
 

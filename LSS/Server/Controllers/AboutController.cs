@@ -8,7 +8,7 @@ using System.Linq;
 namespace LSS.Server.Controllers
 {
 	[ApiController]
-	[Route("[controller]")]
+	[Route("api/[controller]")]
 	public class AboutController : ControllerBase
 	{
 		private static readonly string[] Titles = new[]

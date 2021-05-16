@@ -21,12 +21,14 @@
 @code {
 	[Parameter] public Product Product { get; set; }
 	[Parameter] public EventCallback<Product> DeleteProduct { get; set; }
+	
+	[Parameter] public string CleanUri { get; set; }
 
 	private string productURL = string.Empty;
 
   protected override void OnInitialized()
   {
-      productURL = $"product/{Product.Id}/{@StringUtilities.removeSpecialCharsPath(Product.Title)}";
+      productURL = $"product/{Product.Id}/{Product.Title.Replace(" ", "-")}";
 
 			//{Product.Id}/{Product.Title.Replace(" ", "-")}
   }

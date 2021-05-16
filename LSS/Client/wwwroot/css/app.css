@@ -14,13 +14,6 @@ a, .btn-link {
     border-color: #1861ac;
 }
 
-h1 {
-  color: #fff;
-  background: linear-gradient(135deg, #0E2161 60%, cyan);
-  padding-left: .5rem;
-  border-radius: 5px;
-}
-
 .content {
     padding-top: 1.1rem;
     /**added to push footer down*/

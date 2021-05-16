@@ -53,7 +53,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        aboutLarrys = await Http.GetFromJsonAsync<LSS.Shared.Entities.About[]>("About");
+        aboutLarrys = await Http.GetFromJsonAsync<LSS.Shared.Entities.About[]>("api/About");
     }
 
     
