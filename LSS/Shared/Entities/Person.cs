@@ -11,10 +11,12 @@ namespace LSS.Shared.Entities
   {
     public int Id { get; set; }
 
-    [Required(ErrorMessage = "This field cannot be blank")]
+
+    [Required(ErrorMessage = "Required Field")]
     public string NameFirst { get; set; }
 
-    [Required(ErrorMessage = "This field cannot be blank")]
+
+    [Required(ErrorMessage = "Required Field")]
     public string NameLast { get; set; }
 
     public string NameMI { get; set; }

@@ -1,0 +1,93 @@
+﻿<div class="row align-space-around">
+  <div class="col-md-5 multiple-select">
+    <h3>Categories</h3>
+    <ul class="selectable-ul">
+      @foreach (var item in NotSelected)
+      {
+        <li @onclick="@(() => Select(item))">@item.Value</li>
+      }
+    </ul>
+  </div>
+  <div class="col-md-2 multiple-selector-buttons align-space-around">
+
+@*try this some other time
+
+  <div class="col-md-2 card d-none d-md-block py-5">
+  <div class="my-5 text-center">
+          
+      <button type="button" class="btn btn-outline-secondary custom-btn text-center" style="width:6em;">
+        <span class="d-block">Add</span>
+        <span class="h2 text-center">
+          <i class="fas fa-angle-double-right"></i></span>
+      </button>
+           
+      <br />
+        <span class="h2">&nbsp;</span>
+      <br />
+          
+      <button type="button" class="btn btn-outline-secondary custom-btn text-center" style="width:6em;">
+        <span class="h2 text-center">
+          <i class="fas fa-angle-double-left"></i></span>
+        <span class="d-block">Remove</span>
+      </button>        
+    </div>
+    </div>
+*@
+    <button type="button" class="btn btn-outline-primary justify-space-between" 
+      @onclick="SelectAll">@selectAllText &nbsp;<span class="oi oi-chevron-right"></span></button>
+    <button type="button" class="btn btn-outline-primary" 
+      @onclick="DeselectAll"><span class="oi oi-chevron-left"></span>&nbsp; @removeAllText</button>
+  </div>
+  <div class="col-md-5 multiple-select">
+    <h3>This Product</h3>
+    <ul class="selectable-ul">
+      @foreach (var item in Selected)
+      {
+        <li @onclick="@(() => Deselect(item))">@item.Value</li>
+      }
+    </ul>
+  </div>
+ </div>
+
+@code {
+  private string removeAllChevs = "< <";
+  private string selectAllChevs = "> >";
+  private string removeAllText = "Remove";
+  private string selectAllText = "Add";
+  //could be: list of avail categories not selected to attach to a Product
+  [Parameter]
+  public List<MultipleSelectorModel> NotSelected { get; set; } 
+  = new List<MultipleSelectorModel>();
+  //could be: Currently selected+attached categories to a Product
+  [Parameter]
+  public List<MultipleSelectorModel> Selected { get; set; } 
+  = new List<MultipleSelectorModel>();
+
+  private void Select(MultipleSelectorModel item)
+  {
+    NotSelected.Remove(item);
+    Selected.Add(item);
+  }
+  //if we want to deselect, it means we want 
+  //to remove choices from selected.
+  private void Deselect(MultipleSelectorModel item)
+  {
+    Selected.Remove(item);
+    NotSelected.Add(item);
+  }
+
+  //if SelectAll is Selected, adds everything in the 
+  //NotSelected List, then clears the List
+  private void SelectAll()
+  {
+    Selected.AddRange(NotSelected);
+    NotSelected.Clear();
+  }
+  //adds everything from Selected list 
+  //to NotSelected list, then clear Selected list
+  private void DeselectAll()
+  {
+    NotSelected.AddRange(Selected);
+    Selected.Clear();
+  }
+}

@@ -11,7 +11,8 @@
 @code {
 	[Parameter] public int PersonId { get; set; }
 
-	Person Person = new Person();
+	//do not make new entity on Edit (like on Create)
+	private Person Person;
 
 	
 	protected override void OnInitialized()

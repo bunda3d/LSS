@@ -2,21 +2,24 @@
 @using System.Linq.Expressions
 @typeparam TValue
 
-<div class="row my-3 mx-0">
-  <p>Markdown syntax formatting <a title="formatting reference from markdown-guide.org" 
+<div class="col-md alert alert-info" role="alert">
+  Need a refresher? Markdown syntax formatting <a title="formatting reference from markdown-guide.org" 
+    target=”_blank”
     href="https://www.markdownguide.org/cheat-sheet">cheatsheet</a>
-  </p>
-  <div class="col-md-6">
+</div>
+
+<div class="row my-3 mx-0">
+  <div class="col-md">
     <p>
-      <label>@Label</label>
+      <label>@LabelMarkup</label>
         <div>
           <InputTextArea @bind-Value="CurrentValue" />
           <ValidationMessage For="For" />
         </div>
     </p>
   </div>
-  <div class="col-md-6">
-    <label>@Label (preview):</label>
+  <div class="col-md">
+    <label>@LabelPreview</label>
     <div class="markdown-container">
       <RenderMarkdown MarkdownContent="@CurrentValue"/>
     </div>
@@ -25,5 +28,6 @@
 
 @code {
   [Parameter] public Expression<Func<TValue>> For { get; set; }
-  [Parameter] public string Label { get; set; }
+  [Parameter] public string LabelMarkup { get; set; }
+  [Parameter] public string LabelPreview { get; set; }
 }

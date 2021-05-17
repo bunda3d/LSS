@@ -1,8 +1,53 @@
 ﻿@page "/product/edit/{ProductId:int}"
 
-<h3>Edit Products</h3>
+<h3>Edit Product</h3>
+
+@if (Product != null)
+{
+	<ProductForm Product="Product"	
+		OnValidSubmit="Edit"
+		NotSelectedCategories="NotSelectedCategories"
+		SelectedCategories="SelectedCategories"/>
+}
+
 
 @code {
 	[Parameter] public int ProductId { get; set; }
+	
+	//do not make new entity on Edit (like on Create)
+	private Product Product;
+
+	//seeding the environment
+	private List<Category> NotSelectedCategories = new List<Category>()
+	{
+			new Category(){ Id = 2, Name = "Pants"  },
+			new Category(){ Id = 3, Name = "Shirts" },
+			new Category(){ Id = 4, Name = "Ties"   },
+			new Category(){ Id = 5, Name = "Shoes"  },
+			new Category(){ Id = 6, Name = "Socks"  },
+			new Category(){ Id = 7, Name = "Belts"  }
+	};
+	private List<Category> SelectedCategories = new List<Category>()
+  {
+			new Category(){ Id = 1, Name = "Suits"  },
+  };
+
+	protected override void OnInitialized()
+	{
+		Product = new Product()
+		{
+			Id = ProductId,
+			Title = "Pants, Stockport Wool Linen Blue Slacks",
+			Video = "https://www.youtube.com/watch?v=oDj-W2pwbAA"
+		};
+	}
+
+	private void Edit()
+	{
+		Console.WriteLine("Editing product: ");
+		Console.WriteLine($"{Product.ProductNumber} {Product.Title} {Product.Summary}");
+		Console.WriteLine($"IsMarkedDown?{Product.IsMarkedDownFlag} OnClearance?{Product.OnClearanceFlag}");
+		Console.WriteLine($"DaysToManufacture?{Product.DaysToManufacture} SellStartDate?{Product.SellStartDate} DiscontinuedDate?{Product.DiscontinuedDate}");
+	}
 
 }

@@ -3,15 +3,34 @@
 
 <h3>Create Product</h3>
 
-<button class="btn btn-primary" @onclick="SaveProduct">Save Product</button>
-
+<ProductForm Product="Product"	
+	OnValidSubmit="SaveProduct" 
+	NotSelectedCategories="NotSelectedCategories" />
 
 @code {
+	private Product Product = new Product();
+
+	private List<Category> NotSelectedCategories = new List<Category>()
+	{
+			new Category(){ Id = 1, Name = "Suits"  },
+			new Category(){ Id = 2, Name = "Pants"  },
+			new Category(){ Id = 3, Name = "Shirts" },
+			new Category(){ Id = 4, Name = "Ties"   },
+			new Category(){ Id = 5, Name = "Shoes"  },
+			new Category(){ Id = 6, Name = "Socks"  },
+			new Category(){ Id = 7, Name = "Belts"  }
+	};
+
 	private void SaveProduct()
 	{
-		// Save product
-		Console.WriteLine(navigationManager.Uri);
-		navigationManager.NavigateTo("product");
+		Console.WriteLine("Creating product: ");
+		Console.WriteLine($"{Product.ProductNumber} {Product.Title} {Product.Summary}");
+		Console.WriteLine($"IsMarkedDown?{Product.IsMarkedDownFlag} OnClearance?{Product.OnClearanceFlag}");
+		Console.WriteLine($"DaysToManufacture?{Product.DaysToManufacture} SellStartDate?{Product.SellStartDate} DiscontinuedDate?{Product.DiscontinuedDate}");
+
+		// Redirect on Save
+		//Console.WriteLine(navigationManager.Uri);
+		//navigationManager.NavigateTo("product");
 	}
 
 }

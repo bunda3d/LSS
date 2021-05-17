@@ -15,10 +15,6 @@ namespace LSS.Client.Helpers
 		{
       //return string.Join("_", uriPath.Split(Path.GetInvalidPathChars()));
 
-
-
-
-
       char[] invalidPathChars = Path.GetInvalidPathChars().ToArray();
       var unwanteds = invalidPathChars.Select(c => c.ToString()).ToList();
 

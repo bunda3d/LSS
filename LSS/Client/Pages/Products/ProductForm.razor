@@ -6,9 +6,9 @@
 		<!--IDs-->
 		<div class="form-group">
 			<p>		 
-				<label for="ProductID">Product ID:
-					<InputNumber class="form-control" @bind-Value="@Product.ProductId"/>
-					<ValidationMessage For="@(() => Product.ProductId)" />	 
+				<label for="ProductNumber">Product Number:
+					<InputNumber class="form-control" @bind-Value="@Product.ProductNumber"/>
+					<ValidationMessage For="@(() => Product.ProductNumber)" />	 
 				</label>
 			</p>
 		</div>
@@ -24,8 +24,8 @@
 		
 		<!--Sales Switches-->
 
-		<div class="row">
-		  <div class="col-md form-group my-3">
+
+		  <div class="col form-group my-4 p-0">
         <div class="custom-control custom-switch">
 			    <input type="checkbox" @bind="@Product.IsMarkedDownFlag" 
             class="custom-control-input" id="isMarkedDownFlag">
@@ -36,7 +36,7 @@
         </div>
 		  </div>
 
-      <div class="col-md form-group my-3">
+      <div class="col form-group my-4 p-0">
         <div class="custom-control custom-switch">
 			    <input type="checkbox" @bind="@Product.OnClearanceFlag" 
             class="custom-control-input" id="onClearanceFlag">
@@ -46,16 +46,27 @@
           </label>
         </div>
 		  </div>
-    </div>
+    
 
 		<!--Price-->
 
-		<div class="col-md form-group my-3">
+		<div class="col-sm-12 col-md-6 col-lg-4 form-group my-3 p-0">
 			<div class="form-group">
 				<p>		 
 					<label for="Price">List Price:
-						<InputNumber class="form-control" @bind-Value="@Product.Price"/>
+						<InputNumber step=".01" class="form-control form-control-xs" @bind-Value="@Product.Price"/>
 						<ValidationMessage For="@(() => Product.Price)" />	 
+					</label>
+				</p>
+			</div>
+		</div>
+
+		<div class="col-sm-12 col-md-6 col-lg-4 form-group my-3 p-0">
+			<div class="form-group">
+				<p>		 
+					<label for="DaysToManufacture">Days To Manufacture:
+						<InputNumber class="form-control" @bind-Value="@Product.DaysToManufacture"/>
+						<ValidationMessage For="@(() => Product.DaysToManufacture)" />	 
 					</label>
 				</p>
 			</div>
@@ -64,7 +75,7 @@
 		<!--Dates-->
 	  
 		<div class="row">
-		  <div class="col-md form-group my-3">
+		  <div class="col-sm col-md-6 col-lg-4 col-xl-3 form-group my-3">
 				<div class="form-group">
 					<p>		 
 						<label for="SellStartDate">Sell Start Date:
@@ -74,7 +85,7 @@
 					</p>
 				</div>
 			</div>
-			<div class="col-md form-group my-3">
+			<div class="col-sm col-md-6 col-lg-4 col-xl-3 form-group my-3">
 				<div class="form-group">
 					<p>		 
 						<label for="DiscontinuedDate">Discontinued Date:
@@ -84,16 +95,6 @@
 					</p>
 				</div>
 			</div>
-		<div class="col-md form-group my-3">
-			<div class="form-group">
-				<p>		 
-					<label for="DaysToManufacture">Days To Manufacture (Est. from PO to Shipment):
-						<InputNumber class="form-control" @bind-Value="@Product.DaysToManufacture"/>
-						<ValidationMessage For="@(() => Product.DaysToManufacture)" />	 
-					</label>
-				</p>
-			</div>
-		</div>
 	</div>
 
 		<!--File upload-->
@@ -110,7 +111,7 @@
 		
 		<div class="form-group">
 			<p>		 
-				<label for="Video">Product Video:
+				<label for="Video">Product Video (YouTube URL):
 					<InputText class="form-control" @bind-Value="@Product.Video"/>
 					<ValidationMessage For="@(() => Product.Video)" />	 
 				</label>
@@ -119,15 +120,28 @@
 		
 		<!--Summary Markdown-->
 
-    <div class="form-group form-markdown">
+    <div class="form-group form-markdown mt-3">
 			<p>
         <InputMarkdown @bind-Value="Product.Summary" 
-					Label="Summary (write a product description in Markdown):" 
+					LabelMarkup="Summary (write a product description in Markdown):" 
+					LabelPreview="Summary (Preview):"
 					For="@(() => Product.Summary)" />
 			</p>
     </div>
 
-		<button class="btn btn-success my-3" type="submit">Submit</button>
+		<!--Add or Remove Categories-->
+
+		<div class="form-group">
+			<label>Click individual Product Categories to Add or Remove them to this Product. 
+					(Or) Add All and Remove All with the buttons:</label>
+			<div>
+				<MultipleSelector 
+					Selected="Selected" 
+					NotSelected="NotSelected" />
+			</div>			
+		</div>
+
+		<button class="btn btn-success mb-5" type="submit">Submit</button>
 
 	</EditForm>
 </div>
@@ -135,11 +149,22 @@
 @code {
 	[Parameter] public Product Product { get; set; }
   [Parameter] public EventCallback OnValidSubmit { get; set; }
-	private string imageURL;
+	//need to pass notselected and selected params to component
+	[Parameter] public List<Category> SelectedCategories { get; set; } = new List<Category>();
+	[Parameter] public List<Category> NotSelectedCategories { get; set; } = new List<Category>();
+	
+	private List<MultipleSelectorModel> Selected = new List<MultipleSelectorModel>();
+  private List<MultipleSelectorModel> NotSelected = new List<MultipleSelectorModel>();
 
-	//make it so both photo boxes do not show at same time.
+	private string imageURL;
+	
 	protected override void OnInitialized()
 	{
+
+		Selected = SelectedCategories.Select(x => new MultipleSelectorModel(x.Id.ToString(), x.Name)).ToList();
+		NotSelected = NotSelectedCategories.Select(x => new MultipleSelectorModel(x.Id.ToString(), x.Name)).ToList();
+
+		//make it so both photo boxes do not show at same time.
 		if (!string.IsNullOrEmpty(Product.Poster))
 		{
 			imageURL = Product.Poster;

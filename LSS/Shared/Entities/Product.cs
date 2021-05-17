@@ -11,20 +11,28 @@ namespace LSS.Shared.Entities
 	{
 		public int Id { get; set; }
 
-		[Required(ErrorMessage = "This field cannot be blank")]
-		[RegularExpression(@"^[0 - 9]{6}$", ErrorMessage = "This is a 6-digit number with no letters")]
-		public int ProductId { get; set; }
+		[Required(ErrorMessage = "Required Field: Enter a unique 6-digit number with no letters")]
+		//Need to add controllers to get RegExs working in WASM Blazor
+		//https://docs.microsoft.com/en-us/aspnet/core/blazor/forms-validation?view=aspnetcore-5.0#business-logic-validation
+		//[RegularExpression(@"^[0 - 9]{6}$", ErrorMessage = "Enter a unique 6-digit number with no letters")]
+		public int ProductNumber { get; set; }
 
-		[Required(ErrorMessage = "This field cannot be blank")]
+		[Required(ErrorMessage = "Required Field: Provide a descriptive title sentence.")]
 		public string Title { get; set; }
 
 		public string Summary {get; set;}
+
+		[DataType(DataType.Currency)]
+		[DisplayFormat(ApplyFormatInEditMode =true, DataFormatString = "{0.c}")]
+		public decimal Price { get; set; }
 
 		public bool IsMarkedDownFlag { get; set; }
 
 		public bool OnClearanceFlag { get; set; }
 
-		[RegularExpression(@"^[0 - 9]{0,3}$", ErrorMessage = "Estimated timeframe (in days) for Product Order to Factory Shipment")]
+		//Need to add controllers to get RegExs working in WASM Blazor
+		//https://docs.microsoft.com/en-us/aspnet/core/blazor/forms-validation?view=aspnetcore-5.0#business-logic-validation
+		//[RegularExpression(@"^[0 - 9]{0,3}$", ErrorMessage = "Estimated timeframe (in days) for Product Order to Factory Shipment")]
 		public int? DaysToManufacture { get; set; }
 
 		[Required]
@@ -37,9 +45,7 @@ namespace LSS.Shared.Entities
 
 		public string Video { get; set; }
 
-		[DataType(DataType.Currency)]
-		[DisplayFormat(ApplyFormatInEditMode =true, DataFormatString = "{0.c}")]
-		public decimal Price { get; set; }
+		public List<ProductsCategories> ProductsCategories { get; set; } = new List<ProductsCategories>();
 
 
 		public string TitleBrief

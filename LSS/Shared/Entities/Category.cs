@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace LSS.Shared.Entities
 {
@@ -7,7 +8,7 @@ namespace LSS.Shared.Entities
     public int Id { get; set; }
 
     //Suits or Pants
-    [Required(ErrorMessage = "This field cannot be blank")]
+    [Required(ErrorMessage = "Required Field: Provide a Category Name, like 'Suits' or 'Pants'.")]
     public string Name { get; set; }
 
     //XXL or Petit
@@ -28,6 +29,6 @@ namespace LSS.Shared.Entities
     //1-5 stars
     public int? StarRating { get; set; }
 
-
+    public List<ProductsCategories> ProductsCategories { get; set; } = new List<ProductsCategories>();
   }
 }
