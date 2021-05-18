@@ -28,6 +28,10 @@ namespace LSS.Shared.Entities
 
     public string Biography { get; set; }
 
+    //M:M relation
+    public ICollection<StarRating> StarRatings { get; set; }
+
+
     //2 persons are equal if only they share the same id.
     public override bool Equals(object obj)
     {

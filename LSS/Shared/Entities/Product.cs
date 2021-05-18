@@ -22,9 +22,8 @@ namespace LSS.Shared.Entities
 
 		public string Summary {get; set;}
 
-		[DataType(DataType.Currency)]
-		[DisplayFormat(ApplyFormatInEditMode =true, DataFormatString = "{0.c}")]
-		public decimal Price { get; set; }
+   	public decimal Price { get; set; }
+		public Dollars PriceUnformatted { get; set; }
 
 		public bool IsMarkedDownFlag { get; set; }
 
@@ -59,6 +58,13 @@ namespace LSS.Shared.Entities
 
 		public int? SizeTypeId { get; set; }
 
+		//how ef core sets up M:M relationships in the model
+		//https://bit.ly/3bwZXau
+		public ICollection<Category> Categories { get; set; }
+
+		//M:M relation
+		public ICollection<StarRating> StarRatings { get; set; }
+
 		public List<ProductsCategories> ProductsCategories { get; set; } = new List<ProductsCategories>();
 
 
@@ -81,5 +87,18 @@ namespace LSS.Shared.Entities
 				}
 			}
 		}
+
+		public readonly struct Dollars
+		{
+			public Dollars(decimal price)
+					=> this.Price = price;
+
+			public decimal Price { get; }
+
+			public override string ToString()
+					=> $"${Price}";
+		}
+
+
 	}
 }

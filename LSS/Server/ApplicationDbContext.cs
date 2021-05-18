@@ -1,9 +1,7 @@
 ﻿using LSS.Shared.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using static LSS.Shared.Entities.Product;
 
 namespace LSS.Server
 {
@@ -19,7 +17,22 @@ namespace LSS.Server
     {
       modelBuilder.Entity<ProductsCategories>().HasKey(x => new { x.ProductId, x.CategoryId });
 
+      modelBuilder.Entity<Product>()
+      .Property(b => b.Price)
+      .HasPrecision(8, 2)
+      .HasColumnType("decimal(8, 2)");
 
+
+      modelBuilder.Entity<StarRating>()
+      .Property(b => b.StarRatingScoreEvent)
+      .HasPrecision(8, 2)
+      .HasColumnType("decimal(8, 2)");
+
+      modelBuilder.Entity<Product>()
+      .Property(e => e.PriceUnformatted)
+      .HasConversion(
+        v => v.Price,
+        v => new Dollars(v));
 
       base.OnModelCreating(modelBuilder);
     }

@@ -4,6 +4,7 @@ namespace LSS.Shared.Entities
 {
 	public class About
 	{
+		public int Id { get; set; }
 		public string EmpName { get; set; }
 
 		public string EmpTitle { get; set; }

@@ -54,8 +54,8 @@
 			<div class="form-group">
 				<p>		 
 					<label for="Price">List Price:
-						<InputNumber step=".01" class="form-control form-control-xs" @bind-Value="@Product.Price"/>
-						<ValidationMessage For="@(() => Product.Price)" />	 
+						<InputNumber step=".01" class="form-control form-control-xs" @bind-Value="@Product.PriceUnformatted"/>
+						<ValidationMessage For="@(() => Product.PriceUnformatted)" />	 
 					</label>
 				</p>
 			</div>
