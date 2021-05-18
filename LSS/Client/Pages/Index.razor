@@ -9,6 +9,12 @@
 	<ProductList Products="products"/>
 </div>
 
+<CustomTypeahead SearchMethod="SearchMethod">
+	<ResultTemplate>
+	 @context
+ </ResultTemplate>
+</CustomTypeahead>
+
 
 @code{
 	private List<Product> products;
@@ -17,4 +23,13 @@
 	{
 		products = repository.GetProducts();
 	}
+
+	//dummy omni search / typeahead data	
+	private async Task<IEnumerable<string>> SearchMethod(string searchText)
+	{
+		await Task.Delay(2000);
+		if(searchText =="test") { return Enumerable.Empty<string>();  }
+		return new List<string>() { "Kris", "Bunda" };
+	}
+
 }

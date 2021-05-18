@@ -63,14 +63,14 @@ h3 {
 }
 
 	.form-markdown textarea {
-		min-width: 24rem;
+		min-width: 18rem;
 		min-height: 24rem;
 		margin-right: 1rem;
 	}
 
 	.form-markdown .markdown-container {
 		border: 1px dashed black;
-		width: 24rem;
+		width: 18rem;
 		min-height: 24rem;
 	}
 

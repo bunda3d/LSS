@@ -28,6 +28,7 @@ namespace LSS.Shared.Entities
 
     public string Biography { get; set; }
 
+    //2 persons are equal if only they share the same id.
     public override bool Equals(object obj)
     {
       if (obj is Person p2)

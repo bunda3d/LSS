@@ -45,6 +45,20 @@ namespace LSS.Shared.Entities
 
 		public string Video { get; set; }
 
+		public int? CategoryId { get; set; }
+
+		public int? ColorId { get; set; }
+
+		public int? PatternId { get; set; }
+
+		public int? StyleId { get; set; }
+
+		public int? StarRatingId { get; set; }
+
+		public int? SizeMeasureId { get; set; }
+
+		public int? SizeTypeId { get; set; }
+
 		public List<ProductsCategories> ProductsCategories { get; set; } = new List<ProductsCategories>();
 
 
