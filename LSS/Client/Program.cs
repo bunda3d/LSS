@@ -1,4 +1,5 @@
 using LSS.Client.Helpers;
+using LSS.Client.Repository;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,7 +29,11 @@ namespace LSS.Client
 
 		private static void ConfigureServices(IServiceCollection services)
 		{
+			//register all services
 			services.AddTransient<IRepository, RepositoryInMemory>();
+			services.AddScoped<IHttpService, HttpService>();
+			services.AddScoped<ICategoryRepository, CategoryRepository>();
+			services.AddScoped<IPersonRepository, PersonRepository>();
 		}
 	}
 }

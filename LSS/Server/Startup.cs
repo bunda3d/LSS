@@ -1,3 +1,4 @@
+using LSS.Server.Helpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,7 +26,15 @@ namespace LSS.Server
 		{
 			services.AddDbContext<ApplicationDbContext>(options =>
       options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+			/** 
+			 * uncomment next 2 if rather save blobs 
+			 * to Server proj wwwroot than in azure storage
+			 * services.AddScoped<IFileStorageService, InAppStorageService>();
+			 * services.AddHttpContextAccessor(); 
+			*/
+			services.AddScoped<IFileStorageService, AzureStorageService>();
 			services.AddControllersWithViews();
+				//.AddNewtonsoftJson(options => object.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 			services.AddRazorPages();
 		}
 

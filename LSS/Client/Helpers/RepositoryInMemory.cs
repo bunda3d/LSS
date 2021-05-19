@@ -13,7 +13,7 @@ namespace LSS.Client.Helpers
 			return new List<Product>()
 			{
 				new Product(){
-					Title = "Mens Grey Suit: 3-button ensemble",
+          Title = "Mens Grey Suit: 3-button ensemble",
 					SellStartDate = new DateTime(2019, 7, 2),
 					Price = 700,
 					Poster = "/img/product/suit01.jpg"
@@ -107,6 +107,56 @@ namespace LSS.Client.Helpers
 					SellStartDate = new DateTime(2010, 7, 16),
 					Price = 900,
 					Poster = "/img/product/suit04a.png"
+				}
+			};
+		}
+
+
+		public List<OpenHrs> GetOpenHrs()
+		{
+			return new List<OpenHrs>()
+			{
+				new OpenHrs(){
+					DayOfWk = "Sunday",
+					OpenTime = "11am",
+					ClosingTime = "5pm",
+					OpenHrsMsg = "Compressed days on Weekends"
+				},
+				new OpenHrs(){
+					DayOfWk = "Monday",
+					OpenTime = "9am",
+					ClosingTime = "9pm",
+					OpenHrsMsg = ""
+				},        
+				new OpenHrs(){
+					DayOfWk = "Tuesday",
+					OpenTime = "9am",
+					ClosingTime = "9pm",
+					OpenHrsMsg = ""
+				},
+				new OpenHrs(){
+					DayOfWk = "Wednesday",
+					OpenTime = "9am",
+					ClosingTime = "9pm",
+					OpenHrsMsg = ""
+				},
+								new OpenHrs(){
+					DayOfWk = "Thursday",
+					OpenTime = "9am",
+					ClosingTime = "9pm",
+					OpenHrsMsg = ""
+				},
+				new OpenHrs(){
+					DayOfWk = "Friday",
+					OpenTime = "9am",
+					ClosingTime = "7pm",
+					OpenHrsMsg = "Close Early Fridays"
+				},
+				new OpenHrs(){
+					DayOfWk = "Saturday",
+					OpenTime = "11am",
+					ClosingTime = "5pm",
+					OpenHrsMsg = "Compressed days on Weekends"
 				}
 			};
 		}

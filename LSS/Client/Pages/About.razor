@@ -15,46 +15,77 @@
 
 @if (aboutLarrys == null)
 {
-    <p><em>Loading...</em></p>
+  <p><em>Loading...</em></p>
 }
 else
 {
-    <table class="table table-striped table-hover">
-      <caption>Larry's staff members</caption>
-        <thead>
-            <tr>
-                <th scope="col">Photo</th>
-                <th scope="col">Name</th>
-                <th scope="col">Title</th>
-                <th scope="col" class="text-center">Years</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var aboutLarry in aboutLarrys)
-            {
-                <tr>
-                    <td>@aboutLarry.Date.ToShortDateString()</td>
-                    <td>@aboutLarry.EmpName</td>
-                    <td>@aboutLarry.EmpTitle</td>
-                    <td class="text-center">@aboutLarry.EmpYrsOfService</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+  <table class="table table-striped table-hover">
+    <caption>Larry's staff members</caption>
+    <thead>
+      <tr>
+        <th scope="col">Photo</th>
+        <th scope="col">Name</th>
+        <th scope="col">Title</th>
+        <th scope="col" class="text-center">Years</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var aboutLarry in aboutLarrys)
+      {
+        <tr>
+          <td>@aboutLarry.Date.ToShortDateString()</td>
+          <td>@aboutLarry.EmpName</td>
+          <td>@aboutLarry.EmpTitle</td>
+          <td class="text-center">@aboutLarry.EmpYrsOfService</td>
+        </tr>
+      }
+    </tbody>
+  </table>
 
-    <div>
-      <Map/>
-    </div>
-    
+  <div>
+    <Map/>
+  </div>
 }
 
+@*
+@if (aboutLarrysHrs == null)
+{
+  <p><em>Loading...</em></p>
+  <img src="img/loading.gif"/>
+}
+else
+{
+
+  <table class="table table-striped table-hover">
+    <caption>Larry's Hours of Operation</caption>
+    <thead>
+      <tr>
+        <th scope="col">Day</th>
+        <th scope="col">Open</th>
+        <th scope="col">Close</th>
+        <th scope="col" class="text-center">Note</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var aboutLarrysHr in aboutLarrysHrs)
+      {
+        <tr>
+          <td>@aboutLarrysHr.DayOfWk</td>
+          <td>@aboutLarrysHr.OpenTime</td>
+          <td>@aboutLarrysHr.ClosingTime</td>
+          <td class="text-center">@aboutLarrysHr.OpenHrsMsg</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}*@
+
 @code {
-    private LSS.Shared.Entities.About[] aboutLarrys;
+  private LSS.Shared.Entities.About[] aboutLarrys;
 
     protected override async Task OnInitializedAsync()
     {
         aboutLarrys = await Http.GetFromJsonAsync<LSS.Shared.Entities.About[]>("api/About");
-    }
 
-    
+    }  
 }

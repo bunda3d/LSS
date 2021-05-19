@@ -6,10 +6,10 @@
 
     //XXL or Petit
     public string SizeMeasure { get; set; }
-    public string SizeMeasureId { get; set; }
+    public string SizeMeasureCode { get; set; }
 
     //Gender or Age Group
     public string SizeType { get; set; }
-    public string SizeTypeId { get; set; }
+    public string SizeTypeCode { get; set; }
   }
 }

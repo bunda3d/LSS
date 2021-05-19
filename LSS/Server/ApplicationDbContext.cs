@@ -10,29 +10,31 @@ namespace LSS.Server
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
       :base(options)
     {
-        
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       modelBuilder.Entity<ProductsCategories>().HasKey(x => new { x.ProductId, x.CategoryId });
 
+      modelBuilder.Entity<StarRatingsProducts>().HasKey(x => new { x.ProductId, x.StarRatingId });
+
+      modelBuilder.Entity<StarRatingsPeople>().HasKey(x => new { x.PersonId, x.StarRatingId });
+
       modelBuilder.Entity<Product>()
       .Property(b => b.Price)
       .HasPrecision(8, 2)
       .HasColumnType("decimal(8, 2)");
 
-
       modelBuilder.Entity<StarRating>()
       .Property(b => b.StarRatingScoreEvent)
-      .HasPrecision(8, 2)
-      .HasColumnType("decimal(8, 2)");
+      .HasPrecision(1)
+      .HasColumnType("int");
 
-      modelBuilder.Entity<Product>()
-      .Property(e => e.PriceUnformatted)
-      .HasConversion(
-        v => v.Price,
-        v => new Dollars(v));
+      modelBuilder.Entity<StarRating>()
+      .Property(b => b.StarRatingScoreAvg)
+      .HasPrecision(1, 1)
+      .HasColumnType("decimal(1, 1)");
+
 
       base.OnModelCreating(modelBuilder);
     }

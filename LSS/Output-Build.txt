@@ -1,0 +1,17 @@
+﻿Rebuild started...
+1>------ Rebuild All started: Project: LSS.Shared, Configuration: Debug Any CPU ------
+1>LSS.Shared -> D:\Drive\WEBSITE_PROJECTS\_TUTORIALS\LSS\LSS\Shared\bin\Debug\net5.0\LSS.Shared.dll
+2>------ Rebuild All started: Project: LSS.Client, Configuration: Debug Any CPU ------
+2>D:\Drive\WEBSITE_PROJECTS\_TUTORIALS\LSS\LSS\Client\Pages\Index.razor(22,32,22,50): warning CS1998: This async method lacks 'await' operators and will run synchronously. Consider using the 'await' operator to await non-blocking API calls, or 'await Task.Run(...)' to do CPU-bound work on a background thread.
+2>D:\Drive\WEBSITE_PROJECTS\_TUTORIALS\LSS\LSS\Client\Pages\Products\ProductForm.razor(202,42,202,54): warning CS1998: This async method lacks 'await' operators and will run synchronously. Consider using the 'await' operator to await non-blocking API calls, or 'await Task.Run(...)' to do CPU-bound work on a background thread.
+2>D:\Drive\WEBSITE_PROJECTS\_TUTORIALS\LSS\LSS\Client\Shared\MultipleSelector.razor(53,18,53,32): warning CS0414: The field 'MultipleSelector.removeAllChevs' is assigned but its value is never used
+2>D:\Drive\WEBSITE_PROJECTS\_TUTORIALS\LSS\LSS\Client\Shared\MultipleSelector.razor(54,18,54,32): warning CS0414: The field 'MultipleSelector.selectAllChevs' is assigned but its value is never used
+2>LSS.Client -> D:\Drive\WEBSITE_PROJECTS\_TUTORIALS\LSS\LSS\Client\bin\Debug\net5.0\LSS.Client.dll
+2>LSS.Client (Blazor output) -> D:\Drive\WEBSITE_PROJECTS\_TUTORIALS\LSS\LSS\Client\bin\Debug\net5.0\wwwroot
+2>Done building project "LSS.Client.csproj".
+3>------ Rebuild All started: Project: LSS.Server, Configuration: Debug Any CPU ------
+3>D:\Drive\WEBSITE_PROJECTS\_TUTORIALS\LSS\LSS\Server\ApplicationDbContext.cs(8,16,8,36): warning CS0659: 'ApplicationDbContext' overrides Object.Equals(object o) but does not override Object.GetHashCode()
+3>LSS.Server -> D:\Drive\WEBSITE_PROJECTS\_TUTORIALS\LSS\LSS\Server\bin\Debug\net5.0\LSS.Server.dll
+3>LSS.Server -> D:\Drive\WEBSITE_PROJECTS\_TUTORIALS\LSS\LSS\Server\bin\Debug\net5.0\LSS.Server.Views.dll
+3>Done building project "LSS.Server.csproj".
+========== Rebuild All: 3 succeeded, 0 failed, 0 skipped ==========

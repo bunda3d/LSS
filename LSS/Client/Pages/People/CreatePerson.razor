@@ -1,18 +1,24 @@
 ﻿@page "/person/create"
 @inject NavigationManager navigationManager
+@inject IPersonRepository personRepository
 
 <h3>Create Person</h3>
 
 <PersonForm Person="Person"	OnValidSubmit="Create" />
 
 @code {
-	private Person Person = new Person();
-
-	private void Create()
+	Person Person = new Person();
+	
+	private async Task Create()
 	{
-		Console.WriteLine("Creating person: ");
-		Console.WriteLine($"{Person.NameFirst} {Person.NameMI} {Person.NameLast}");
-		Console.WriteLine($"{Person.DateOfBirth} {Person.Biography}");
+		try
+		{
+			await personRepository.CreatePerson(Person);
+			navigationManager.NavigateTo("people");
+		}
+		catch(Exception ex)
+		{
+			Console.WriteLine(ex.Message);
+		}		
 	}
-
 }

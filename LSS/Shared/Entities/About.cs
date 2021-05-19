@@ -15,10 +15,22 @@ namespace LSS.Shared.Entities
 
 		public DateTime Date { get; set; }
 
-		public int TemperatureC { get; set; }
-
 		public string Summary { get; set; }
 
-		public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 	}
+
+	public class OpenHrs
+  {
+
+		public string DayOfWk { get; set; }
+
+		public string OpenTime { get; set; }
+
+		public string ClosingTime { get; set; }
+
+		public string OpenHrsMsg { get; set; }
+
+
+  }
+
 }

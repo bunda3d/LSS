@@ -1,5 +1,6 @@
 ﻿@page "/category/create"
 @inject NavigationManager navigationManager
+@inject ICategoryRepository categoryRepository
 
 <h3>Create Category</h3>
 
@@ -12,6 +13,18 @@
 	{
 		Console.WriteLine("Create method: ");
 		Console.WriteLine(category.Name);
+
+		try
+		{
+			categoryRepository.CreateCategory(category);
+			navigationManager.NavigateTo("categories");
+			
+		}
+		catch(Exception ex)
+		{
+			//
+			Console.WriteLine(ex.Message);
+		}		
 	}
 
 }

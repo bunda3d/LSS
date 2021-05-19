@@ -22,8 +22,7 @@ namespace LSS.Shared.Entities
 
 		public string Summary {get; set;}
 
-   	public decimal Price { get; set; }
-		public Dollars PriceUnformatted { get; set; }
+    public decimal Price { get; set; }
 
 		public bool IsMarkedDownFlag { get; set; }
 
@@ -86,17 +85,6 @@ namespace LSS.Shared.Entities
 					return Title;
 				}
 			}
-		}
-
-		public readonly struct Dollars
-		{
-			public Dollars(decimal price)
-					=> this.Price = price;
-
-			public decimal Price { get; }
-
-			public override string ToString()
-					=> $"${Price}";
 		}
 
 
