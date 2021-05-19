@@ -1,17 +1,15 @@
 using LSS.Server.Helpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Linq;
 
 namespace LSS.Server
 {
-	public class Startup
+  public class Startup
 	{
 		public Startup(IConfiguration configuration)
 		{
@@ -36,7 +34,7 @@ namespace LSS.Server
 			services.AddControllersWithViews();
 				//.AddNewtonsoftJson(options => object.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 			services.AddRazorPages();
-		}
+    }
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

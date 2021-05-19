@@ -144,14 +144,14 @@
 		<div class="form-group mb-3">
 			<label>Products Search: </label>
 			<div>
-				<MultipleSelectorTypeahead Context="person" SearchMethod="SearchMethod" SelectedElements="SelectedPeople">
+				<MultipleSelectorTypeahead Context="Person" SearchMethod="SearchMethod" SelectedElements="SelectedPeople">
 					<MyResultTemplate>
-						<img style="width: 50px;" src="@person.Photo" /> 
-						@person.NameFirst @person.NameLast
+						<img style="width: 50px;" src="@Person.Photo" /> 
+						@Person.NameFirst @Person.NameLast
 					</MyResultTemplate>
 						
 					<MyListTemplate>
-						@person.NameFirst @person.NameLast
+						@Person.NameFirst @Person.NameLast
 					</MyListTemplate>
 				</MultipleSelectorTypeahead>
 			</div>
