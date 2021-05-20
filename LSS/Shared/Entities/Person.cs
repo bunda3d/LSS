@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LSS.Shared.Entities
 {
@@ -21,15 +19,30 @@ namespace LSS.Shared.Entities
 
     public string NameMI { get; set; }
 
+    public string FullName => string.Format("{0} {1}", NameFirst, NameLast);
+
     public string Photo { get; set; }
 
     [Required]
-    public DateTime? DateOfBirth { get; set; }
+    public DateTime DateOfBirth { get; set; }
+
+    public TimeSpan GetAge() => DateTime.Now - DateOfBirth;
 
     public string Biography { get; set; }
+    
+    [NotMapped]
+    public string Role { get; set; }
+
 
     //M:M relation
     public ICollection<StarRating> StarRatings { get; set; }
+    public List<StarRatingsProducts> StarRatingsProducts { get; set; }
+
+    //M:M relation -> for person's role with product;
+    //taylor, salesperson, purchaser, 
+    public ICollection<Product> Products { get; set; }
+    public List<ProductsPeople> ProductsPeople { get; set; }
+
 
 
     //2 persons are equal if only they share the same id.

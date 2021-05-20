@@ -12,9 +12,6 @@ namespace LSS.Shared.Entities
 		public int Id { get; set; }
 
 		[Required(ErrorMessage = "Required Field: Enter a unique 6-digit number with no letters")]
-		//Need to add controllers to get RegExs working in WASM Blazor
-		//https://docs.microsoft.com/en-us/aspnet/core/blazor/forms-validation?view=aspnetcore-5.0#business-logic-validation
-		//[RegularExpression(@"^[0 - 9]{6}$", ErrorMessage = "Enter a unique 6-digit number with no letters")]
 		public int ProductNumber { get; set; }
 
 		[Required(ErrorMessage = "Required Field: Provide a descriptive title sentence.")]
@@ -28,16 +25,13 @@ namespace LSS.Shared.Entities
 
 		public bool OnClearanceFlag { get; set; }
 
-		//Need to add controllers to get RegExs working in WASM Blazor
-		//https://docs.microsoft.com/en-us/aspnet/core/blazor/forms-validation?view=aspnetcore-5.0#business-logic-validation
-		//[RegularExpression(@"^[0 - 9]{0,3}$", ErrorMessage = "Estimated timeframe (in days) for Product Order to Factory Shipment")]
-		public int? DaysToManufacture { get; set; }
+		public int DaysToManufacture { get; set; }
 
 		[Required]
-		public DateTime? SellStartDate { get; set; }
+		public DateTime SellStartDate { get; set; }
 
 		[Required]
-		public DateTime? DiscontinuedDate { get; set; }
+		public DateTime DiscontinuedDate { get; set; }
 
 		public string Poster { get; set; }
 
@@ -58,13 +52,21 @@ namespace LSS.Shared.Entities
 		public int? SizeTypeId { get; set; }
 
 		//how ef core sets up M:M relationships in the model
-		//https://bit.ly/3bwZXau
+		//https://bit.ly/3bwZXau and in the link, see the
+		//"Join Entity Type Configuration" section for why this: 
+
+		//M:M relation
 		public ICollection<Category> Categories { get; set; }
+		public List<ProductsCategories> ProductsCategories { get; set; }
 
 		//M:M relation
 		public ICollection<StarRating> StarRatings { get; set; }
+		public List<StarRatingsProducts> StarRatingsProducts { get; set; }
 
-		public List<ProductsCategories> ProductsCategories { get; set; } = new List<ProductsCategories>();
+		//M:M relation
+		public ICollection<Person> People { get; set; }
+		public List<ProductsPeople> ProductsPeople { get; set; }
+
 
 
 		public string TitleBrief

@@ -29,11 +29,12 @@ namespace LSS.Client
 
 		private static void ConfigureServices(IServiceCollection services)
 		{
-			//register all services
+			//register all client services
 			services.AddTransient<IRepository, RepositoryInMemory>();
 			services.AddScoped<IHttpService, HttpService>();
 			services.AddScoped<ICategoryRepository, CategoryRepository>();
 			services.AddScoped<IPersonRepository, PersonRepository>();
+			services.AddScoped<IProductRepository, ProductRepository>();
 		}
 	}
 }

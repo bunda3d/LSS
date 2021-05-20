@@ -1,5 +1,6 @@
 ﻿@page "/product/create"
 @inject NavigationManager navigationManager
+@inject IProductRepository productRepository
 
 <h3>Create Product</h3>
 
@@ -21,16 +22,26 @@
 			new Category(){ Id = 7, Name = "Belts"  }
 	};
 
-	private void SaveProduct()
+	private async Task SaveProduct()
 	{
 		Console.WriteLine("Creating product: ");
 		Console.WriteLine($"{Product.ProductNumber} {Product.Title} {Product.Summary}");
 		Console.WriteLine($"IsMarkedDown?{Product.IsMarkedDownFlag} OnClearance?{Product.OnClearanceFlag}");
 		Console.WriteLine($"DaysToManufacture?{Product.DaysToManufacture} SellStartDate?{Product.SellStartDate} DiscontinuedDate?{Product.DiscontinuedDate}");
 
+		try
+		{
 		// Redirect on Save
-		//Console.WriteLine(navigationManager.Uri);
-		//navigationManager.NavigateTo("product");
+			var productId = await productRepository.CreateProduct(Product);
+			navigationManager.NavigateTo($"product/{productId}/{Product.Title.Replace(" ", "-")}");
+			//Console.WriteLine(navigationManager.Uri);
+		}
+		catch (Exception ex)
+		{
+
+		}
 	}
 
+
 }
+

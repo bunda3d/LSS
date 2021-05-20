@@ -1,11 +1,15 @@
+using AutoMapper;
 using LSS.Server.Helpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Linq;
 
 namespace LSS.Server
 {
@@ -18,21 +22,24 @@ namespace LSS.Server
 
 		public IConfiguration Configuration { get; }
 
-		// This method gets called by the runtime. Use this method to add services to the container.
-		// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddDbContext<ApplicationDbContext>(options =>
       options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 			/** 
 			 * uncomment next 2 if rather save blobs 
-			 * to Server proj wwwroot than in azure storage
-			 * services.AddScoped<IFileStorageService, InAppStorageService>();
-			 * services.AddHttpContextAccessor(); 
+			 * to Server proj's wwwroot than in azure storage
+			 */
+			services.AddScoped<IFileStorageService, InAppStorageService>();
+			services.AddHttpContextAccessor(); 
+			/** 
+			 * uncomment if rather save blobs in azure storage
+			 * services.AddScoped<IFileStorageService, AzureStorageService>();
 			*/
-			services.AddScoped<IFileStorageService, AzureStorageService>();
-			services.AddControllersWithViews();
-				//.AddNewtonsoftJson(options => object.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+			services.AddAutoMapper(typeof(Startup));
+			services.AddControllersWithViews()
+					.AddNewtonsoftJson(options =>
+					options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 			services.AddRazorPages();
     }
 

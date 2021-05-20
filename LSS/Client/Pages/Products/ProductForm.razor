@@ -1,6 +1,6 @@
 ﻿
 <div class="form my-4">
-	<EditForm Model="Product" OnValidSubmit="OnValidSubmit">
+	<EditForm Model="Product" OnValidSubmit="OnDataAnnotationsValidated">
 		<DataAnnotationsValidator />
 
 		<!--IDs-->
@@ -147,11 +147,11 @@
 				<MultipleSelectorTypeahead Context="Person" SearchMethod="SearchMethod" SelectedElements="SelectedPeople">
 					<MyResultTemplate>
 						<img style="width: 50px;" src="@Person.Photo" /> 
-						@Person.NameFirst @Person.NameLast
+						$(@Person.NameFirst @Person.NameLast);
 					</MyResultTemplate>
 						
 					<MyListTemplate>
-						@Person.NameFirst @Person.NameLast
+						@Person.FullName / <Input type="text" placeholder="Role" @bind="Person.Role" />
 					</MyListTemplate>
 				</MultipleSelectorTypeahead>
 			</div>
@@ -207,6 +207,19 @@
 			new Person() { Id= 2, NameFirst= "Tom", NameLast= "Joad", Photo="https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iKxSKNo1BXGM/v0/-1x-1.jpg"		},
 			new Person() { Id= 3, NameFirst= "Miss", NameLast= "Kitten", Photo="https://ae01.alicdn.com/kf/HTB1EZAeXjLuK1Rjy0Fhq6xpdFXaw/Fashion-Sashes-Black-Striped-Women-pant-suit-Office-work-wearing-suit-Solid-White-black-OL-Career.jpg" }
 		};
-
   }
+
+	private async void OnDataAnnotationsValidated()
+	{
+		Product.ProductsCategories = Selected.Select(x =>
+			new ProductsCategories { CategoryId = int.Parse(x.Key) }).ToList();
+
+		Product.ProductsPeople = Selected.Select(x =>
+			new ProductsPeople { PersonId = int.Parse(x.Key) }).ToList();
+
+		if(!string.IsNullOrWhiteSpace(Product.Poster)) { imageURL = null; }
+
+		await OnValidSubmit.InvokeAsync(null);
+	}
+
 }
