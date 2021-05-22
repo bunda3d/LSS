@@ -1,4 +1,5 @@
-﻿
+﻿@inject IPersonRepository personRepository
+
 <div class="form my-4">
 	<EditForm Model="Product" OnValidSubmit="OnDataAnnotationsValidated">
 		<DataAnnotationsValidator />
@@ -147,11 +148,11 @@
 				<MultipleSelectorTypeahead Context="Person" SearchMethod="SearchMethod" SelectedElements="SelectedPeople">
 					<MyResultTemplate>
 						<img style="width: 50px;" src="@Person.Photo" /> 
-						$(@Person.NameFirst @Person.NameLast);
+						@Person.NameFirst @Person.NameLast
 					</MyResultTemplate>
 						
 					<MyListTemplate>
-						@Person.FullName / <Input type="text" placeholder="Role" @bind="Person.Role" />
+						@Person.FullName / <input type="text" placeholder="Role" @bind="Person.Role" />
 					</MyListTemplate>
 				</MultipleSelectorTypeahead>
 			</div>
@@ -191,6 +192,7 @@
 			Product.Poster = null;
 		}
 	}
+
 	private void PosterSelected(string imageBase64)
 	{
 		Product.Poster = imageBase64;
@@ -207,15 +209,16 @@
 			new Person() { Id= 2, NameFirst= "Tom", NameLast= "Joad", Photo="https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iKxSKNo1BXGM/v0/-1x-1.jpg"		},
 			new Person() { Id= 3, NameFirst= "Miss", NameLast= "Kitten", Photo="https://ae01.alicdn.com/kf/HTB1EZAeXjLuK1Rjy0Fhq6xpdFXaw/Fashion-Sashes-Black-Striped-Women-pant-suit-Office-work-wearing-suit-Solid-White-black-OL-Career.jpg" }
 		};
+		//return await personRepository.GetPeopleByName(searchText);
   }
 
-	private async void OnDataAnnotationsValidated()
+	private async Task OnDataAnnotationsValidated()
 	{
 		Product.ProductsCategories = Selected.Select(x =>
-			new ProductsCategories { CategoryId = int.Parse(x.Key) }).ToList();
+			new ProductCategory { CategoryId = int.Parse(x.Key) }).ToList();
 
-		Product.ProductsPeople = Selected.Select(x =>
-			new ProductsPeople { PersonId = int.Parse(x.Key) }).ToList();
+		Product.ProductsPeople = SelectedPeople.Select(x =>
+			new ProductPerson { PersonId = x.Id, Role = x.Role }).ToList();
 
 		if(!string.IsNullOrWhiteSpace(Product.Poster)) { imageURL = null; }
 

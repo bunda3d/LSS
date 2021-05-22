@@ -11,10 +11,8 @@ namespace LSS.Shared.Entities
     [Required(ErrorMessage = "Required Field: Provide Category Name, i.e.; 'Suits' or 'Pants'")]
     public string Name { get; set; }
 
-    //how ef core sets up M:M relationships in the model
-    //https://bit.ly/3bwZXau
-    public ICollection<Product> Products { get; set; }
-    public List<ProductsCategories> ProductsCategories { get; set; }
+    //M:M in ef core: https://bit.ly/3bwZXau
+    public ICollection<ProductCategory> ProductsCategories { get; } = new List<ProductCategory>();
 
 
   }

@@ -22,10 +22,9 @@ namespace LSS.Shared.Entities
 
 
     //M:M relation
-    public ICollection<Product> Products { get; set; }
+    public ICollection<StarRatingProduct> StarRatingsProducts { get; } = new List<StarRatingProduct>();
 
-    //M:M relation
-    public ICollection<Person> People { get; set; }
+    public ICollection<StarRatingPerson> StarRatingsPeople { get; } = new List<StarRatingPerson>();
 
 
   }

@@ -5,11 +5,12 @@ namespace LSS.Client.Repository
 {
   public interface IProductRepository
   {
-    Task CreateProduct(Product product);
+    Task<int> CreateProduct(Product product);
     Task DeleteProduct(int Id);
-    //Task<PaginatedResponse<List<Product>>> GetProducts(PaginationDTO paginationDTO);
-    //Task<List<Product>> GetProductsByName(string name);
-    Task<Product> GetProductById(int id);
+    //Task<DetailsProductDTO> GetDetailsProductDTO(int id);
+    //Task<IndexPageDTO> GetIndexPageDTO();
+    //Task<ProductUpdateDTO> GetProductForUpdate(int id);
+    //Task<PaginatedResponse<List<Product>>> GetProductsFiltered(FilterProductsDTO filterProductsDTO);
     Task UpdateProduct(Product product);
   }
 }

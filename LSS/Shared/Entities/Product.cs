@@ -19,7 +19,9 @@ namespace LSS.Shared.Entities
 
 		public string Summary {get; set;}
 
-    public decimal Price { get; set; }
+    [DataType(DataType.Currency)]
+		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:c}")]
+		public decimal Price { get; set; }
 
 		public bool IsMarkedDownFlag { get; set; }
 
@@ -28,10 +30,10 @@ namespace LSS.Shared.Entities
 		public int DaysToManufacture { get; set; }
 
 		[Required]
-		public DateTime SellStartDate { get; set; }
+		public DateTime? SellStartDate { get; set; }
 
 		[Required]
-		public DateTime DiscontinuedDate { get; set; }
+		public DateTime? DiscontinuedDate { get; set; }
 
 		public string Poster { get; set; }
 
@@ -55,17 +57,13 @@ namespace LSS.Shared.Entities
 		//https://bit.ly/3bwZXau and in the link, see the
 		//"Join Entity Type Configuration" section for why this: 
 
-		//M:M relation
-		public ICollection<Category> Categories { get; set; }
-		public List<ProductsCategories> ProductsCategories { get; set; }
+		//M:M relations
+		public ICollection<ProductCategory> ProductsCategories { get; } = new List<ProductCategory>();
 
-		//M:M relation
-		public ICollection<StarRating> StarRatings { get; set; }
-		public List<StarRatingsProducts> StarRatingsProducts { get; set; }
+		public ICollection<StarRatingProduct> StarRatingsProducts { get; } = new List<StarRatingProduct>();
 
-		//M:M relation
-		public ICollection<Person> People { get; set; }
-		public List<ProductsPeople> ProductsPeople { get; set; }
+		public ICollection<ProductPerson> ProductsPeople { get; } = new List<ProductPerson>();
+
 
 
 

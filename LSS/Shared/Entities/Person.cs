@@ -24,9 +24,9 @@ namespace LSS.Shared.Entities
     public string Photo { get; set; }
 
     [Required]
-    public DateTime DateOfBirth { get; set; }
+    public DateTime? DateOfBirth { get; set; }
 
-    public TimeSpan GetAge() => DateTime.Now - DateOfBirth;
+    public TimeSpan? GetAge() => DateTime.Now - DateOfBirth;
 
     public string Biography { get; set; }
     
@@ -35,13 +35,11 @@ namespace LSS.Shared.Entities
 
 
     //M:M relation
-    public ICollection<StarRating> StarRatings { get; set; }
-    public List<StarRatingsProducts> StarRatingsProducts { get; set; }
+    public ICollection<StarRatingPerson> StarRatingsPeople { get; } = new List<StarRatingPerson>();
 
     //M:M relation -> for person's role with product;
     //taylor, salesperson, purchaser, 
-    public ICollection<Product> Products { get; set; }
-    public List<ProductsPeople> ProductsPeople { get; set; }
+    public ICollection<ProductPerson> ProductsPeople { get; } = new List<ProductPerson>();
 
 
 

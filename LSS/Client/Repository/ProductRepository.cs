@@ -33,11 +33,6 @@ namespace LSS.Client.Repository
       throw new NotImplementedException();
     }
 
-    Task<Product> IProductRepository.GetProductById(int id)
-    {
-      throw new NotImplementedException();
-    }
-
     Task IProductRepository.UpdateProduct(Product product)
     {
       throw new NotImplementedException();

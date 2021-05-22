@@ -25,7 +25,7 @@ namespace LSS.Server.Controllers
       if (!string.IsNullOrWhiteSpace(product.Poster))
       {
         var productPicture = Convert.FromBase64String(product.Poster);
-        product.Poster = await fileStorageService.SaveFile(productPicture, ".jpg", "products");
+        product.Poster = await fileStorageService.SaveFile(productPicture, ".jpg", "img/product");
       }
 
 

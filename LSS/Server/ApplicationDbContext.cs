@@ -19,13 +19,17 @@ namespace LSS.Server
       //.ToTable("AspNetUsers", t => t.ExcludeFromMigrations());
 
       //M:M Join Tables
-      modelBuilder.Entity<ProductsCategories>().HasKey(x => new { x.CategoryId, x.ProductId });
+      modelBuilder.Entity<ProductCategory>()
+        .HasKey(x => new { x.ProductId, x.CategoryId });
 
-      modelBuilder.Entity<ProductsPeople>().HasKey(x => new { x.PersonId, x.ProductId });
+      modelBuilder.Entity<ProductPerson>()
+        .HasKey(x => new { x.ProductId, x.PersonId });
 
-      modelBuilder.Entity<StarRatingsProducts>().HasKey(x => new { x.ProductId, x.StarRatingId });
+      modelBuilder.Entity<StarRatingProduct>()
+        .HasKey(x => new { x.StarRatingId, x.ProductId });
 
-      modelBuilder.Entity<StarRatingsPeople>().HasKey(x => new { x.PersonId, x.StarRatingId });
+      modelBuilder.Entity<StarRatingPerson>()
+        .HasKey(x => new { x.StarRatingId, x.PersonId });
 
 
       //Fields & Tables
@@ -60,10 +64,10 @@ namespace LSS.Server
     public DbSet<StarRating> StarRatings { get; set; }
 
     //M:M Join Tables
-    public DbSet<ProductsCategories> ProductsCategories { get; set; }
-    public DbSet<ProductsPeople> StarRatingsPeople { get; set; }
-    public DbSet<StarRatingsProducts> StarRatingsProducts { get; set; }
-    public DbSet<StarRatingsPeople> ProductsPeople { get; set; }
+    public DbSet<ProductCategory> ProductsCategories { get; set; }
+    public DbSet<ProductPerson> ProductsPeople { get; set; }
+    public DbSet<StarRatingProduct> StarRatingsProducts { get; set; }
+    public DbSet<StarRatingPerson> StarRatingsPeople { get; set; }
 
 
     public override bool Equals(object obj)
