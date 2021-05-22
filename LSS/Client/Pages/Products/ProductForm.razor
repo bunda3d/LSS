@@ -215,14 +215,13 @@
 	private async Task OnDataAnnotationsValidated()
 	{
 		Product.ProductsCategories = Selected.Select(x =>
-			new ProductCategory { CategoryId = int.Parse(x.Key) }).ToList();
+			new ProductsCategories { CategoryId = int.Parse(x.Key) }).ToList();
 
 		Product.ProductsPeople = SelectedPeople.Select(x =>
-			new ProductPerson { PersonId = x.Id, Role = x.Role }).ToList();
+			new ProductsPeople { PersonId = x.Id, Role = x.Role }).ToList();
 
 		if(!string.IsNullOrWhiteSpace(Product.Poster)) { imageURL = null; }
 
 		await OnValidSubmit.InvokeAsync(null);
 	}
-
-}
+} 

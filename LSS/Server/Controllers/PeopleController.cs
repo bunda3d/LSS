@@ -1,5 +1,6 @@
 ﻿using LSS.Server.Helpers;
 using LSS.Shared.Entities;
+using LSS.Server.Data.Context;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -25,7 +26,7 @@ namespace LSS.Server.Controllers
       if (!string.IsNullOrWhiteSpace(person.Photo))
       {
         var personPicture = Convert.FromBase64String(person.Photo);
-        person.Photo = await fileStorageService.SaveFile(personPicture, ".jpg", "people");
+        person.Photo = await fileStorageService.SaveFile(personPicture, ".jpg", "img/people");
       }
 
 

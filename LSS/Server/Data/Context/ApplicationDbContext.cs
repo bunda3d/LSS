@@ -1,9 +1,9 @@
 ﻿using LSS.Shared.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using static LSS.Shared.Entities.Product;
+using System.Reflection;
 
-namespace LSS.Server
+namespace LSS.Server.Data.Context
 {
   public class ApplicationDbContext : DbContext
   {
@@ -19,24 +19,24 @@ namespace LSS.Server
       //.ToTable("AspNetUsers", t => t.ExcludeFromMigrations());
 
       //M:M Join Tables
-      modelBuilder.Entity<ProductCategory>()
+      modelBuilder.Entity<ProductsCategories>()
         .HasKey(x => new { x.ProductId, x.CategoryId });
 
-      modelBuilder.Entity<ProductPerson>()
+      modelBuilder.Entity<ProductsPeople>()
         .HasKey(x => new { x.ProductId, x.PersonId });
 
-      modelBuilder.Entity<StarRatingProduct>()
+      modelBuilder.Entity<StarRatingsProducts>()
         .HasKey(x => new { x.StarRatingId, x.ProductId });
 
-      modelBuilder.Entity<StarRatingPerson>()
+      modelBuilder.Entity<StarRatingsPeople>()
         .HasKey(x => new { x.StarRatingId, x.PersonId });
 
-
       //Fields & Tables
-      modelBuilder.Entity<Product>()
-      .Property(b => b.Price)
-      .HasPrecision(8, 2)
-      .HasColumnType("decimal(8, 2)");
+      modelBuilder.Entity<Product>(
+      ex =>
+      {
+        ex.Property(b => b.Price).HasPrecision(8, 2).HasColumnType("decimal(8, 2)");
+      });
 
       modelBuilder.Entity<StarRating>(
       ex =>
@@ -52,6 +52,9 @@ namespace LSS.Server
 
 
       base.OnModelCreating(modelBuilder);
+
+      //apply all model configurations
+      modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 
     public DbSet<About> About { get; set; }
@@ -60,14 +63,14 @@ namespace LSS.Server
     public DbSet<Person> People { get; set; }
     public DbSet<Color> Colors { get; set; }
     public DbSet<PatternStyle> PatternStyles { get; set; }
-    public DbSet<SizeUnit> SizeUnits { get; set; }
+    public DbSet<SizeMeasure> SizeUnits { get; set; }
     public DbSet<StarRating> StarRatings { get; set; }
 
     //M:M Join Tables
-    public DbSet<ProductCategory> ProductsCategories { get; set; }
-    public DbSet<ProductPerson> ProductsPeople { get; set; }
-    public DbSet<StarRatingProduct> StarRatingsProducts { get; set; }
-    public DbSet<StarRatingPerson> StarRatingsPeople { get; set; }
+    public DbSet<ProductsCategories> ProductsCategories { get; set; }
+    public DbSet<ProductsPeople> ProductsPeople { get; set; }
+    public DbSet<StarRatingsProducts> StarRatingsProducts { get; set; }
+    public DbSet<StarRatingsPeople> StarRatingsPeople { get; set; }
 
 
     public override bool Equals(object obj)

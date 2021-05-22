@@ -1,4 +1,5 @@
 using AutoMapper;
+using LSS.Server.Data.Context;
 using LSS.Server.Helpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

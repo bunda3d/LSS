@@ -9,18 +9,29 @@ namespace LSS.Shared.Entities
   {
     public int Id { get; set; }
 
-
+    [StringLength (50, MinimumLength = 2, ErrorMessage = "Required: " +
+      "Name must be between 2 and 50 characters long.")]
     [Required(ErrorMessage = "Required Field")]
+    [Column(TypeName = "varchar(50)")]
     public string NameFirst { get; set; }
 
 
+    [StringLength(50, MinimumLength = 2, ErrorMessage = "Required: " +
+      "Name must be between 2 and 50 characters long.")]
     [Required(ErrorMessage = "Required Field")]
+    [Column(TypeName = "varchar(50)")]
     public string NameLast { get; set; }
 
+
+    [StringLength(3, MinimumLength = 0, ErrorMessage = "Required: " +
+      "Middle Initial must be between 0 and 3 characters long.")]
+    [Column(TypeName = "varchar(3)")]
     public string NameMI { get; set; }
 
+    [Column(TypeName = "varchar(100)")]
     public string FullName => string.Format("{0} {1}", NameFirst, NameLast);
 
+    [Column(TypeName = "varchar(MAX)")]
     public string Photo { get; set; }
 
     [Required]
@@ -28,18 +39,22 @@ namespace LSS.Shared.Entities
 
     public TimeSpan? GetAge() => DateTime.Now - DateOfBirth;
 
+    [Required(ErrorMessage = "Required Field: Provide a descriptive summary to explain and market the product.")]
+    [StringLength(1024, ErrorMessage = "Max Length is 1024 characters.")]
+    [Column(TypeName = "varchar(1024)")]
     public string Biography { get; set; }
     
     [NotMapped]
+    [Column(TypeName = "varchar(50)")]
     public string Role { get; set; }
 
 
     //M:M relation
-    public ICollection<StarRatingPerson> StarRatingsPeople { get; } = new List<StarRatingPerson>();
+    public ICollection<StarRatingsPeople> StarRatingsPeople { get; set; } = new List<StarRatingsPeople>();
 
     //M:M relation -> for person's role with product;
     //taylor, salesperson, purchaser, 
-    public ICollection<ProductPerson> ProductsPeople { get; } = new List<ProductPerson>();
+    public ICollection<ProductsPeople> ProductsPeople { get; set; } = new List<ProductsPeople>();
 
 
 

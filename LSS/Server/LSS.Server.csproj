@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Configurations\ProductConfiguration.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.8.3" />
     <PackageReference Include="Azure.Storage.Files.Shares" Version="12.1.0" />
@@ -30,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Data\Configurations\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

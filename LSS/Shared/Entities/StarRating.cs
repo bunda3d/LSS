@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LSS.Shared.Entities
 {
@@ -9,22 +10,29 @@ namespace LSS.Shared.Entities
 
     //one customer's scoring of this product
     //[1-5] are values, null is default (unrated)
+    [Column(TypeName = "int")]
     public int StarRatingScoreEvent { get; set; }
 
     //if >1 starRatingScores, record average score
+    [Column(TypeName = "decimal(1, 1)")]
     public decimal StarRatingScoreAvg { get; set; }
 
     //Person clicking the star score
-    public string PersonId { get; set; }
+
+    [ForeignKey("Person")]
+    [Column(TypeName = "int")]
+    public int PersonId { get; set; }
 
     //1-5 stars for each ecommerce-listed product ID
-    public string ProductId { get; set; }
+    [ForeignKey("Product")]
+    [Column(TypeName = "int")]
+    public int ProductId { get; set; }
 
 
     //M:M relation
-    public ICollection<StarRatingProduct> StarRatingsProducts { get; } = new List<StarRatingProduct>();
+    public ICollection<StarRatingsProducts> StarRatingsProducts { get; set; } = new List<StarRatingsProducts>();
 
-    public ICollection<StarRatingPerson> StarRatingsPeople { get; } = new List<StarRatingPerson>();
+    public ICollection<StarRatingsPeople> StarRatingsPeople { get; set; } = new List<StarRatingsPeople>();
 
 
   }

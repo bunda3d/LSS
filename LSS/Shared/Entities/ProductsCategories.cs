@@ -1,13 +1,13 @@
 ﻿namespace LSS.Shared.Entities
 {
-  public class StarRatingProduct
+  public class ProductsCategories
   {
-    public int StarRatingId { get; set; }
-    public StarRating StarRating { get; set; }
-
-
     public int ProductId { get; set; }
     public Product Product { get; set; }
+
+
+    public int CategoryId { get; set; }
+    public Category Category { get; set; }
 
   }
 }

@@ -25,6 +25,7 @@ namespace LSS.Client.Repository
       {
         throw new ApplicationException(await response.GetBody());
       }
+      //integer that came from api
       return response.Response;
     }
 
