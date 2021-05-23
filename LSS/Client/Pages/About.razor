@@ -4,7 +4,7 @@
 
 <h1>About Larry's Sartorial Shoppe</h1>
 
-<h3>We Make You Look Your Best </h3>
+<h2>We Make You Look Your Best </h2>
 
 <p>Larry's was started by Larry Fitzpatrick over 30 years ago in Seattle, Washington.</p> 
 <p>Success was had relatively quickly, which Larry attributes to liking his work and being a fair businessperson.</p>
@@ -19,6 +19,7 @@
 }
 else
 {
+  <h3>Team</h3>
   <table class="table table-striped table-hover">
     <caption>Larry's staff members</caption>
     <thead>
@@ -33,7 +34,7 @@ else
       @foreach (var aboutLarry in aboutLarrys)
       {
         <tr>
-          <td>@aboutLarry.Date.ToShortDateString()</td>
+          <td class="p-0"><img class="my-auto" src="@aboutLarry.EmpImg" /></td>
           <td>@aboutLarry.EmpName</td>
           <td>@aboutLarry.EmpTitle</td>
           <td class="text-center">@aboutLarry.EmpYrsOfService</td>
@@ -47,15 +48,16 @@ else
   </div>
 }
 
-@*
+
 @if (aboutLarrysHrs == null)
 {
-  <p><em>Loading...</em></p>
-  <img src="img/loading.gif"/>
+  <p>
+    <img src="img/loading.gif"/>
+  </p>
 }
 else
 {
-
+  <h3>Hours</h3>
   <table class="table table-striped table-hover">
     <caption>Larry's Hours of Operation</caption>
     <thead>
@@ -73,19 +75,23 @@ else
           <td>@aboutLarrysHr.DayOfWk</td>
           <td>@aboutLarrysHr.OpenTime</td>
           <td>@aboutLarrysHr.ClosingTime</td>
-          <td class="text-center">@aboutLarrysHr.OpenHrsMsg</td>
+          <td>@aboutLarrysHr.OpenHrsMsg</td>
         </tr>
       }
     </tbody>
   </table>
-}*@
+}
 
 @code {
   private LSS.Shared.Entities.About[] aboutLarrys;
+  private LSS.Shared.Entities.OpenHrs[] aboutLarrysHrs;
 
-    protected override async Task OnInitializedAsync()
-    {
-        aboutLarrys = await Http.GetFromJsonAsync<LSS.Shared.Entities.About[]>("api/About");
+  protected override async Task OnInitializedAsync()
+  {
+    //be sure to set the routed endpoints correctly 
+    //(because: nested annotations between controller & actions)
+    aboutLarrys = await Http.GetFromJsonAsync<LSS.Shared.Entities.About[]>("api/About");
 
-    }  
+    aboutLarrysHrs = await Http.GetFromJsonAsync<LSS.Shared.Entities.OpenHrs[]>("api/OpenHrs");
+  }  
 }

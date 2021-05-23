@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LSS.Shared.Entities
 {
@@ -28,7 +23,9 @@ namespace LSS.Shared.Entities
 
     public bool WasUsedInProductionFlag { get; set; }
 
-    [ForeignKey("ProductNumber")]
+    //this would actually be a query to find where this
+    //table's PK is listed in any Product table's ColorId
+    //[ForeignKey("ProductNumber")]
     public int ColorUsedInProductId { get; set; }
 
   }

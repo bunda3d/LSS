@@ -20,11 +20,7 @@ namespace LSS.Shared.Entities
 		[Column(TypeName = "varchar(120)")]
 		public string Title { get; set; }
 
-		//does the person in role attached to product add value to it
-		//by performing a work process or applying a component to it? 
-		[Required(ErrorMessage = "Required: does the person in the role attached " +
-			"to product add value to it by performing a work process or applying a component to it? " +
-			"if 'YES', what job or process was performed?")]
+		[Required(ErrorMessage = "Required Field: Provide a descriptive summary to explain and market the product.")]
 		[StringLength(1024, ErrorMessage = "Max Length is 1024 characters.")]
 		[Column(TypeName = "varchar(1024)")]
 		public string Summary {get; set;}
@@ -40,10 +36,10 @@ namespace LSS.Shared.Entities
 
 		public int DaysToManufacture { get; set; }
 
-		[Required]
+
+		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 		public DateTime? SellStartDate { get; set; }
 
-		[Required]
 		public DateTime? DiscontinuedDate { get; set; }
 
 
@@ -53,23 +49,39 @@ namespace LSS.Shared.Entities
 		[Column(TypeName ="varchar(MAX)")]
 		public string Video { get; set; }
 
-		[ForeignKey("Color")]
+
+		//FK Relations
 		public int? ColorId { get; set; }
 
-		[ForeignKey("PatternStyle")]
-		public int? PatternId { get; set; }
+		[ForeignKey("ColorId")]
+		public Color Color { get; set; }
 
-		[ForeignKey("Style")]
+		
+		public int? PatternStyleId { get; set; }
+
+		[ForeignKey("PatternStyleId")]
+		public PatternStyle PatternStyle { get; set; }
+
+
 		public int? StyleId { get; set; }
 
-		[ForeignKey("StarRating")]
-		public int? StarRatingId { get; set; }
+		[ForeignKey("StyleId")]
+		public Style Style { get; set; }
 
-		[ForeignKey("SizeMeasure")]
+
+
 		public int? SizeMeasureId { get; set; }
 
-		[ForeignKey("SizeType")]
+		[ForeignKey("SizeMeasureId")]
+		public SizeMeasure SizeMeasure { get; set; }
+
+
+		
 		public int? SizeTypeId { get; set; }
+
+		[ForeignKey("SizeTypeId")]
+		public SizeType SizeType { get; set; }
+
 
 		//how ef core sets up M:M relationships in the model
 		//https://bit.ly/3bwZXau and in the link, see the

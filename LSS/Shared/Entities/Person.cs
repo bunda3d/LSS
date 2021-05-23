@@ -31,6 +31,22 @@ namespace LSS.Shared.Entities
     [Column(TypeName = "varchar(100)")]
     public string FullName => string.Format("{0} {1}", NameFirst, NameLast);
 
+
+    public bool IsEmployeeFlag { get; set; }
+    public Employee EmployeeId { get; set; }
+
+    //for if a Person is an Customer https://bit.ly/3vdDRS5
+    public bool IsCustomerFlag { get; set; }
+    //public Customer CustomerId { get; set; }
+    //^^^ haven't built this table yet
+
+    //for if a Person is an Vendor https://bit.ly/3vdDRS5
+    public bool IsVendorFlag { get; set; }
+    //public Vendor VendorId { get; set; }
+    //^^^ haven't built this table yet
+
+
+
     [Column(TypeName = "varchar(MAX)")]
     public string Photo { get; set; }
 
@@ -39,7 +55,7 @@ namespace LSS.Shared.Entities
 
     public TimeSpan? GetAge() => DateTime.Now - DateOfBirth;
 
-    [Required(ErrorMessage = "Required Field: Provide a descriptive summary to explain and market the product.")]
+    [Required(ErrorMessage = "Required Field: Provide a descriptive summary as a Biography (up to 1024 characters).")]
     [StringLength(1024, ErrorMessage = "Max Length is 1024 characters.")]
     [Column(TypeName = "varchar(1024)")]
     public string Biography { get; set; }

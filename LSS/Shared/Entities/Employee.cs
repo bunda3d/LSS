@@ -4,9 +4,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LSS.Shared.Entities
 {
-	public class About
+	public class Employee
 	{
 		public int Id { get; set; }
+
+
+		//for if a Person is an Employee https://bit.ly/3vdDRS5
+		public int PersonId { get; set; }
+
+		[ForeignKey("PersonId")]
+		public Person Person { get; set; }
+
 
 		[Column(TypeName = "varchar(100)")]
 		public string EmpName { get; set; }
@@ -17,28 +25,15 @@ namespace LSS.Shared.Entities
 
 		public int EmpYrsOfService { get; set; }
 
+		[Column(TypeName = "varchar(MAX)")]
 		public string EmpImg { get; set; }
 
 
 		[Required]
-		public DateTime Date { get; set; }
+		public DateTime? EmpHireDate { get; set; }
 
-		public string Summary { get; set; }
+		public string EmpSkillsSummary { get; set; }
 
 	}
-
-	public class OpenHrs
-  {
-
-		public string DayOfWk { get; set; }
-
-		public string OpenTime { get; set; }
-
-		public string ClosingTime { get; set; }
-
-		public string OpenHrsMsg { get; set; }
-
-
-  }
 
 }
