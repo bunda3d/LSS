@@ -29,14 +29,14 @@ namespace LSS.Client.Repository
       return response.Response;
     }
 
-    Task IProductRepository.DeleteProduct(int Id)
-    {
-      throw new NotImplementedException();
-    }
+    //Task IProductRepository.DeleteProduct(int Id)
+    //{
+    //  throw new NotImplementedException();
+    //}
 
-    Task IProductRepository.UpdateProduct(Product product)
-    {
-      throw new NotImplementedException();
-    }
+    //Task IProductRepository.UpdateProduct(Product product)
+    //{
+    //  throw new NotImplementedException();
+    //}
   }
 }

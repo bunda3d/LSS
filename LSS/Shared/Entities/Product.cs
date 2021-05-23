@@ -37,7 +37,7 @@ namespace LSS.Shared.Entities
 		public int DaysToManufacture { get; set; }
 
 
-		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+		//[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 		public DateTime? SellStartDate { get; set; }
 
 		public DateTime? DiscontinuedDate { get; set; }

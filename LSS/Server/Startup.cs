@@ -1,5 +1,5 @@
 using AutoMapper;
-using LSS.Server.Data.Context;
+using LSS.Server;
 using LSS.Server.Helpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,8 +25,14 @@ namespace LSS.Server
 
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddRazorPages();
+
 			services.AddDbContext<ApplicationDbContext>(options =>
-      options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+				options.UseSqlServer(Configuration
+				.GetConnectionString("DefaultConnection")));
+
+			services.AddDatabaseDeveloperPageExceptionFilter();
+
 			/** 
 			 * uncomment next 2 if rather save blobs 
 			 * to Server proj's wwwroot than in azure storage
@@ -39,9 +45,9 @@ namespace LSS.Server
 			*/
 			services.AddAutoMapper(typeof(Startup));
 			services.AddControllersWithViews()
-					.AddNewtonsoftJson(options =>
-					options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-			services.AddRazorPages();
+				.AddNewtonsoftJson(options =>
+				options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+			
     }
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

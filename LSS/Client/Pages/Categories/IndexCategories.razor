@@ -1,14 +1,62 @@
 ﻿@page "/categories"
+@inject ICategoryRepository categoryRepository
 
-<h3>Categories</h3>
-
+<h3>Index Categories</h3>
 
 
 <div class="form-group">
 	<a class="btn btn-info" href="category/create">New Category</a>
 </div>
 
+<GenericList List="Categories">
+	<WholeListTemplate>
+	 <table class="table table-striped">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Name</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Categories)
+				{
+					<tr>
+						<td> 
+							<a class="btn btn-success" href="/category/edit/@item.Id">Edit</a>
+							<a class="btn btn-danger" @onclick="@(() => DeleteCategories(item.Id))">Delete</a>
+						</td>
+						<td>@item.Name</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+ </WholeListTemplate>
+</GenericList>
+
 
 @code {
+	List<Category> Categories;
 
+
+	protected override async Task OnInitializedAsync()
+	{
+		try
+		{
+			Categories = await categoryRepository.GetCategories();
+		}
+		catch(Exception ex)
+		{
+			throw;
+		}
+
+		private async Task DeleteCategories(int id)
+		{
+			await categoryRepository.DeleteCategory(id);
+			Categories = await categoryRepository.GetCategories();
+		}
+
+
+
+	}
 }

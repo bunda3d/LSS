@@ -1,5 +1,5 @@
 ﻿using LSS.Server.Helpers;
-using LSS.Server.Data.Context;
+using LSS.Server;
 using LSS.Shared.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -26,7 +26,7 @@ namespace LSS.Server.Controllers
       if (!string.IsNullOrWhiteSpace(product.Poster))
       {
         var productPicture = Convert.FromBase64String(product.Poster);
-        product.Poster = await fileStorageService.SaveFile(productPicture, ".jpg", "img/product");
+        product.Poster = await fileStorageService.SaveFile(productPicture, "jpg", "img/product");
       }
 
 

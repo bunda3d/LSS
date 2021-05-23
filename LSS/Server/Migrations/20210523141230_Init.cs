@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LSS.Server.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -95,21 +95,7 @@ namespace LSS.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SizeType",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SizeTypeName = table.Column<string>(type: "varchar(30)", nullable: false),
-                    SizeTypeCode = table.Column<string>(type: "varchar(15)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SizeType", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SizeUnits",
+                name: "SizeMeasures",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -119,7 +105,21 @@ namespace LSS.Server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SizeUnits", x => x.Id);
+                    table.PrimaryKey("PK_SizeMeasures", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SizeTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SizeTypeName = table.Column<string>(type: "varchar(30)", nullable: false),
+                    SizeTypeCode = table.Column<string>(type: "varchar(15)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SizeTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -139,7 +139,7 @@ namespace LSS.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Style",
+                name: "Styles",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -153,7 +153,7 @@ namespace LSS.Server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Style", x => x.Id);
+                    table.PrimaryKey("PK_Styles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -244,21 +244,21 @@ namespace LSS.Server.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Products_SizeType_SizeTypeId",
-                        column: x => x.SizeTypeId,
-                        principalTable: "SizeType",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Products_SizeUnits_SizeMeasureId",
+                        name: "FK_Products_SizeMeasures_SizeMeasureId",
                         column: x => x.SizeMeasureId,
-                        principalTable: "SizeUnits",
+                        principalTable: "SizeMeasures",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Products_Style_StyleId",
+                        name: "FK_Products_SizeTypes_SizeTypeId",
+                        column: x => x.SizeTypeId,
+                        principalTable: "SizeTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Products_Styles_StyleId",
                         column: x => x.StyleId,
-                        principalTable: "Style",
+                        principalTable: "Styles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -428,13 +428,13 @@ namespace LSS.Server.Migrations
                 name: "PatternStyles");
 
             migrationBuilder.DropTable(
-                name: "SizeType");
+                name: "SizeMeasures");
 
             migrationBuilder.DropTable(
-                name: "SizeUnits");
+                name: "SizeTypes");
 
             migrationBuilder.DropTable(
-                name: "Style");
+                name: "Styles");
         }
     }
 }

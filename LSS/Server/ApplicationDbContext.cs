@@ -1,23 +1,22 @@
 ﻿using LSS.Shared.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-using System.Reflection;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace LSS.Server.Data.Context
+namespace LSS.Server
 {
   public class ApplicationDbContext : DbContext
   {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
       :base(options)
     {
+
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-
-      //modelBuilder.Entity<IdentityUser>()
-      //.ToTable("AspNetUsers", t => t.ExcludeFromMigrations());
-
       //M:M Join Tables
       modelBuilder.Entity<ProductsCategories>()
         .HasKey(x => new { x.ProductId, x.CategoryId });
@@ -33,9 +32,6 @@ namespace LSS.Server.Data.Context
 
 
       base.OnModelCreating(modelBuilder);
-
-      //apply all model configurations
-      modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 
     public DbSet<About> About { get; set; }
@@ -45,8 +41,8 @@ namespace LSS.Server.Data.Context
     public DbSet<PatternStyle> PatternStyles { get; set; }
     public DbSet<Person> People { get; set; }
     public DbSet<Product> Products { get; set; }
-    public DbSet<SizeMeasure> SizeTypes { get; set; }
-    public DbSet<SizeType> SizeUnits { get; set; }
+    public DbSet<SizeMeasure> SizeMeasures { get; set; }
+    public DbSet<SizeType> SizeTypes { get; set; }
     public DbSet<StarRating> StarRatings { get; set; }
     public DbSet<Style> Styles { get; set; }
 
@@ -55,7 +51,6 @@ namespace LSS.Server.Data.Context
     public DbSet<ProductsPeople> ProductsPeople { get; set; }
     public DbSet<StarRatingsPeople> StarRatingsPeople { get; set; }
     public DbSet<StarRatingsProducts> StarRatingsProducts { get; set; }
-
 
     public override bool Equals(object obj)
     {
