@@ -1,34 +1,30 @@
 ﻿@page "/product/create"
 @inject NavigationManager navigationManager
 @inject IProductRepository productRepository
+@inject ICategoryRepository categoryRepository
 
 <h3>Create Product</h3>
 
-<ProductForm Product="Product"	
-	OnValidSubmit="SaveProduct" 
-	NotSelectedCategories="NotSelectedCategories" />
+@if (NotSelectedCategories != null)
+{
+	<ProductForm Product="Product"	
+		OnValidSubmit="SaveProduct" 
+		NotSelectedCategories="NotSelectedCategories" />
+}
+
 
 @code {
+
 	private Product Product = new Product();
 
-	private List<Category> NotSelectedCategories = new List<Category>()
+	protected async override Task OnInitializedAsync()
 	{
-			new Category(){ Id = 1, Name = "Suits"  },
-			new Category(){ Id = 2, Name = "Pants"  },
-			new Category(){ Id = 3, Name = "Shirts" },
-			new Category(){ Id = 4, Name = "Ties"   },
-			new Category(){ Id = 5, Name = "Shoes"  },
-			new Category(){ Id = 6, Name = "Socks"  },
-			new Category(){ Id = 7, Name = "Belts"  }
-	};
+		NotSelectedCategories = await categoryRepository.GetCategories();
+	}
+	private List<Category> NotSelectedCategories;
 
 	private async Task SaveProduct()
 	{
-		Console.WriteLine("Creating product: ");
-		Console.WriteLine($"{Product.ProductNumber} {Product.Title} {Product.Summary}");
-		Console.WriteLine($"IsMarkedDown?{Product.IsMarkedDownFlag} OnClearance?{Product.OnClearanceFlag}");
-		Console.WriteLine($"DaysToManufacture?{Product.DaysToManufacture} SellStartDate?{Product.SellStartDate} DiscontinuedDate?{Product.DiscontinuedDate}");
-
 		try
 		{
 		// Redirect on Save
@@ -41,5 +37,17 @@
 
 		}
 	}
+		
+	//private List<Category> NotSelectedCategories = new List<Category>()
+	//{
+			//new Category(){ Id = 1, Name = "Suits"  },
+			//new Category(){ Id = 2, Name = "Pants"  },
+			//new Category(){ Id = 3, Name = "Shirts" },
+			//new Category(){ Id = 4, Name = "Ties"   },
+			//new Category(){ Id = 5, Name = "Shoes"  },
+			//new Category(){ Id = 6, Name = "Socks"  },
+			//new Category(){ Id = 7, Name = "Belts"  }
+	//};
+
 }
 

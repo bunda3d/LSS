@@ -29,7 +29,6 @@ namespace LSS.Client.Repository
       return response.Response;
     }
 
-
     public async Task CreateCategory(Category category)
     {
       var response = await httpService.Post(url, category);
@@ -38,7 +37,20 @@ namespace LSS.Client.Repository
         throw new ApplicationException(await response.GetBody());
       }
     }
-    
 
+    Task<Category> ICategoryRepository.GetCategories(int id)
+    {
+      throw new NotImplementedException();
+    }
+
+    Task ICategoryRepository.UpdateCategory(Category category)
+    {
+      throw new NotImplementedException();
+    }
+
+    Task ICategoryRepository.DeleteCategory(int Id)
+    {
+      throw new NotImplementedException();
+    }
   }
 }

@@ -8,5 +8,9 @@ namespace LSS.Client.Repository
   {
     Task CreateCategory(Category category);
     Task<List<Category>> GetCategories();
+    Task<Category> GetCategories(int id);
+    Task UpdateCategory(Category category);
+    Task DeleteCategory(int Id);
+
   }
 }

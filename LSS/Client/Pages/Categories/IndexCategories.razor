@@ -1,7 +1,7 @@
 ﻿@page "/categories"
 @inject ICategoryRepository categoryRepository
 
-<h3>Index Categories</h3>
+<h3>Categories</h3>
 
 
 <div class="form-group">
@@ -23,8 +23,8 @@
 				{
 					<tr>
 						<td> 
-							<a class="btn btn-success" href="/category/edit/@item.Id">Edit</a>
-							<a class="btn btn-danger" @onclick="@(() => DeleteCategories(item.Id))">Delete</a>
+							<a class="btn btn-outline-success" href="/category/edit/@item.Id">Edit</a>
+							<!-- <button class="btn btn-danger" @onclick="@(() => DeleteCatagories(item.Id))">Delete</button> -->
 						</td>
 						<td>@item.Name</td>
 					</tr>
@@ -36,6 +36,8 @@
 
 
 @code {
+
+
 	List<Category> Categories;
 
 
@@ -45,18 +47,16 @@
 		{
 			Categories = await categoryRepository.GetCategories();
 		}
-		catch(Exception ex)
+		catch(Exception e)
 		{
 			throw;
 		}
 
-		private async Task DeleteCategories(int id)
+		async Task DeleteCategories(int id)
 		{
 			await categoryRepository.DeleteCategory(id);
 			Categories = await categoryRepository.GetCategories();
 		}
-
-
 
 	}
 }
