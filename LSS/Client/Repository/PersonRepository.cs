@@ -20,26 +20,22 @@ namespace LSS.Client.Repository
     }
 
 
+    public async Task<List<Person>> GetPeople()
+    {
+      var response = await httpService.Get<List<Person>>(url);
+      if (!response.Success)
+      {
+        throw new ApplicationException(await response.GetBody());
+      }
+      return response.Response;
+    }
 
     //public async Task<PaginatedResponse<List<Person>>> GetPeople(PaginationDTO paginationDTO)
     //{
     //  return await httpService.GetHelper<List<Person>>(url, paginationDTO);
     //}
 
-
-
-    //delete after uncommenting above
-    Task<List<Person>> IPersonRepository.GetPeople()
-    {
-      throw new NotImplementedException();
-    }
-
-
-
-
-
-
-    public async Task<List<Person>> GetPeopleByName()
+    public async Task<List<Person>> GetPeopleByName(string name)
     {
       var response = await httpService.Get<List<Person>>($"{url}/search/{nameof(Person.NameLast)}");
       if (!response.Success)

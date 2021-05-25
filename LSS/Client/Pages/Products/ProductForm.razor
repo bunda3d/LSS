@@ -200,16 +200,10 @@
 		Console.WriteLine(imageBase64);
 	}
 
-	//dummy omni search / typeahead data	
+	//omni search / typeahead hookup to data	
 	private async Task<IEnumerable<Person>> SearchMethod(string searchText)
 	{
-		return new List<Person>()
-		{
-			new Person() { Id= 1, NameFirst= "Kris", NameLast= "Bunda", Photo="https://images.express.com/is/image/expressfashion/0039_04372511_0098_f042?cache=on&wid=960&fmt=jpeg&qlt=85,1&resmode=sharp2&op_usm=1,1,5,0&defaultImage=Photo-Coming-Soon.jpg"	},
-			new Person() { Id= 2, NameFirst= "Tom", NameLast= "Joad", Photo="https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iKxSKNo1BXGM/v0/-1x-1.jpg"		},
-			new Person() { Id= 3, NameFirst= "Miss", NameLast= "Kitten", Photo="https://ae01.alicdn.com/kf/HTB1EZAeXjLuK1Rjy0Fhq6xpdFXaw/Fashion-Sashes-Black-Striped-Women-pant-suit-Office-work-wearing-suit-Solid-White-black-OL-Career.jpg" }
-		};
-		//return await personRepository.GetPeopleByName(searchText);
+		return await personRepository.GetPeopleByName(searchText);
   }
 
 	private async Task OnDataAnnotationsValidated()

@@ -36,12 +36,16 @@ namespace LSS.Server.Controllers
     }
 
 
+    //filtering multiple names, like 1st and last: https://bit.ly/3vgSCUj
+
     [HttpGet("search/{searchText}")]
     public async Task<ActionResult<List<Person>>> FilterByName(string searchText)
     {
       if (string.IsNullOrWhiteSpace(searchText)) { return new List<Person>(); }
-      return await context.People.Where(x => x.NameLast.Contains(searchText) && x.NameFirst.Contains(searchText)).Take(5).ToListAsync();
-    } //filtering multiple names, like 1st and last: https://bit.ly/3vgSCUj
+      return await context.People.Where(x => x.NameLast.Contains(searchText) && 
+        x.NameFirst.Contains(searchText))
+        .Take(5).ToListAsync();
+    } 
 
 
     [HttpPost]

@@ -29,6 +29,9 @@ namespace LSS.Server.Controllers
         product.Poster = await fileStorageService.SaveFile(productPicture, "jpg", "img/product");
       }
 
+      //could not get looping through ProductsPeople
+      //work to order Product Roles. Got a bizarre reason about indexing
+
 
       context.Add(product);
       await context.SaveChangesAsync();

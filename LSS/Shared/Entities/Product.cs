@@ -10,7 +10,9 @@ namespace LSS.Shared.Entities
 {
 	public class Product
 	{
-		public int Id { get; set; }
+    public int Order;
+
+    public int Id { get; set; }
 
 		[Required(ErrorMessage = "Required Field: Enter a unique 6-digit number with no letters")]
 		public int ProductNumber { get; set; }

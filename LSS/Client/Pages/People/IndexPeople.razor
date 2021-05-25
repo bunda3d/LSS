@@ -24,7 +24,7 @@
 					<tr>
 						<td> 
 							<a class="btn btn-outline-success" href="/person/edit/@item.Id">Edit</a>
-						  <!-- <button class="btn btn-danger" @onclick="@(() => DeletePerson(item.Id))">Delete</button> -->
+						  <button class="btn btn-danger">Delete</button>
 						</td>
 						<td>$"{@item.NameFirst @item.NameLast}"</td>
 					</tr>
@@ -39,6 +39,16 @@
 
   List<Person> People;
 
+	protected override async Task OnInitializedAsync()
+	{
+		try
+		{
+			People = await personRepository.GetPeople();
+		}
+		catch(Exception e)
+		{
+			throw;
+		}
 
- 
+	}
 }

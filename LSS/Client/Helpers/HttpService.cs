@@ -62,5 +62,10 @@ namespace LSS.Client.Helpers
       var responseString = await httpResponse.Content.ReadAsStringAsync();
       return JsonSerializer.Deserialize<T>(responseString, options);
     }
+
+    Task<T> IHttpService.GetHelper<T>(string v)
+    {
+      throw new System.NotImplementedException();
+    }
   }
 }

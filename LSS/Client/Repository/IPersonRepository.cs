@@ -15,5 +15,6 @@ namespace LSS.Client.Repository
 
     //Task UpdatePerson(Person person);
     Task<List<Person>> GetPeople();
+    Task<List<Person>> GetPeopleByName(string name);
   }
 }

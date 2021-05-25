@@ -18,8 +18,6 @@ namespace LSS.Server.Controllers
       this.context = context;
     }
 
-
-
     [HttpGet]
     public async Task<ActionResult<List<Category>>> Get()
     {
