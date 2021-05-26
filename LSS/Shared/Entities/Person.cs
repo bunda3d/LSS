@@ -28,6 +28,7 @@ namespace LSS.Shared.Entities
     [Column(TypeName = "varchar(3)")]
     public string NameMI { get; set; }
 
+
     [Column(TypeName = "varchar(100)")]
     public string FullName => string.Format("{0} {1}", NameFirst, NameLast);
 
@@ -51,6 +52,7 @@ namespace LSS.Shared.Entities
     public string Photo { get; set; }
 
     [Required]
+    [DisplayFormat(DataFormatString = "{dddd, yyyy/MM/dd}")]
     public DateTime? DateOfBirth { get; set; }
 
     public TimeSpan? GetAge() => DateTime.Now - DateOfBirth;
@@ -61,19 +63,18 @@ namespace LSS.Shared.Entities
     public string Biography { get; set; }
     
     [NotMapped]
-    [Column(TypeName = "varchar(50)")]
-    public string Role { get; set; }
+    public int Role { get; set; }
 
 
     //M:M relation
-    public ICollection<StarRatingsPeople> StarRatingsPeople { get; set; } = new List<StarRatingsPeople>();
+    public List<StarRatingsPeople> StarRatingsPeople { get; set; } = new List<StarRatingsPeople>();
 
     //M:M relation -> for person's role with product;
     //taylor, salesperson, purchaser, 
-    public ICollection<ProductsPeople> ProductsPeople { get; set; } = new List<ProductsPeople>();
+    public List<ProductsPeople> ProductsPeople { get; set; } = new List<ProductsPeople>();
 
 
-
+    //this is for the searchbox "typeahead"
     //2 persons are equal if only they share the same id.
     public override bool Equals(object obj)
     {
@@ -88,7 +89,5 @@ namespace LSS.Shared.Entities
     {
       return base.GetHashCode();
     }
-
-
   }
 }

@@ -42,11 +42,54 @@
 			</p>
 		</div>
 
+				
+		<!--Person Type Switches-->
+			<div>
+			<p class="form-check-label">This Person is:</p>
+			<div class="card">			
+		<div class="form-row">
+		  <div class="col form-group my-4 ml-4 p-0">
+        <div class="custom-control custom-switch">
+			    <input type="checkbox" @bind="@Person.IsEmployeeFlag" 
+            class="custom-control-input" id="IsEmployeeFlag">
+
+			    <label class="custom-control-label" for="IsEmployeeFlag">
+            Employee
+          </label>
+        </div>
+		  </div>
+
+		  <div class="col form-group my-4 ml-4 p-0">
+        <div class="custom-control custom-switch">
+			    <input type="checkbox" @bind="@Person.IsCustomerFlag" 
+            class="custom-control-input" id="IsCustomerFlag">
+
+			    <label class="custom-control-label" for="IsCustomerFlag">
+            Customer
+          </label>
+        </div>
+		  </div>
+    
+		  <div class="col form-group my-4 ml-4 p-0">
+        <div class="custom-control custom-switch">
+			    <input type="checkbox" @bind="@Person.IsVendorFlag" 
+            class="custom-control-input" id="IsVendorFlag">
+
+			    <label class="custom-control-label" for="IsVendorFlag">
+            Vendor
+          </label>
+        </div>
+				</div>
+		  </div>
+			</div>
+		</div>
+
+
 		<!--File upload-->
 	  
 		<div class="form-group">
 			<p>
-				<InputImg Label="Photo Upload (avatar image of you):" 
+				<InputImg Label="Photo Upload (avatar image):" 
 					OnSelectedImage="OnSelectedImage" ImageURL="@imageURL" />
 				<ValidationMessage For="@(() => Person.Photo)" />	 
 			</p>

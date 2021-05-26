@@ -19,15 +19,6 @@ namespace LSS.Client.Repository
       this.httpService = httpService;
     }
 
-    public async Task<List<Category>> GetCategories()
-    {
-      var response = await httpService.Get<List<Category>>(url);
-      if (!response.Success)
-      {
-        throw new ApplicationException(await response.GetBody());
-      }
-      return response.Response;
-    }
 
     public async Task CreateCategory(Category category)
     {
@@ -38,19 +29,49 @@ namespace LSS.Client.Repository
       }
     }
 
-    Task<Category> ICategoryRepository.GetCategories(int id)
+
+    public async Task<Category> GetCategory(int Id)
     {
-      throw new NotImplementedException();
+      var response = await httpService.Get<Category>($"{url}/{Id}");
+      if (!response.Success)
+      {
+        throw new ApplicationException(await response.GetBody());
+      }
+      return response.Response;
     }
 
-    Task ICategoryRepository.UpdateCategory(Category category)
+    public async Task<List<Category>> GetCategories()
     {
-      throw new NotImplementedException();
+      var response = await httpService.Get<List<Category>>(url);
+      if (!response.Success)
+      {
+        throw new ApplicationException(await response.GetBody());
+      }
+      return response.Response;
     }
 
-    Task ICategoryRepository.DeleteCategory(int Id)
+
+
+    public async Task UpdateCategory(Category category)
     {
-      throw new NotImplementedException();
+      var response = await httpService.Put(url, category);
+      if (!response.Success)
+      {
+        throw new ApplicationException(await response.GetBody());
+      }
     }
+
+
+
+    public async Task DeleteCategory(int Id)
+    {
+      var response = await httpService.Delete($"{url}/{Id}");
+      if (!response.Success)
+      {
+        throw new ApplicationException(await response.GetBody());
+      }
+    }
+
+
   }
 }

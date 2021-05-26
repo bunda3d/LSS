@@ -1,6 +1,10 @@
 ﻿@page "/person/edit/{PersonId:int}"
+@inject IPersonRepository personRepository
+@inject NavigationManager navigationManager
+
 
 <h3>Edit Person</h3>
+
 
 @if (Person != null)
 {
@@ -11,27 +15,23 @@
 @code {
 	[Parameter] public int PersonId { get; set; }
 
-	//do not make new entity on Edit (like on Create)
+
+	//do not make 'new' entity on Edit (like on Create)
 	private Person Person;
 
 	
-	protected override void OnInitialized()
+	protected async override Task OnInitializedAsync()
 	{
-		Person = new Person() 
-		{ 
-			NameFirst = "Kris", 
-			NameMI = "K", 
-			NameLast = "Bunda", 
-			DateOfBirth = DateTime.Today,
-			Biography = "Some words about me."
-		};
+		Person = await personRepository.GetPersonById(PersonId);		
 	}
 
-	private void Edit()
+  private async Task Edit()
 	{
 		Console.WriteLine("Editing the person: ");
-		Console.WriteLine($"{Person.NameFirst} {Person.NameMI} {Person.NameLast}");
-		Console.WriteLine($"{Person.DateOfBirth} {Person.Biography}");
+		Console.WriteLine($"{Person.FullName}");
+
+		await personRepository.UpdatePerson(Person);
+    navigationManager.NavigateTo("people");
 	}
 
 }

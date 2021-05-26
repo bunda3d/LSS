@@ -90,11 +90,11 @@ namespace LSS.Shared.Entities
 		//"Join Entity Type Configuration" section for why this: 
 
 		//M:M relations
-		public ICollection<ProductsCategories> ProductsCategories { get; set; } = new List<ProductsCategories>();
+		public List<ProductsCategories> ProductsCategories { get; set; } = new List<ProductsCategories>();
 
-		public ICollection<StarRatingsProducts> StarRatingsProducts { get; set; } = new List<StarRatingsProducts>();
+		public List<StarRatingsProducts> StarRatingsProducts { get; set; } = new List<StarRatingsProducts>();
 
-		public ICollection<ProductsPeople> ProductsPeople { get; set; } = new List<ProductsPeople>();
+		public List<ProductsPeople> ProductsPeople { get; set; } = new List<ProductsPeople>();
 
 
 

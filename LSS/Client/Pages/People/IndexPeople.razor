@@ -7,15 +7,19 @@
 	<a class="btn btn-info" href="person/create">New Person</a>
 </div>
 
+<!--<Pagination CurrentPage="@paginationDTO.Page" TotalAmountPages="totalAmountPages"
+            SelectedPage="SelectedPage" />
+						-->
 
 <GenericList List="People">
 	<WholeListTemplate>
-	 <table class="table table-striped">
+	 <table class="table table-striped table-hover">
 			<thead>
 				<tr>
-					<th></th>
+					<th>Actions</th>
 					<th>Name</th>
-
+					<th class="text-center">Photo</th>
+					<th class="text-center">DOB</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -24,9 +28,18 @@
 					<tr>
 						<td> 
 							<a class="btn btn-outline-success" href="/person/edit/@item.Id">Edit</a>
-						  <button class="btn btn-danger">Delete</button>
+						  <button class="btn btn-danger" @onclick=@(() => DeleteThis(item.Id)) >Delete</button>
 						</td>
-						<td>$"{@item.NameFirst @item.NameLast}"</td>
+						<td>
+							@item.NameLast, @item.NameFirst 
+						</td>
+						<td class="text-center">
+							<img style="width: 50px;" src="@item.Photo" /> 
+						</td>
+						<td class="text-center">
+								@(item.DateOfBirth.HasValue 
+								? item.DateOfBirth.Value.ToString("yyyy/MM/dd") : "----/--/--")
+						</td>
 					</tr>
 				}
 			</tbody>
@@ -36,19 +49,42 @@
 
 
 @code {
-
-  List<Person> People;
+	List<Person> People;
+	//PaginationDTO paginationDTO = new PaginationDTO() { RecordsPerPage = 10 };
+  private int totalAmountPages;
 
 	protected override async Task OnInitializedAsync()
 	{
 		try
 		{
+			//await LoadPeople();
 			People = await personRepository.GetPeople();
 		}
 		catch(Exception e)
 		{
-			throw;
+			//throw;
 		}
-
 	}
+
+	//private async Task LoadPeople()
+	//{
+	//	var paginatedResponse = await personRepository.GetPeople(paginationDTO);
+	//	People = paginatedResponse.Response;
+	//	totalAmountPages = paginatedResponse.TotalAmountPages;
+	//}
+
+	
+  //private async Task SelectedPage(int page)
+  //{
+  //   paginationDTO.Page = page;
+  //    await LoadPeople();
+  //}
+
+	private async Task DeleteThis(int id)
+	{
+    await personRepository.DeletePerson(id);
+    //await LoadPeople();
+		People = await personRepository.GetPeople();
+	}
+
 }

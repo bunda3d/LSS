@@ -17,10 +17,12 @@ namespace LSS.Server.Controllers
   {
     private readonly ApplicationDbContext context;
     private readonly IFileStorageService fileStorageService;
+    private string containerName = "img/people";
     private readonly IMapper mapper;
 
-    public PeopleController(ApplicationDbContext context, IFileStorageService fileStorageService,
-            IMapper mapper)
+    public PeopleController(ApplicationDbContext context, 
+      IFileStorageService fileStorageService,
+      IMapper mapper)
     {
       this.context = context;
       this.fileStorageService = fileStorageService;
@@ -54,7 +56,7 @@ namespace LSS.Server.Controllers
       if (!string.IsNullOrWhiteSpace(person.Photo))
       {
         var personPicture = Convert.FromBase64String(person.Photo);
-        person.Photo = await fileStorageService.SaveFile(personPicture, "jpg", "people");
+        person.Photo = await fileStorageService.SaveFile(personPicture, ".jpg", containerName);
       }
 
       context.Add(person);
@@ -76,7 +78,7 @@ namespace LSS.Server.Controllers
       {
         var personPicture = Convert.FromBase64String(person.Photo);
         personDB.Photo = await fileStorageService.EditFile(personPicture,
-            "jpg", "people", personDB.Photo);
+            ".jpg", containerName, personDB.Photo);
       }
 
       await context.SaveChangesAsync();

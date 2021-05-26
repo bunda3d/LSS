@@ -10,10 +10,10 @@
 
 <GenericList List="Categories">
 	<WholeListTemplate>
-	 <table class="table table-striped">
+	 <table class="table table-striped table-hover">
 			<thead>
 				<tr>
-					<th></th>
+					<th>Actions</th>
 					<th>Name</th>
 
 				</tr>
@@ -24,7 +24,7 @@
 					<tr>
 						<td> 
 							<a class="btn btn-outline-success" href="/category/edit/@item.Id">Edit</a>
-							<button class="btn btn-danger" >Delete</button>
+							<button class="btn btn-danger" @onclick="@(() => DeleteThis(item.Id))" >Delete</button>
 						</td>
 						<td>@item.Name</td>
 					</tr>
@@ -49,14 +49,15 @@
 		}
 		catch(Exception e)
 		{
-			throw;
+			//throw;
 		}
-
-		async Task DeleteCategories(int id)
-		{
-			await categoryRepository.DeleteCategory(id);
-			Categories = await categoryRepository.GetCategories();
-		}
-
 	}
+	
+	private async Task DeleteThis(int Id)
+	{
+		await categoryRepository.DeleteCategory(Id);
+		Categories = await categoryRepository.GetCategories();
+	}
+
+
 }

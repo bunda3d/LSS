@@ -1,6 +1,8 @@
 ﻿@typeparam T
 
-<CustomTypeahead SearchMethod="@((string searchText) => SearchMethod(searchText))" ValueChanged="@((T item) => SelectedElement(item))">
+<CustomTypeahead SearchMethod="@((string searchText) => SearchMethod(searchText))" 
+                  ValueChanged="@((T item) => SelectedElement(item))"
+                  >
     <ResultTemplate>
         @MyResultTemplate(context)
     </ResultTemplate>
@@ -16,7 +18,7 @@
             >
             @MyListTemplate(item)
             <span @onclick="@(() => SelectedElements.Remove(item))" 
-              class="badge badge-primary badge-pill" 
+              class="badge badge-primary badge-pill ml-2" 
               style="cursor: pointer">X</span>
         </li>
     }

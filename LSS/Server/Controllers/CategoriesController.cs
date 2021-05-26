@@ -60,13 +60,13 @@ namespace LSS.Server.Controllers
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete(int id)
     {
-      var genre = await context.Categories.FirstOrDefaultAsync(x => x.Id == id);
-      if (genre == null)
+      var category = await context.Categories.FirstOrDefaultAsync(x => x.Id == id);
+      if (category == null)
       {
         return NotFound();
       }
 
-      context.Remove(genre);
+      context.Remove(category);
       await context.SaveChangesAsync();
       return NoContent();
     }

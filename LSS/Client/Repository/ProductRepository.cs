@@ -29,14 +29,23 @@ namespace LSS.Client.Repository
       return response.Response;
     }
 
-    //Task IProductRepository.DeleteProduct(int Id)
-    //{
-    //  throw new NotImplementedException();
-    //}
 
-    //Task IProductRepository.UpdateProduct(Product product)
-    //{
-    //  throw new NotImplementedException();
-    //}
+    public async Task UpdateProduct(Product product)
+    {
+      var response = await httpService.Put(url, product);
+      if (!response.Success)
+      {
+        throw new ApplicationException(await response.GetBody());
+      }
+    }
+
+    public async Task DeleteProduct(int Id)
+    {
+      var response = await httpService.Delete($"{url}/{Id}");
+      if (!response.Success)
+      {
+        throw new ApplicationException(await response.GetBody());
+      }
+    }
   }
 }

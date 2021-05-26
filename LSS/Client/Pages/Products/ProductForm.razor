@@ -142,17 +142,21 @@
 			</div>			
 		</div>
 
+		<!--TypeAhead Search-->
+
 		<div class="form-group mb-3">
 			<label>Products Search: </label>
 			<div>
-				<MultipleSelectorTypeahead Context="Person" SearchMethod="SearchMethod" SelectedElements="SelectedPeople">
+				<MultipleSelectorTypeahead Context="person" 
+																		SearchMethod="SearchMethod" 
+																		SelectedElements="SelectedPeople">
 					<MyResultTemplate>
-						<img style="width: 50px;" src="@Person.Photo" /> 
-						@Person.NameFirst @Person.NameLast
+						<img style="width: 50px;" src="@person.Photo" /> 
+						@person.FullName
 					</MyResultTemplate>
 						
 					<MyListTemplate>
-						@Person.FullName / <input type="text" placeholder="Role" @bind="Person.Role" />
+						@person.FullName / <input type="text" placeholder="Role" @bind="person.Role" />
 					</MyListTemplate>
 				</MultipleSelectorTypeahead>
 			</div>
@@ -203,6 +207,10 @@
 	//omni search / typeahead hookup to data	
 	private async Task<IEnumerable<Person>> SearchMethod(string searchText)
 	{
+		//return new List<Person>() {
+		//			new Person() { Id = 1, FullName = "Bob Smith", Photo = "Server\wwwroot\img\people\cc2461c4-db2f-4a79-a9e1-198ac3ae8329.jpg" }
+		//	};
+
 		return await personRepository.GetPeopleByName(searchText);
   }
 
