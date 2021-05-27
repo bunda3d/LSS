@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace LSS.Server.Controllers
 {
@@ -17,12 +18,18 @@ namespace LSS.Server.Controllers
   {
     private readonly ApplicationDbContext context;
     private readonly IFileStorageService fileStorageService;
-    private string containerName = "img/product";
+    private readonly string containerName = "products";
+    private readonly string fileExtension = ".jpg";
+    private readonly IMapper mapper;
 
-    public ProductsController(ApplicationDbContext context, IFileStorageService fileStorageService)
+
+    public ProductsController(ApplicationDbContext context, 
+      IFileStorageService fileStorageService,
+      IMapper mapper)
     {
       this.context = context;
       this.fileStorageService = fileStorageService;
+      this.mapper = mapper;
     }
 
 
@@ -32,12 +39,10 @@ namespace LSS.Server.Controllers
       if (!string.IsNullOrWhiteSpace(product.Poster))
       {
         var productPicture = Convert.FromBase64String(product.Poster);
-        product.Poster = await fileStorageService.SaveFile(productPicture, "jpg", containerName);
+        product.Poster = await fileStorageService
+          .SaveFile(productPicture, fileExtension, containerName);
       }
 
-
-      //could not get looping through ProductsPeople
-      //work to order Product Roles. Got a bizarre reason about indexing
       if (product.ProductsPeople != null)
       {
         //var productsPeople = (product.ProductsPeople).AsEnumerable().ToList();

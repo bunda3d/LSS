@@ -25,7 +25,7 @@ namespace LSS.Client.Repository
       {
         throw new ApplicationException(await response.GetBody());
       }
-      //integer that came from api
+      //integer (<int>) (PK) that came back from api after saving Product
       return response.Response;
     }
 

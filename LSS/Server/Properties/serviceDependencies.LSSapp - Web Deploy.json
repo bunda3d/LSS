@@ -9,7 +9,7 @@
     "storage1": {
       "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Storage/storageAccounts/lss1blazor1storage",
       "type": "storage.azure",
-      "connectionId": "AzureStorageConnection",
+      "connectionId": "AzureStorageConnection:blob",
       "secretStore": "AzureAppSettings"
     }
   }

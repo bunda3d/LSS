@@ -1,14 +1,5 @@
 {
   "dependencies": {
-    "storage1": {
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Storage/storageAccounts/lss1blazor1storage",
-      "type": "storage.azure",
-      "connectionId": "AzureStorageConnection",
-      "secretStore": "LocalSecretsFile"
-    },
-    "secrets1": {
-      "type": "secrets.user"
-    },
     "mssql1": {
       "resourceId": null,
       "type": "mssql.local",

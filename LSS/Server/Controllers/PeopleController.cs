@@ -17,10 +17,11 @@ namespace LSS.Server.Controllers
   {
     private readonly ApplicationDbContext context;
     private readonly IFileStorageService fileStorageService;
-    private string containerName = "img/people";
+    private readonly string containerName = "people";
+    private readonly string fileExtension = ".jpg";
     private readonly IMapper mapper;
 
-    public PeopleController(ApplicationDbContext context, 
+    public PeopleController(ApplicationDbContext context,
       IFileStorageService fileStorageService,
       IMapper mapper)
     {
@@ -44,9 +45,8 @@ namespace LSS.Server.Controllers
     public async Task<ActionResult<List<Person>>> FilterByName(string searchText)
     {
       if (string.IsNullOrWhiteSpace(searchText)) { return new List<Person>(); }
-      return await context.People.Where(x => x.NameLast.Contains(searchText) && 
-        x.NameFirst.Contains(searchText))
-        .Take(5).ToListAsync();
+      return await context.People.Where(x => x.NameFirst.Contains(searchText)
+        || x.NameLast.Contains(searchText)).Take(5).ToListAsync();
     } 
 
 
@@ -56,7 +56,8 @@ namespace LSS.Server.Controllers
       if (!string.IsNullOrWhiteSpace(person.Photo))
       {
         var personPicture = Convert.FromBase64String(person.Photo);
-        person.Photo = await fileStorageService.SaveFile(personPicture, ".jpg", containerName);
+        person.Photo = await fileStorageService
+          .SaveFile(personPicture, fileExtension, containerName);
       }
 
       context.Add(person);
@@ -77,8 +78,8 @@ namespace LSS.Server.Controllers
       if (!string.IsNullOrWhiteSpace(person.Photo))
       {
         var personPicture = Convert.FromBase64String(person.Photo);
-        personDB.Photo = await fileStorageService.EditFile(personPicture,
-            ".jpg", containerName, personDB.Photo);
+        personDB.Photo = await fileStorageService
+          .EditFile(personPicture, fileExtension, containerName, personDB.Photo);
       }
 
       await context.SaveChangesAsync();

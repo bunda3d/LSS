@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LSS.Shared.Entities;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace LSS.Client.Helpers
 {
-	public class StringUtilities
-	{
-		public static string toAllCaps(string value) => value.ToUpper();
+  public class StringUtilities
+  {
+    public static string toAllCaps(string value) => value.ToUpper();
 
-		public static string removeSpecialCharsPath(string uriPath)
-		{
+    public static string removeSpecialCharsPath(string uriPath)
+    {
       //return string.Join("_", uriPath.Split(Path.GetInvalidPathChars()));
 
       char[] invalidPathChars = Path.GetInvalidPathChars().ToArray();
@@ -26,7 +27,5 @@ namespace LSS.Client.Helpers
       }
       return sb.ToString();
     }
-
-	}
-
+  } 
 }

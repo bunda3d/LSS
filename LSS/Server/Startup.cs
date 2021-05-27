@@ -11,6 +11,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
+using Azure.Storage.Queues;
+using Azure.Storage.Blobs;
+using Azure.Core.Extensions;
+using System;
 
 namespace LSS.Server
 {
@@ -36,18 +40,22 @@ namespace LSS.Server
 			/** 
 			 * uncomment next 2 if rather save blobs 
 			 * to Server proj's wwwroot than in azure storage
-			 */
 			services.AddScoped<IFileStorageService, InAppStorageService>();
 			services.AddHttpContextAccessor(); 
-			/** 
-			 * uncomment if rather save blobs in azure storage
-			 * services.AddScoped<IFileStorageService, AzureStorageService>();
 			*/
+			 /** * uncomment if rather save blobs in azure storage*/
+			services.AddScoped<IFileStorageService, AzureStorageService>();
+			
 			services.AddAutoMapper(typeof(Startup));
 			services.AddControllersWithViews()
 				.AddNewtonsoftJson(options =>
 				options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-			
+      services.AddAzureClients(builder =>
+      {
+        builder.AddBlobServiceClient(Configuration["ConnectionStrings:AzureStorageConnection:blob:blob"], preferMsi: true);
+        builder.AddQueueServiceClient(Configuration["ConnectionStrings:AzureStorageConnection:blob:queue"], preferMsi: true);
+      });
+
     }
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,4 +90,29 @@ namespace LSS.Server
 			});
 		}
 	}
+  internal static class StartupExtensions
+  {
+    public static IAzureClientBuilder<BlobServiceClient, BlobClientOptions> AddBlobServiceClient(this AzureClientFactoryBuilder builder, string serviceUriOrConnectionString, bool preferMsi)
+    {
+      if (preferMsi && Uri.TryCreate(serviceUriOrConnectionString, UriKind.Absolute, out Uri serviceUri))
+      {
+        return builder.AddBlobServiceClient(serviceUri);
+      }
+      else
+      {
+        return builder.AddBlobServiceClient(serviceUriOrConnectionString);
+      }
+    }
+    public static IAzureClientBuilder<QueueServiceClient, QueueClientOptions> AddQueueServiceClient(this AzureClientFactoryBuilder builder, string serviceUriOrConnectionString, bool preferMsi)
+    {
+      if (preferMsi && Uri.TryCreate(serviceUriOrConnectionString, UriKind.Absolute, out Uri serviceUri))
+      {
+        return builder.AddQueueServiceClient(serviceUri);
+      }
+      else
+      {
+        return builder.AddQueueServiceClient(serviceUriOrConnectionString);
+      }
+    }
+  }
 }

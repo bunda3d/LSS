@@ -18,15 +18,8 @@
 	private Product Product;
 
 	//seeding the environment
-	private List<Category> NotSelectedCategories = new List<Category>()
-	{
-			new Category(){ Id = 2, Name = "Pants"  },
-			new Category(){ Id = 3, Name = "Shirts" },
-			new Category(){ Id = 4, Name = "Ties"   },
-			new Category(){ Id = 5, Name = "Shoes"  },
-			new Category(){ Id = 6, Name = "Socks"  },
-			new Category(){ Id = 7, Name = "Belts"  }
-	};
+	private List<Category> NotSelectedCategories; 
+
 	private List<Category> SelectedCategories = new List<Category>()
   {
 			new Category(){ Id = 1, Name = "Suits"  },
