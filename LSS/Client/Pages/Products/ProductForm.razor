@@ -1,5 +1,6 @@
 ﻿@inject IPersonRepository personRepository
 
+
 <div class="form my-4">
 	<EditForm Model="Product" OnValidSubmit="OnDataAnnotationsValidated">
 		<DataAnnotationsValidator />
@@ -28,10 +29,10 @@
 
 		  <div class="col form-group my-4 p-0">
         <div class="custom-control custom-switch">
-			    <input type="checkbox" @bind="@Product.IsMarkedDownFlag" 
-            class="custom-control-input" id="isMarkedDownFlag">
+			    <input type="checkbox" @bind="@Product.IsOnSale" 
+            class="custom-control-input" id="IsOnSale">
 
-			    <label class="custom-control-label" for="isMarkedDownFlag">
+			    <label class="custom-control-label" for="IsOnSale">
             Sale Item? (marked-down up-to 25%)
           </label>
         </div>
@@ -39,15 +40,36 @@
 
       <div class="col form-group my-4 p-0">
         <div class="custom-control custom-switch">
-			    <input type="checkbox" @bind="@Product.OnClearanceFlag" 
-            class="custom-control-input" id="onClearanceFlag">
+			    <input type="checkbox" @bind="@Product.IsOnClearance" 
+            class="custom-control-input" id="IsOnClearance">
 
-			    <label class="custom-control-label" for="onClearanceFlag">
+			    <label class="custom-control-label" for="IsOnClearance">
             Clearance Item? (marked-down over 25%)
           </label>
         </div>
 		  </div>
     
+		  <div class="col form-group my-4 p-0">
+        <div class="custom-control custom-switch">
+			    <input type="checkbox" @bind="@Product.IsTrending" 
+            class="custom-control-input" id="IsTrending">
+
+			    <label class="custom-control-label" for="IsTrending">
+            Trending? (will auto. trend if less than 25% original stock)
+          </label>
+        </div>
+		  </div>
+
+      <div class="col form-group my-4 p-0">
+        <div class="custom-control custom-switch">
+			    <input type="checkbox" @bind="@Product.IsFeatured" 
+            class="custom-control-input" id="IsFeatured">
+
+			    <label class="custom-control-label" for="IsFeatured">
+            Featured? (Will list in top row of sales splash page)
+          </label>
+        </div>
+		  </div>
 
 		<!--Price-->
 
@@ -62,14 +84,59 @@
 			</div>
 		</div>
 
+		
 		<div class="col-sm-12 col-md-6 col-lg-4 form-group my-3 p-0">
 			<div class="form-group">
 				<p>		 
-					<label for="DaysToManufacture">Days To Manufacture:
-						<InputNumber class="form-control" @bind-Value="@Product.DaysToManufacture"/>
-						<ValidationMessage For="@(() => Product.DaysToManufacture)" />	 
+					<label for="UnitCostOnPO">Unit Purchase Price (from PO):
+						<InputNumber step=".01" class="form-control form-control-xs" @bind-Value="@Product.UnitCostOnPO"/>
+						<ValidationMessage For="@(() => Product.UnitCostOnPO)" />	 
 					</label>
 				</p>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<p>		 
+				<label for="ProductQtyOrdered">Product Quantity Ordered (from P.O.):
+					<InputNumber class="form-control" @bind-Value="@Product.QtyOrderedOnPO"/>
+					<ValidationMessage For="@(() => Product.QtyOrderedOnPO)" />	 
+				</label>
+			</p>
+		</div>
+
+		<div class="form-group">
+			<p>		 
+				<label for="ProductQtyInStock">Product Quantity In Stock:
+					<InputNumber class="form-control" @bind-Value="@Product.QtyInStock"/>
+					<ValidationMessage For="@(() => Product.QtyInStock)" />	 
+				</label>
+			</p>
+		</div>
+
+			  
+		<div class="row">
+		  <div class="col-sm col-md-6 col-lg-4 col-xl-3 form-group my-3">
+				<div class="form-group">
+					<p>		 
+						<label for="SalesEventStartDate">Sales Event Start Date:
+							<InputDate class="form-control" @bind-Value="@Product.SalesEventStartDate"/>
+							<ValidationMessage For="@(() => Product.SalesEventStartDate)" />	 
+						</label>
+					</p>
+				</div>
+			</div>
+			<div class="col-sm-12 col-md-6 col-lg-4 form-group my-3 p-0">
+				<div class="form-group">
+					<p>		 
+						<label for="DaysToManufacture">Sales Event Length (in Days):
+							<InputNumber class="form-control" 
+								@bind-Value="@Product.SaleLengthInDays"
+								DisplayName="Days To Manufacture"/>
+							<ValidationMessage For="@(() => Product.SaleLengthInDays)" />	 
+						</label>
+					</p>
+				</div>
 			</div>
 		</div>
 
@@ -79,7 +146,7 @@
 		  <div class="col-sm col-md-6 col-lg-4 col-xl-3 form-group my-3">
 				<div class="form-group">
 					<p>		 
-						<label for="SellStartDate">Sell Start Date:
+						<label for="SellStartDate">1st Date Product is Sold:
 							<InputDate class="form-control" @bind-Value="@Product.SellStartDate"/>
 							<ValidationMessage For="@(() => Product.SellStartDate)" />	 
 						</label>
@@ -89,7 +156,7 @@
 			<div class="col-sm col-md-6 col-lg-4 col-xl-3 form-group my-3">
 				<div class="form-group">
 					<p>		 
-						<label for="DiscontinuedDate">Discontinued Date:
+						<label for="DiscontinuedDate">Product Discontinued Date:
 							<InputDate class="form-control" @bind-Value="@Product.DiscontinuedDate"/>
 							<ValidationMessage For="@(() => Product.DiscontinuedDate)" />	 
 						</label>
@@ -145,7 +212,18 @@
 		<!--TypeAhead Search-->
 
 		<div class="form-group mb-3">
-			<label>Products Search: </label>
+			<button class="badge badge-info mr-2" 
+				data-toggle="collapse" 
+				href="#collapseInfo" 
+				role="button" aria-expanded="false" 
+				aria-controls="collapseExample">Info
+			</button> 
+			<label>Search People & Assign Roles: </label>
+			<div class="collapse" id="collapseInfo">
+				<div class="card card-body">
+					<p>Find a person, add their role to the product (i.e.: Estimator, Foreman, Customer)</p>
+				</div>
+			</div>
 			<div>
 				<MultipleSelectorTypeahead Context="person" 
 																		SearchMethod="SearchMethod" 
@@ -154,7 +232,7 @@
 						<img style="width: 50px;" src="@person.Photo" /> 
 						@person.FullName
 					</MyResultTemplate>
-						
+
 					<MyListTemplate>
 						@person.FullName / <input type="text" placeholder="Role" @bind="person.Role" />
 					</MyListTemplate>
@@ -207,10 +285,6 @@
 	//omni search / typeahead hookup to data	
 	private async Task<IEnumerable<Person>> SearchMethod(string searchText)
 	{
-		//return new List<Person>() {
-		//			new Person() { Id = 1, FullName = "Bob Smith", Photo = "Server\wwwroot\img\people\cc2461c4-db2f-4a79-a9e1-198ac3ae8329.jpg" }
-		//	};
-
 		return await personRepository.GetPeopleByName(searchText);
   }
 

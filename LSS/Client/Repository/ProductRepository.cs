@@ -1,4 +1,5 @@
 ﻿using LSS.Client.Helpers;
+using LSS.Shared.DTOs;
 using LSS.Shared.Entities;
 using System;
 using System.Threading.Tasks;
@@ -18,6 +19,18 @@ namespace LSS.Client.Repository
       this.httpService = httpService;
     }
 
+
+    public async Task<IndexPageDTO> GetIndexPageDTO()
+    {
+      var response = await httpService.Get<IndexPageDTO>(url);
+      if (!response.Success)
+      {
+        throw new ApplicationException(await response.GetBody());
+      }
+      return response.Response;
+    }
+
+
     public async Task<int> CreateProduct(Product product)
     {
       var response = await httpService.Post<Product, int>(url, product);
@@ -28,7 +41,6 @@ namespace LSS.Client.Repository
       //integer (<int>) (PK) that came back from api after saving Product
       return response.Response;
     }
-
 
     public async Task UpdateProduct(Product product)
     {

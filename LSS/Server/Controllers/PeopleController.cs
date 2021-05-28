@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using LSS.Shared.DTOs;
+using LSS.Client.Helpers;
 
 namespace LSS.Server.Controllers
 {
@@ -29,7 +31,6 @@ namespace LSS.Server.Controllers
       this.fileStorageService = fileStorageService;
       this.mapper = mapper;
     }
-
 
 
     [HttpGet]

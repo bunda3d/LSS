@@ -8,6 +8,8 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using LSS.Shared.DTOs;
+using Microsoft.EntityFrameworkCore;
 
 namespace LSS.Server.Controllers
 {
@@ -23,13 +25,56 @@ namespace LSS.Server.Controllers
     private readonly IMapper mapper;
 
 
-    public ProductsController(ApplicationDbContext context, 
+    public ProductsController(ApplicationDbContext context,
       IFileStorageService fileStorageService,
       IMapper mapper)
     {
       this.context = context;
       this.fileStorageService = fileStorageService;
       this.mapper = mapper;
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<IndexPageDTO>> Get()
+    {
+      var limit = 6;
+      var todaysDate = DateTime.Today;
+
+      var productIsFeatured = await context.Products
+        .Where(x => x.IsFeatured == true)
+        .Take(limit).OrderByDescending(x => x.SellStartDate)
+        .ToListAsync();      
+
+      var productIsNewRelease = await context.Products
+        .Where(x => x.SellStartDate <= todaysDate.AddDays(50))
+        .Take(limit).OrderByDescending(x => x.SellStartDate)
+        .ToListAsync();
+
+      var productIsTrending = await context.Products 
+        .Where(x => x.IsTrending == true || 
+                    x.QtyInStock / x.QtyOrderedOnPO < 0.25)
+        .Take(limit).OrderByDescending(x => x.SellStartDate)
+        .ToListAsync();
+
+      var productIsOnSale = await context.Products
+        .Where(x => x.IsOnSale == true)
+        .Take(limit).OrderByDescending(x => x.SellStartDate)
+        .ToListAsync();
+
+      var productIsOnClearance = await context.Products
+        .Where(x => x.IsOnClearance == true ||
+                    x.Price / x.UnitCostOnPO < 0.75M)
+        .Take(limit).OrderByDescending(x => x.SellStartDate)
+        .ToListAsync();
+
+      var response = new IndexPageDTO();
+          response.Featured = productIsFeatured;
+          response.NewRelease = productIsNewRelease;
+          response.Trending = productIsTrending;
+          response.OnSale = productIsOnSale;
+          response.OnClearance = productIsOnClearance;
+
+      return response;
     }
 
 

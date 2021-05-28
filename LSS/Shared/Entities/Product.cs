@@ -2,19 +2,15 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LSS.Shared.Entities
 {
-	public class Product
+  public class Product
 	{
-    public int Order;
-
     public int Id { get; set; }
 
 		[Required(ErrorMessage = "Required Field: Enter a unique 6-digit number with no letters")]
+		[Range(100000, 999999)]
 		public int ProductNumber { get; set; }
 
 		[MaxLength(120, ErrorMessage ="Cannot exceed 120 characters.")]
@@ -32,16 +28,38 @@ namespace LSS.Shared.Entities
 		[Column(TypeName = "decimal(8,2)")]
 		public decimal Price { get; set; }
 
-		public bool IsMarkedDownFlag { get; set; }
+		[DataType(DataType.Currency)]
+		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:c}")]
+		[Column(TypeName = "decimal(8,2)")]
+		public decimal UnitCostOnPO { get; set; }
+		
+		public bool IsFeatured { get; set; }
 
-		public bool OnClearanceFlag { get; set; }
+		public bool IsNewRelease { get; set; }
 
-		public int DaysToManufacture { get; set; }
+		public bool IsTrending { get; set; }
+
+		public bool IsOnSale { get; set; }
+
+		public bool IsOnClearance { get; set; }
+
+		public int QtyOrderedOnPO { get; set; }
+
+		public int QtyInStock { get; set; }
+
+		public int SaleLengthInDays { get; set; }
 
 
-		//[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+		[DisplayFormat(DataFormatString = "{yyyy-MM-dd}", 
+			ApplyFormatInEditMode = true)]
+		public DateTime? SalesEventStartDate { get; set; }
+
+		[DisplayFormat(DataFormatString = "{yyyy-MM-dd}", 
+			ApplyFormatInEditMode = true)]
 		public DateTime? SellStartDate { get; set; }
 
+		[DisplayFormat(DataFormatString = "{yyyy-MM-dd}", 
+			ApplyFormatInEditMode = true)]
 		public DateTime? DiscontinuedDate { get; set; }
 
 

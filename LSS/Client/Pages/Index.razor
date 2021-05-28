@@ -1,35 +1,47 @@
 ﻿@page "/"
 @page "/index"
-@inject IRepository repository
+@inject IProductRepository productRepository
 
 
 <h1>Larry's Sartorial Shoppe</h1>
 
 <div>
-	<ProductList Products="products"/>
+	<h3>Featured: Hand-Picked</h3>
+	<ProductList Products="IsFeatured"/>
 </div>
-
-<CustomTypeahead SearchMethod="SearchMethod">
-	<ResultTemplate>
-	 @context
- </ResultTemplate>
-</CustomTypeahead>
+<div>
+	<h3>New Releases: The Latest Designs</h3>
+	<ProductList Products="IsNewRelease"/>
+</div>
+<div>
+	<h3>Trending: Selling Out</h3>
+	<ProductList Products="IsTrending"/>
+</div>
+<div>
+	<h3>Sale: Up to 25% off</h3>
+	<ProductList Products="IsOnSale"/>
+</div>
+<div>
+	<h3>Clearance: Over 25% off</h3>
+	<ProductList Products="IsOnClearance"/>
+</div>
 
 
 @code{
-	private List<Product> products;
+	private List<Product> IsFeatured;
+	private List<Product> IsNewRelease;
+	private List<Product> IsTrending;
+	private List<Product> IsOnSale;
+	private List<Product> IsOnClearance;
 
 	protected async override Task OnInitializedAsync()
 	{
-		products = repository.GetProducts();
+		var response = await productRepository.GetIndexPageDTO();
+		IsFeatured = response.Featured;
+		IsNewRelease = response.NewRelease;
+		IsTrending = response.Trending;
+		IsOnSale = response.OnSale;
+		IsOnClearance = response.OnClearance;
 	}
-
-	//dummy omni search / typeahead data	
-	private async Task<IEnumerable<string>> SearchMethod(string searchText)
-	{
-		await Task.Delay(2000);
-		if(searchText =="test") { return Enumerable.Empty<string>();  }
-		return new List<string>() { "Kris", "Bunda" };
-	}
-
+		
 }
