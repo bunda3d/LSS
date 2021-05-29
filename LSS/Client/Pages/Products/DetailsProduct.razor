@@ -19,25 +19,73 @@ else
 	<h2>@model.Product.Title (@model.Product.SellStartDate.Value.ToString("yyyy"))</h2>
 	for (int i = 0; i < model.Categories.Count; i++)
 	{
-		@linkCategory(model.Categories[i])<text>,</text>
+		if (i < model.Categories.Count - 1)
+		{
+			@linkCategory(model.Categories[i])<text>, </text>
+		}
+		else
+		{
+			@linkCategory(model.Categories[i])
+		}
 	}
+	<text> | </text> <span>@model.Product.SellStartDate.Value.ToString("yyyy/MM/dd")</span>
+
+	<div class="col">
+		<span style="display: inline-block; margin-right: .5rem;">
+			<img src="@model.Product.Poster" class="product-poster" />
+		</span>
+		<iframe width="560" height="315" 
+						src="https://www.youtube.com/embed/@model.Product.Video" 
+						frameborder="0" 
+						allow="
+							accelerometer; 
+							autoplay; 
+							encrypted-media; 
+							gyroscope; 
+							picture-in-picture" 
+						allowfullscreen>
+		</iframe>
+	</div>
+
+	<div class="col mt-3">
+		<h3>Summary</h3>
+		<div>
+			<RenderMarkdown MarkdownContent="@model.Product.Summary"; />
+		</div>
+	</div>
+
+	<div class="col mt-3">
+		<h3>People & Roles</h3>
+		<div class="col">
+			@foreach(var person in model.People)
+			{
+				<div class="mb-1">
+					<img class="thumb" src="@person.Photo" />
+					<span class="d-inline-block">
+						<a href="/person/@person.Id/@person.FullName.Replace(" ", "-")">
+							@person.FullName
+						</a>
+					</span>
+					<span class="d-inline-block">...</span>
+					<span>@person.Role</span>
+				</div>
+			}
+		</div>
+	</div>
+
 }
 
 @code {
 	[Parameter] public int ProductId { get; set; }
 	[Parameter] public string ProductName { get; set; }
-	private RenderFragment<Category> linkCategory = (category) => 
-		@<a href="products/search?categoryId=@category.Id">
-			@category.Name
-		</a>
+	private RenderFragment<Category> linkCategory = (category) =>
+			@<a href="products/search?categoryId=@category.Id">@category.Name</a>
+	;
 	DetailsProductDTO model;
 
 
 	protected async override Task OnInitializedAsync()
 	{
 		model = await productRepository.GetDetailsProductDTO(ProductId);
-
-		Console.WriteLine($"The product ID is: {ProductId}");
-		Console.WriteLine($"The product name is: {ProductName}");
 	}
 }

@@ -26,6 +26,12 @@ h3 {
 	object-fit: cover;
 }
 
+.thumb {
+	width: 4rem;
+	height: 6rem;
+	object-fit: cover;
+}
+
 .product-title {
 	max-width: 16rem;
 	padding-top: .5rem;
