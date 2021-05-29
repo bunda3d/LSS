@@ -51,8 +51,8 @@ namespace LSS.Server.Controllers
         .ToListAsync();
 
       var productIsTrending = await context.Products 
-        .Where(x => x.IsTrending == true || 
-                    x.QtyInStock / x.QtyOrderedOnPO < 0.25)
+        .Where(x => x.IsTrending == true ||
+                    (((x.QtyInStock) / ((x.QtyOrderedOnPO) == 0 ? 0.1M : (x.QtyOrderedOnPO)) * 1M) < 0.25M))
         .Take(limit).OrderByDescending(x => x.SellStartDate)
         .ToListAsync();
 
@@ -63,7 +63,7 @@ namespace LSS.Server.Controllers
 
       var productIsOnClearance = await context.Products
         .Where(x => x.IsOnClearance == true ||
-                    x.Price / x.UnitCostOnPO < 0.75M)
+                    ((x.Price / (x.UnitCostOnPO == 0 ? 0.1M : x.UnitCostOnPO)) < 0.75M))
         .Take(limit).OrderByDescending(x => x.SellStartDate)
         .ToListAsync();
 

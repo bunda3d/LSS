@@ -24,7 +24,7 @@ namespace LSS.Shared.Entities
 		public string Summary {get; set;}
 
     [DataType(DataType.Currency)]
-		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:c}")]
+		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "${0:c}")]
 		[Column(TypeName = "decimal(8,2)")]
 		public decimal Price { get; set; }
 

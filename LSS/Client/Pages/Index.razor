@@ -5,26 +5,41 @@
 
 <h1>Larry's Sartorial Shoppe</h1>
 
-<div>
-	<h3>Featured: Hand-Picked</h3>
-	<ProductList Products="IsFeatured"/>
-</div>
-<div>
-	<h3>New Releases: The Latest Designs</h3>
-	<ProductList Products="IsNewRelease"/>
-</div>
-<div>
-	<h3>Trending: Selling Out</h3>
-	<ProductList Products="IsTrending"/>
-</div>
-<div>
-	<h3>Sale: Up to 25% off</h3>
-	<ProductList Products="IsOnSale"/>
-</div>
-<div>
-	<h3>Clearance: Over 25% off</h3>
-	<ProductList Products="IsOnClearance"/>
-</div>
+@if (IsFeatured.Count > 0)
+{
+	<div>
+		<h3>Featured: Hand-Picked</h3>
+		<ProductList Products="IsFeatured"/>
+	</div>
+} else {}
+@if (IsNewRelease.Count > 0)
+{
+	<div>
+		<h3>New Releases: The Latest Designs</h3>
+		<ProductList Products="IsNewRelease"/>
+	</div>
+} else {}
+@if (IsTrending.Count > 0)
+{
+	<div>
+		<h3>Trending: Selling Out</h3>
+		<ProductList Products="IsTrending"/>
+	</div>
+} else {}
+@if (IsOnSale.Count > 0)
+{
+	<div>
+		<h3>Sale: Up to 25% off</h3>
+		<ProductList Products="IsOnSale"/>
+	</div>
+} else {}
+@if (IsOnClearance.Count > 0)
+{
+	<div>
+		<h3>Clearance: Over 25% off</h3>
+		<ProductList Products="IsOnClearance"/>
+	</div>
+} else {}
 
 
 @code{
@@ -43,5 +58,4 @@
 		IsOnSale = response.OnSale;
 		IsOnClearance = response.OnClearance;
 	}
-		
 }
