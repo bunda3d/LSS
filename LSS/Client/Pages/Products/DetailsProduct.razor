@@ -1,17 +1,42 @@
 ﻿@page "/product/{ProductId:int}"
 @page "/product/{ProductId:int}/{ProductName}"
+@inject IProductRepository productRepository
 
+@if (model == null)
+{
+	<div class="container">
+		<div class="row text-center">
+			<text class="text-info">Loading...</text>
+		</div>
+		<div class="row">
+			<img src="/img/loading.gif" asp-append-version="true" width="300px"/>
+		</div>
+	</div>	
 
-
-<h3>Product Details</h3>
+}
+else
+{
+	<h2>@model.Product.Title (@model.Product.SellStartDate.Value.ToString("yyyy"))</h2>
+	for (int i = 0; i < model.Categories.Count; i++)
+	{
+		@linkCategory(model.Categories[i])<text>,</text>
+	}
+}
 
 @code {
 	[Parameter] public int ProductId { get; set; }
 	[Parameter] public string ProductName { get; set; }
+	private RenderFragment<Category> linkCategory = (category) => 
+		@<a href="products/search?categoryId=@category.Id">
+			@category.Name
+		</a>
+	DetailsProductDTO model;
 
 
-	protected override void OnInitialized()
+	protected async override Task OnInitializedAsync()
 	{
+		model = await productRepository.GetDetailsProductDTO(ProductId);
+
 		Console.WriteLine($"The product ID is: {ProductId}");
 		Console.WriteLine($"The product name is: {ProductName}");
 	}

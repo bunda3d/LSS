@@ -52,7 +52,7 @@ namespace LSS.Server.Controllers
 
       var productIsTrending = await context.Products 
         .Where(x => x.IsTrending == true ||
-                    (((x.QtyInStock) / ((x.QtyOrderedOnPO) == 0 ? 0.1M : (x.QtyOrderedOnPO)) * 1M) < 0.25M))
+                  ((x.QtyInStock / (x.QtyOrderedOnPO == 0 ? 0.1M : x.QtyOrderedOnPO) * 1M) < 0.25M))
         .Take(limit).OrderByDescending(x => x.SellStartDate)
         .ToListAsync();
 
@@ -63,7 +63,7 @@ namespace LSS.Server.Controllers
 
       var productIsOnClearance = await context.Products
         .Where(x => x.IsOnClearance == true ||
-                    ((x.Price / (x.UnitCostOnPO == 0 ? 0.1M : x.UnitCostOnPO)) < 0.75M))
+                  ((x.Price / (x.UnitCostOnPO == 0 ? 0.1M : x.UnitCostOnPO)) < 0.75M))
         .Take(limit).OrderByDescending(x => x.SellStartDate)
         .ToListAsync();
 
@@ -76,6 +76,36 @@ namespace LSS.Server.Controllers
 
       return response;
     }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<DetailsProductDTO>> Get(int id)
+    {
+      var product = await context.Products.Where(x => x.Id == id)
+        .Include(x => x.ProductsCategories).ThenInclude(x => x.Category)
+        .Include(x => x.ProductsPeople).ThenInclude(x => x.Person)
+        .FirstOrDefaultAsync();
+
+      if (product == null) { return NotFound(); }
+
+      product.ProductsPeople = product.ProductsPeople.OrderBy(x => x.Order).ToList();
+
+      var model = new DetailsProductDTO();
+      model.Product = product;
+      model.Categories = product.ProductsCategories.Select(x => x.Category).ToList();
+      model.People = product.ProductsPeople.Select(x =>
+        new Person
+        {
+          NameFirst = x.Person.NameFirst,
+          NameLast = x.Person.NameLast,
+          Photo = x.Person.Photo,
+          Role = x.Role,
+          Id = x.PersonId
+        }).ToList();
+
+      return model;
+
+    }
+    
 
 
     [HttpPost]
@@ -93,7 +123,7 @@ namespace LSS.Server.Controllers
         //var productsPeople = (product.ProductsPeople).AsEnumerable().ToList();
         for (int i = 0; i < product.ProductsPeople.Count; i++)
         {
-          product.ProductsPeople[i].Role = i + 1;
+          product.ProductsPeople[i].Order = i + 1;
         }
       }
 

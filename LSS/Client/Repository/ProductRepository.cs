@@ -30,6 +30,21 @@ namespace LSS.Client.Repository
       return response.Response;
     }
 
+    public async Task<DetailsProductDTO> GetDetailsProductDTO(int id)
+    {
+      return await Get<DetailsProductDTO>($"{url}/{id}");
+
+    }
+
+    private async Task<T> Get<T>(string url)
+    {
+      var response = await httpService.Get<T>(url);
+      if (!response.Success)
+      {
+        throw new ApplicationException(await response.GetBody());
+      }
+      return response.Response;
+    }
 
     public async Task<int> CreateProduct(Product product)
     {

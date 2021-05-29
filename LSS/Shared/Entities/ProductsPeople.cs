@@ -16,14 +16,15 @@ namespace LSS.Shared.Entities
     //otherwise can be associated with this product.
     [Required(ErrorMessage = "Required: Role is any person, emp, customer, or vendor " +
       "who adds value, sells, buys, or otherwise can be associated with this product.")]
-    public int Role { get; set; }
+    public string Role { get; set; }
     //TODO^^^need roles list obj for feeding a select list 
 
-    //does the person in role attached to product add value to it
-    //by performing a work process or applying a component to it? 
-    [Required(ErrorMessage = "Required: What job or process is " +
-      "performed that adds value to this product?")]
-    public int ProductValueAddJob { get; set; }
+    //sequential Order that Roles do work/add value to Products
+    public int Order { get; set; }
+
+    [Required(ErrorMessage = "Required: What job or process the Role " +
+      "performs on the Product")]
+    public string ValueAddJob { get; set; }
     //TODO^^^need to add job list table for feeding a select list 
 
   }

@@ -63,7 +63,7 @@ namespace LSS.Shared.Entities
     public string Biography { get; set; }
     
     [NotMapped]
-    public int Role { get; set; }
+    public string Role { get; set; }
 
 
     //M:M relation

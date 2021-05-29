@@ -5,35 +5,35 @@
 
 <h1>Larry's Sartorial Shoppe</h1>
 
-@if (IsFeatured.Count > 0)
+@if (IsFeatured != null)
 {
 	<div>
 		<h3>Featured: Hand-Picked</h3>
 		<ProductList Products="IsFeatured"/>
 	</div>
 } else {}
-@if (IsNewRelease.Count > 0)
+@if (IsNewRelease != null)
 {
 	<div>
 		<h3>New Releases: The Latest Designs</h3>
 		<ProductList Products="IsNewRelease"/>
 	</div>
 } else {}
-@if (IsTrending.Count > 0)
+@if (IsTrending != null)
 {
 	<div>
 		<h3>Trending: Selling Out</h3>
 		<ProductList Products="IsTrending"/>
 	</div>
 } else {}
-@if (IsOnSale.Count > 0)
+@if (IsOnSale != null)
 {
 	<div>
 		<h3>Sale: Up to 25% off</h3>
 		<ProductList Products="IsOnSale"/>
 	</div>
 } else {}
-@if (IsOnClearance.Count > 0)
+@if (IsOnClearance != null)
 {
 	<div>
 		<h3>Clearance: Over 25% off</h3>
@@ -43,11 +43,11 @@
 
 
 @code{
-	private List<Product> IsFeatured;
-	private List<Product> IsNewRelease;
-	private List<Product> IsTrending;
-	private List<Product> IsOnSale;
-	private List<Product> IsOnClearance;
+	[Parameter] public List<Product> IsFeatured { get; set; }
+	[Parameter] public List<Product> IsNewRelease { get; set; }
+	[Parameter] public List<Product> IsTrending{  get; set; }
+	[Parameter] public List<Product> IsOnSale { get; set; }
+	[Parameter] public List<Product> IsOnClearance { get; set; }
 
 	protected async override Task OnInitializedAsync()
 	{

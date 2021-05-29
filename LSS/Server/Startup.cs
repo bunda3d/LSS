@@ -43,7 +43,7 @@ namespace LSS.Server
 			services.AddScoped<IFileStorageService, InAppStorageService>();
 			services.AddHttpContextAccessor(); 
 			*/
-			 /** * uncomment if rather save blobs in azure storage*/
+			 /** uncomment next if rather save blobs in azure storage */
 			services.AddScoped<IFileStorageService, AzureStorageService>();
 			
 			services.AddAutoMapper(typeof(Startup));
