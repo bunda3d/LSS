@@ -1,4 +1,6 @@
 ﻿@page "/product/edit/{ProductId:int}"
+@inject IProductRepository productRepository
+@inject NavigationManager navigationManager
 
 <h3>Edit Product</h3>
 
@@ -6,6 +8,7 @@
 {
 	<ProductForm Product="Product"	
 		OnValidSubmit="Edit"
+		SelectedPeople="SelectedPeople"
 		NotSelectedCategories="NotSelectedCategories"
 		SelectedCategories="SelectedCategories"/>
 }
@@ -13,33 +16,30 @@
 
 @code {
 	[Parameter] public int ProductId { get; set; }
-	
 	//do not make new entity on Edit (like on Create)
 	private Product Product;
+	private List<Person> SelectedPeople;
+	private List<Category> SelectedCategories;
+	private List<Category> NotSelectedCategories;
 
-	//seeding the environment
-	private List<Category> NotSelectedCategories; 
-
-	private List<Category> SelectedCategories = new List<Category>()
-  {
-			new Category(){ Id = 1, Name = "Suits"  },
-  };
-
-	protected override void OnInitialized()
+	protected async override Task OnInitializedAsync()
 	{
-		Product = new Product()
-		{
-			Id = ProductId,
-			Title = "Pants, Stockport Wool Linen Blue Slacks",
-			Video = "https://www.youtube.com/watch?v=oDj-W2pwbAA"
-		};
+		var model = await productRepository.GetProudctForUpdate(ProductId);
+		Product = model.Product;
+		SelectedPeople = model.People;
+		SelectedCategories = model.SelectedCategories;
+		NotSelectedCategories = model.NotSelectedCategories;
 	}
 
-	private void Edit()
+	private async Task Edit()
 	{
-		Console.WriteLine("Editing product: ");
-		Console.WriteLine($"{Product.ProductNumber} {Product.Title} {Product.Summary}");
-		Console.WriteLine($"IsOnSale?{Product.IsOnSale} IsOnClearance?{Product.IsOnClearance}");
+		await productRepository.UpdateProduct(Product);
+    navigationManager.NavigateTo($"products/{ProductId}/{Product.Title.Replace(" ", "-")}");
+
+		Console.WriteLine("Editing the product: ");
+		Console.WriteLine($"{Product.Id} : {Product.Title}");
+
+		
 	}
 
 }

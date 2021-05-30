@@ -19,15 +19,13 @@
 		category = await categoryRepository.GetCategory(CategoryId);
 	}
 
-	private void Edit()
+	private async Task Edit()
 	{
 
-		categoryRepository.UpdateCategory(category);
+		await categoryRepository.UpdateCategory(category);
 		navigationManager.NavigateTo("categories");
 
-		Console.WriteLine("Edit method: ");
-		Console.WriteLine($"Id = {category.Id}");
-		Console.WriteLine($"Name = {category.Name}");
+		Console.WriteLine($"Editing Category: Id = {category.Id} Name = {category.Name}");
 	}
 
 }

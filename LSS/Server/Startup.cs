@@ -35,6 +35,8 @@ namespace LSS.Server
 				options.UseSqlServer(Configuration
 				.GetConnectionString("DefaultConnection")));
 
+			services.AddAutoMapper(typeof(Startup));
+
 			services.AddDatabaseDeveloperPageExceptionFilter();
 
 			/** 

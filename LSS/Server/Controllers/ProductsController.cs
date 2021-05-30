@@ -105,6 +105,29 @@ namespace LSS.Server.Controllers
       return model;
 
     }
+
+    [HttpGet("update/{id}")]
+    public async Task<ActionResult<ProductUpdateDTO>> PutGet(int id)
+    {
+      var productActionResult = await Get(id);
+      if (productActionResult.Result is NotFoundResult) { return NotFound(); }
+
+      var productDetailDTO = productActionResult.Value;
+      var selectedCategoriesIds = productDetailDTO.Categories
+        .Select(x => x.Id)
+        .ToList();
+      var notSelectedCategories = await context.Categories
+        .Where(x => !selectedCategoriesIds.Contains(x.Id))
+        .ToListAsync();
+
+      var model = new ProductUpdateDTO();
+      model.Product = productDetailDTO.Product;
+      model.SelectedCategories = productDetailDTO.Categories;
+      model.NotSelectedCategories = notSelectedCategories;
+      model.People = productDetailDTO.People;
+      return model;
+    }
+
     
 
 

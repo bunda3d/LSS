@@ -15,5 +15,6 @@ namespace LSS.Client.Repository
     Task DeleteProduct(int Id);
     Task<IndexPageDTO> GetIndexPageDTO();
     Task<DetailsProductDTO> GetDetailsProductDTO(int id);
+    Task<ProductUpdateDTO> GetProudctForUpdate(int id);
   }
 }

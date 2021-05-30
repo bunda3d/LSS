@@ -14,8 +14,6 @@
 
 @code {
 	[Parameter] public int PersonId { get; set; }
-
-
 	//do not make 'new' entity on Edit (like on Create)
 	private Person Person;
 
@@ -27,11 +25,11 @@
 
   private async Task Edit()
 	{
-		Console.WriteLine("Editing the person: ");
-		Console.WriteLine($"{Person.FullName}");
-
 		await personRepository.UpdatePerson(Person);
     navigationManager.NavigateTo("people");
+
+		Console.WriteLine("Editing the person: ");
+		Console.WriteLine($"{Person.FullName}");
 	}
 
 }

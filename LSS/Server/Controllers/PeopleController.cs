@@ -1,15 +1,12 @@
-﻿using LSS.Server.Helpers;
+﻿using AutoMapper;
+using LSS.Server.Helpers;
 using LSS.Shared.Entities;
-using LSS.Server;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using AutoMapper;
-using LSS.Shared.DTOs;
-using LSS.Client.Helpers;
+using System.Threading.Tasks;
 
 namespace LSS.Server.Controllers
 {
@@ -39,6 +36,13 @@ namespace LSS.Server.Controllers
       return await context.People.ToListAsync();
     }
 
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Person>> Get(int id)
+    {
+      var person = await context.People.FirstOrDefaultAsync(x => x.Id == id);
+      if (person == null) { return NotFound(); }
+      return person; 
+    }
 
     //filtering multiple names, like 1st and last: https://bit.ly/3vgSCUj
 
@@ -70,17 +74,19 @@ namespace LSS.Server.Controllers
     [HttpPut]
     public async Task<ActionResult> Put(Person person)
     {
+      //personDB = same person, but from database
       var personDB = await context.People.FirstOrDefaultAsync(x => x.Id == person.Id);
 
       if (personDB == null) { return NotFound(); }
 
       personDB = mapper.Map(person, personDB);
 
+      //so as not to replace image every edit--only when it's changed
       if (!string.IsNullOrWhiteSpace(person.Photo))
       {
         var personPicture = Convert.FromBase64String(person.Photo);
-        personDB.Photo = await fileStorageService
-          .EditFile(personPicture, fileExtension, containerName, personDB.Photo);
+        personDB.Photo = await fileStorageService.EditFile(personPicture, 
+          fileExtension, containerName, personDB.Photo);
       }
 
       await context.SaveChangesAsync();
