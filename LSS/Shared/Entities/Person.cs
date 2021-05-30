@@ -62,6 +62,7 @@ namespace LSS.Shared.Entities
     [Column(TypeName = "varchar(1024)")]
     public string Biography { get; set; }
     
+
     [NotMapped]
     public string Role { get; set; }
 

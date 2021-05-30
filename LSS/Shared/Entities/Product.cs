@@ -66,7 +66,7 @@ namespace LSS.Shared.Entities
 		[Column(TypeName = "varchar(MAX)")]
 		public string Poster { get; set; }
 
-		[Column(TypeName ="varchar(MAX)")]
+		[Column(TypeName ="varchar(50)")]
 		public string Video { get; set; }
 
 

@@ -24,12 +24,35 @@ h3 {
 	width: 16rem;
 	height: 24rem;
 	object-fit: cover;
+	object-position: center top;
 }
+
 
 .thumb {
 	width: 4rem;
-	height: 6rem;
+	height: 4rem;
 	object-fit: cover;
+	object-position: center top;
+}
+
+.marquis {
+	max-height: 24rem;
+	overflow: hidden;
+
+}
+
+.video-container {
+	position: relative;
+	width: 100%;
+	padding-bottom: 56.25%
+}
+.video {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border: 0;
 }
 
 .product-title {
