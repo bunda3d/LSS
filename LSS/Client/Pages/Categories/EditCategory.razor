@@ -1,4 +1,6 @@
 ﻿@page "/category/edit/{CategoryId:int}"
+@inject ICategoryRepository categoryRepository
+@inject NavigationManager navigationManager
 
 <h3>Edit Product Category</h3>
 
@@ -10,16 +12,19 @@
 
 @code {
 	[Parameter] public int CategoryId { get; set; }
-	
 	public Category category;
 
-	protected override void OnInitialized()
+	protected override async Task OnInitializedAsync()
 	{
-		category = new Category() { Id = CategoryId, Name = "Suit" };
+		category = await categoryRepository.GetCategory(CategoryId);
 	}
 
 	private void Edit()
 	{
+
+		categoryRepository.UpdateCategory(category);
+		navigationManager.NavigateTo("categories");
+
 		Console.WriteLine("Edit method: ");
 		Console.WriteLine($"Id = {category.Id}");
 		Console.WriteLine($"Name = {category.Name}");

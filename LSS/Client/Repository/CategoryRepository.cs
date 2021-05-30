@@ -40,6 +40,7 @@ namespace LSS.Client.Repository
       return response.Response;
     }
 
+
     public async Task<List<Category>> GetCategories()
     {
       var response = await httpService.Get<List<Category>>(url);
@@ -51,7 +52,6 @@ namespace LSS.Client.Repository
     }
 
 
-
     public async Task UpdateCategory(Category category)
     {
       var response = await httpService.Put(url, category);
@@ -60,7 +60,6 @@ namespace LSS.Client.Repository
         throw new ApplicationException(await response.GetBody());
       }
     }
-
 
 
     public async Task DeleteCategory(int Id)

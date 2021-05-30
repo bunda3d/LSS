@@ -24,8 +24,6 @@ namespace LSS.Server.Controllers
       return await context.Categories.ToListAsync();
     }
 
-
-
     [HttpGet("{id}")]
     public async Task<ActionResult<Category>> Get(int id)
     {
@@ -33,8 +31,6 @@ namespace LSS.Server.Controllers
       if (genre == null) { return NotFound(); }
       return genre;
     }
-
-
 
     [HttpPost]
     public async Task<ActionResult<int>> Post(Category category)
@@ -45,8 +41,6 @@ namespace LSS.Server.Controllers
       return Ok();
     }
 
-
-
     [HttpPut]
     public async Task<ActionResult> Put(Category category)
     {
@@ -54,8 +48,6 @@ namespace LSS.Server.Controllers
       await context.SaveChangesAsync();
       return NoContent();
     }
-
-
 
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete(int id)
@@ -70,7 +62,6 @@ namespace LSS.Server.Controllers
       await context.SaveChangesAsync();
       return NoContent();
     }
-
 
   }
 }
