@@ -10,7 +10,7 @@
  <p class="product-price">@Product.Price</p>
 
  <div>
-	 <a class="btn btn-info" href="/products/edit/@Product.Id">Edit</a>
+	 <a class="btn btn-info" href="/product/edit/@Product.Id">Edit</a>
 	 <button type="button" class="btn btn-danger"
 			@onclick="@(() => DeleteProduct.InvokeAsync(Product))">
 		 Delete		

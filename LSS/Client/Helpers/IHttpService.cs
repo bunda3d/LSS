@@ -15,6 +15,5 @@ namespace LSS.Client.Helpers
     Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T data);
     Task<HttpResponseWrapper<object>> Put<T>(string url, T data);
     Task<HttpResponseWrapper<object>> Delete(string url);
-    Task<T> GetHelper<T>(string v);
   }
 }

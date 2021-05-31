@@ -31,7 +31,6 @@ namespace LSS.Client.Helpers
       }
     }
 
-
     public async Task<HttpResponseWrapper<object>> Post<T>(string url, T data)
     {
       var dataJson = JsonSerializer.Serialize(data);
@@ -39,7 +38,6 @@ namespace LSS.Client.Helpers
       var response = await httpClient.PostAsync(url, stringContent);
       return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
     }
-
 
     public async Task<HttpResponseWrapper<object>> Put<T>(string url, T data)
     {
@@ -66,13 +64,6 @@ namespace LSS.Client.Helpers
         return new HttpResponseWrapper<TResponse>(default, false, response);
       }
     }
-
-
-    Task<T> IHttpService.GetHelper<T>(string v)
-    {
-      throw new System.NotImplementedException();
-    }
-
 
     public async Task<HttpResponseWrapper<object>> Delete(string url)
     {

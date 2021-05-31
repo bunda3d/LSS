@@ -34,7 +34,7 @@
 	private async Task Edit()
 	{
 		await productRepository.UpdateProduct(Product);
-    navigationManager.NavigateTo($"products/{ProductId}/{Product.Title.Replace(" ", "-")}");
+    navigationManager.NavigateTo($"product/{ProductId}/{Product.Title.Replace(" ", "-")}");
 
 		Console.WriteLine("Editing the product: ");
 		Console.WriteLine($"{Product.Id} : {Product.Title}");
