@@ -27,6 +27,15 @@ h3 {
 	object-position: center top;
 }
 
+.product-poster-indiv {
+	min-width: 16rem;
+	width: 100%;
+	min-height: 24rem;
+	height: auto;
+
+	/*	object-fit: cover;
+	object-position: center top;*/
+}
 
 .thumb {
 	width: 4rem;
@@ -36,7 +45,8 @@ h3 {
 }
 
 .marquis {
-	max-height: 24rem;
+	min-height: 24rem;
+	/*max-height: 33rem;*/
 	overflow: hidden;
 
 }
@@ -44,7 +54,9 @@ h3 {
 .video-container {
 	position: relative;
 	width: 100%;
-	padding-bottom: 56.25%
+	/*padding-bottom: 56.25%;*/
+	max-height: 24rem;
+	overflow: hidden;
 }
 .video {
 	position: absolute;
@@ -53,6 +65,7 @@ h3 {
 	width: 100%;
 	height: 100%;
 	border: 0;
+
 }
 
 .product-title {

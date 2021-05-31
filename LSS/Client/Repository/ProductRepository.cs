@@ -19,6 +19,7 @@ namespace LSS.Client.Repository
       this.httpService = httpService;
     }
 
+    //Using Data Transfer Objectss (DTOs)
 
     public async Task<IndexPageDTO> GetIndexPageDTO()
     {
@@ -30,11 +31,14 @@ namespace LSS.Client.Repository
       return await httpService.GetHelper<ProductUpdateDTO>($"{url}/update/{id}");
     }
 
-
     public async Task<DetailsProductDTO> GetDetailsProductDTO(int id)
     {
       return await httpService.GetHelper<DetailsProductDTO>($"{url}/{id}");
     }
+
+
+
+    //CRUD
 
     public async Task<int> CreateProduct(Product product)
     {
@@ -55,6 +59,7 @@ namespace LSS.Client.Repository
         throw new ApplicationException(await response.GetBody());
       }
     }
+
 
     public async Task DeleteProduct(int Id)
     {

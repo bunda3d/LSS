@@ -27,7 +27,7 @@ namespace LSS.Client
 		{
 			//register all client services
 			services.AddTransient<IRepository, RepositoryInMemory>();
-			services.AddScoped<IHttpService, httpService>();
+			services.AddScoped<IHttpService, HttpService>();
 			services.AddScoped<ICategoryRepository, CategoryRepository>();
 			services.AddScoped<IPersonRepository, PersonRepository>();
 			services.AddScoped<IProductRepository, ProductRepository>();

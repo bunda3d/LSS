@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace LSS.Client.Helpers
 {
-  public class httpService : IHttpService
+  public class HttpService : IHttpService
   {
     private readonly HttpClient httpClient;
     private JsonSerializerOptions defaultJsonSerializerOptions =>
       new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
 
-    public httpService(HttpClient httpClient)
+    public HttpService(HttpClient httpClient)
     {
       this.httpClient = httpClient;
     }

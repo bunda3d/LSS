@@ -1,9 +1,5 @@
 ﻿using AutoMapper;
 using LSS.Shared.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace LSS.Server.Helpers
 {
@@ -11,9 +7,13 @@ namespace LSS.Server.Helpers
   {
     public AutomapperProfiles()
     {
+      //map for PeopleController
       CreateMap<Person, Person>()
         .ForMember(x => x.Photo, option => option.Ignore());
 
+      //map for ProductController
+      CreateMap<Product, Product>()
+        .ForMember(x => x.Poster, option => option.Ignore());
     }
   }
 }

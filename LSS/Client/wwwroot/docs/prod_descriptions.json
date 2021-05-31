@@ -70,17 +70,3 @@ h6MqY0zDUhs
 s-kpKqhHGbw
 
 
-
-
-
-blazor.webassembly.js:1 crit: Microsoft.AspNetCore.Components.WebAssembly.Rendering.WebAssemblyRenderer[100]
-      Unhandled exception rendering component: 
-System.ApplicationException
-   at LSS.Client.Repository.ProductRepository.UpdateProduct(Product product) in D:\Drive\WEBSITE_PROJECTS\_TUTORIALS\LSS\LSS\Client\Repository\ProductRepository.cs:line 55
-   at LSS.Client.Pages.Products.EditProduct.Edit() in D:\Drive\WEBSITE_PROJECTS\_TUTORIALS\LSS\LSS\Client\Pages\Products\EditProduct.razor:line 36
-   at Microsoft.AspNetCore.Components.ComponentBase.CallStateHasChangedOnAsyncCompletion(Task task)
-   at LSS.Client.Pages.Products.ProductForm.OnDataAnnotationsValidated() in D:\Drive\WEBSITE_PROJECTS\_TUTORIALS\LSS\LSS\Client\Pages\Products\ProductForm.razor:line 296
-   at Microsoft.AspNetCore.Components.ComponentBase.CallStateHasChangedOnAsyncCompletion(Task task)
-   at Microsoft.AspNetCore.Components.Forms.EditForm.HandleSubmitAsync()
-   at Microsoft.AspNetCore.Components.ComponentBase.CallStateHasChangedOnAsyncCompletion(Task task)
-   at Microsoft.AspNetCore.Components.RenderTree.Renderer.GetErrorHandledTask(Task taskToHandle)

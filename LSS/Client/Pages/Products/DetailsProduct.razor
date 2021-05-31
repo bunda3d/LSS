@@ -29,19 +29,10 @@
 		}
 		<text> | </text> <span>@model.Product.SellStartDate.Value.ToString("yyyy/MM/dd")</span>
 
-		<div class="d-flex flex-row px-0 justify-content-start align-items-start marquis no-gutters">
-			<div class="mr-2 px-0">
-				<img src="@model.Product.Poster" class="product-poster" />
-			</div>
-			<div class="col mx-0 px-0 video-container text-center">
-				<iframe width="100%" height="auto" 
-				  align="middle" 
-					class="video" 
-					src="https://www.youtube.com/embed/@model.Product.Video?autoplay=1&modestbranding=1&showinfo=0"
-					modestbranding=1 
-					frameborder=0 
-					allowfullscreen>
-				</iframe>
+		<div class="row px-0 justify-content-start align-items-start marquis no-gutters">
+			<div class="col-xs-12 col-sm-6 col-md-4 mr-sm-2 mb-2 px-0 product-poster-indiv" 
+					 style="background:url('@model.Product.Poster'); background-position: top center; background-size: cover;">
+				@*<img src="@model.Product.Poster" class="product-poster-indiv" />*@
 			</div>
 		</div>
 
@@ -77,8 +68,7 @@
 	[Parameter] public int ProductId { get; set; }
 	[Parameter] public string ProductName { get; set; }
 	private RenderFragment<Category> linkCategory = (category) =>
-			@<a href="products/search?categoryId=@category.Id">@category.Name</a>
-	;
+			@<a href="products/search?categoryId=@category.Id">@category.Name</a>;
 	DetailsProductDTO model;
 
 

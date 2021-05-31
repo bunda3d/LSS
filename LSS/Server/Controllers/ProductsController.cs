@@ -1,15 +1,12 @@
-﻿using LSS.Server.Helpers;
-using LSS.Server;
+﻿using AutoMapper;
+using LSS.Server.Helpers;
+using LSS.Shared.DTOs;
 using LSS.Shared.Entities;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
-using System.Reflection;
-using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
-using LSS.Shared.DTOs;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LSS.Server.Controllers
 {
@@ -121,14 +118,57 @@ namespace LSS.Server.Controllers
         .ToListAsync();
 
       var model = new ProductUpdateDTO();
+
       model.Product = productDetailDTO.Product;
       model.SelectedCategories = productDetailDTO.Categories;
       model.NotSelectedCategories = notSelectedCategories;
       model.People = productDetailDTO.People;
+
       return model;
     }
 
-    
+
+
+    [HttpPut]
+    public async Task<ActionResult> Put(Product product)
+    {
+      //productDB = same product, but from database
+      var productDB = await context.Products.FirstOrDefaultAsync(x => x.Id == product.Id);
+
+      if (productDB == null) { return NotFound(); }
+
+      productDB = mapper.Map(product, productDB);
+
+      //so as not to replace image every edit--only when it's changed
+      if (!string.IsNullOrWhiteSpace(product.Poster))
+      {
+        var productPicture = Convert.FromBase64String(product.Poster);
+        productDB.Poster = await fileStorageService.EditFile(productPicture,
+          fileExtension, containerName, productDB.Poster);
+      }
+
+      //when updating Product: Just delete Products and People info and re add
+      await context.Database.ExecuteSqlInterpolatedAsync(
+        $"DELETE FROM ProductsPeople where ProductId = {product.Id}; DELETE FROM ProductsCategories where ProductId = {product.Id}");
+
+      if (product.ProductsPeople != null)
+      {
+        //var productsPeople = (product.ProductsPeople).AsEnumerable().ToList();
+        for (int i = 0; i < product.ProductsPeople.Count; i++)
+        {
+          product.ProductsPeople[i].Order = i + 1;
+        }
+      }
+
+      productDB.ProductsPeople = product.ProductsPeople;
+      productDB.ProductsCategories = product.ProductsCategories;
+
+
+      await context.SaveChangesAsync();
+      return NoContent();
+
+    }
+
 
 
     [HttpPost]
