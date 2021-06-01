@@ -7,9 +7,8 @@
 	<a class="btn btn-info" href="person/create">New Person</a>
 </div>
 
-<!--<Pagination CurrentPage="@paginationDTO.Page" TotalAmountPages="totalAmountPages"
-            SelectedPage="SelectedPage" />
-						-->
+<Pagination CurrentPage="@paginationDTO.Page" TotalAmountPages="totalAmountPages" SelectedPage="SelectedPage" />
+
 
 <GenericList List="People">
 	<WholeListTemplate>
@@ -50,41 +49,39 @@
 
 @code {
 	List<Person> People;
-	//PaginationDTO paginationDTO = new PaginationDTO() { RecordsPerPage = 10 };
-  private int totalAmountPages;
+	PaginationDTO paginationDTO = new PaginationDTO() { RecordsPerPage = 1 };
+	private int totalAmountPages;
 
 	protected override async Task OnInitializedAsync()
 	{
 		try
 		{
-			//await LoadPeople();
-			People = await personRepository.GetPeople();
+			await LoadPeople();
 		}
-		catch(Exception e)
+		catch(Exception ex)
 		{
 			//throw;
 		}
 	}
 
-	//private async Task LoadPeople()
-	//{
-	//	var paginatedResponse = await personRepository.GetPeople(paginationDTO);
-	//	People = paginatedResponse.Response;
-	//	totalAmountPages = paginatedResponse.TotalAmountPages;
-	//}
+	private async Task LoadPeople()
+  {
+      var paginatedResponse = await personRepository.GetPeople(paginationDTO);
+      People = paginatedResponse.Response;
+      totalAmountPages = paginatedResponse.TotalAmountPages;
+			Console.WriteLine(paginatedResponse.totalAmountPages);
+  }
 
-	
-  //private async Task SelectedPage(int page)
-  //{
-  //   paginationDTO.Page = page;
-  //    await LoadPeople();
-  //}
+  private async Task SelectedPage(int page)
+  {
+      paginationDTO.Page = page;
+      await LoadPeople();
+  }
 
 	private async Task DeleteThis(int id)
 	{
     await personRepository.DeletePerson(id);
-    //await LoadPeople();
-		People = await personRepository.GetPeople();
+		await LoadPeople();
 	}
 
 }

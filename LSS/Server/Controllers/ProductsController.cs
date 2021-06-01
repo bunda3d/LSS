@@ -40,14 +40,14 @@ namespace LSS.Server.Controllers
       var productIsFeatured = await context.Products
         .Where(x => x.IsFeatured == true)
         .Take(limit).OrderByDescending(x => x.SellStartDate)
-        .ToListAsync();      
+        .ToListAsync();
 
       var productIsNewRelease = await context.Products
         .Where(x => x.SellStartDate <= todaysDate.AddDays(50))
         .Take(limit).OrderByDescending(x => x.SellStartDate)
         .ToListAsync();
 
-      var productIsTrending = await context.Products 
+      var productIsTrending = await context.Products
         .Where(x => x.IsTrending == true ||
                   ((x.QtyInStock / (x.QtyOrderedOnPO == 0 ? 0.1M : x.QtyOrderedOnPO) * 1M) < 0.25M))
         .Take(limit).OrderByDescending(x => x.SellStartDate)
@@ -65,11 +65,11 @@ namespace LSS.Server.Controllers
         .ToListAsync();
 
       var response = new IndexPageDTO();
-          response.Featured = productIsFeatured;
-          response.NewRelease = productIsNewRelease;
-          response.Trending = productIsTrending;
-          response.OnSale = productIsOnSale;
-          response.OnClearance = productIsOnClearance;
+      response.Featured = productIsFeatured;
+      response.NewRelease = productIsNewRelease;
+      response.Trending = productIsTrending;
+      response.OnSale = productIsOnSale;
+      response.OnClearance = productIsOnClearance;
 
       return response;
     }
@@ -192,10 +192,26 @@ namespace LSS.Server.Controllers
 
       context.Add(product);
       await context.SaveChangesAsync();
-      
+
       return product.Id;
-      
+
     }
 
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> Delete(int id)
+    {
+      var product = await context.Products.FirstOrDefaultAsync(x => x.Id == id);
+
+      if (product == null)
+      {
+        return NotFound();
+      }
+
+      context.Remove(product);
+      await context.SaveChangesAsync();
+      return NoContent();
+
+
+    }
   }
 }

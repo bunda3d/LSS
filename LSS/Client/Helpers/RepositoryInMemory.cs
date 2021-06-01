@@ -22,7 +22,7 @@ namespace LSS.Client.Helpers
 					Title = "Extra Slim Light Gray Plaid Linen Blend Suit",
 					SellStartDate = new DateTime(2016, 11, 23),
 					Price = 500,
-					Poster = "/img/product/suit03a.png"
+					Poster = "/img/product/suit03a.jpg"
 				},
 				new Product(){
 					Title = "Grey Check Suit Jacket and Pant combo",
@@ -34,7 +34,7 @@ namespace LSS.Client.Helpers
 					Title = "Rust Chambray Solid Style Jacket and Pant",
 					SellStartDate = new DateTime(2010, 7, 16),
 					Price = 900,
-					Poster = "/img/product/suit04a.png"
+					Poster = "/img/product/suit04a.jpg"
 				},
 				new Product(){
 					Title = "Mens Grey Suit: 3-button ensemble",
@@ -46,7 +46,7 @@ namespace LSS.Client.Helpers
 					Title = "Extra Slim Light Gray Plaid Linen Blend Suit",
 					SellStartDate = new DateTime(2016, 11, 23),
 					Price = 500,
-					Poster = "/img/product/suit03a.png"
+					Poster = "/img/product/suit03a.jpg"
 				},
 				new Product(){
 					Title = "Grey Check Suit Jacket and Pant combo",
@@ -58,7 +58,7 @@ namespace LSS.Client.Helpers
 					Title = "Rust Chambray Solid Style Jacket and Pant",
 					SellStartDate = new DateTime(2010, 7, 16),
 					Price = 900,
-					Poster = "/img/product/suit04a.png"
+					Poster = "/img/product/suit04a.jpg"
 				},
 				new Product(){
 					Title = "Mens Grey Suit: 3-button ensemble",
@@ -70,7 +70,7 @@ namespace LSS.Client.Helpers
 					Title = "Extra Slim Light Gray Plaid Linen Blend Suit",
 					SellStartDate = new DateTime(2016, 11, 23),
 					Price = 500,
-					Poster = "/img/product/suit03a.png"
+					Poster = "/img/product/suit03a.jpg"
 				},
 				new Product(){
 					Title = "Grey Check Suit Jacket and Pant combo",
@@ -82,7 +82,7 @@ namespace LSS.Client.Helpers
 					Title = "Rust Chambray Solid Style Jacket and Pant",
 					SellStartDate = new DateTime(2010, 7, 16),
 					Price = 900,
-					Poster = "/img/product/suit04a.png"
+					Poster = "/img/product/suit04a.jpg"
 				},
 				new Product(){
 					Title = "Mens Grey Suit: 3-button ensemble",
@@ -94,7 +94,7 @@ namespace LSS.Client.Helpers
 					Title = "Extra Slim Light Gray Plaid Linen Blend Suit",
 					SellStartDate = new DateTime(2016, 11, 23),
 					Price = 500,
-					Poster = "/img/product/suit03a.png"
+					Poster = "/img/product/suit03a.jpg"
 				},
 				new Product(){
 					Title = "Grey Check Suit Jacket and Pant combo",
@@ -106,7 +106,7 @@ namespace LSS.Client.Helpers
 					Title = "Rust Chambray Solid Style Jacket and Pant",
 					SellStartDate = new DateTime(2010, 7, 16),
 					Price = 900,
-					Poster = "/img/product/suit04a.png"
+					Poster = "/img/product/suit04a.jpg"
 				}
 			};
 		}
@@ -140,7 +140,7 @@ namespace LSS.Client.Helpers
 					ClosingTime = "9pm",
 					OpenHrsMsg = ""
 				},
-								new OpenHrs(){
+				new OpenHrs(){
 					DayOfWk = "Thursday",
 					OpenTime = "9am",
 					ClosingTime = "9pm",

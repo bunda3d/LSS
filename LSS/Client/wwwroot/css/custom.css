@@ -29,13 +29,24 @@ h3 {
 
 .product-poster-indiv {
 	min-width: 16rem;
+	max-width: 100%;
+	min-height: 24rem;
+	max-width: auto;
+	object-fit: cover;
+	object-position: center top;
+	overflow: hidden;
+}
+
+.product-poster-indiv-bg {
+	min-width: 16rem;
 	width: 100%;
 	min-height: 24rem;
 	height: auto;
-
-	/*	object-fit: cover;
-	object-position: center top;*/
+	object-fit: cover;
+	object-position: center top;
+	overflow: hidden;
 }
+
 
 .thumb {
 	width: 4rem;
@@ -46,7 +57,7 @@ h3 {
 
 .marquis {
 	min-height: 24rem;
-	/*max-height: 33rem;*/
+	max-height: 33rem;
 	overflow: hidden;
 
 }

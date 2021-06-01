@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using LSS.Server.Helpers;
+using LSS.Shared.DTOs;
 using LSS.Shared.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -31,9 +32,15 @@ namespace LSS.Server.Controllers
 
 
     [HttpGet]
-    public async Task<ActionResult<List<Person>>> Get()
+    public async Task<ActionResult<List<Person>>> Get(
+      [FromQuery]PaginationDTO paginationDTO)
     {
-      return await context.People.ToListAsync();
+      var queryable = context.People.AsQueryable();
+
+      await HttpContext.InsertPaginationParametersInResponse(
+        queryable, paginationDTO.RecordsPerPage);
+
+      return await queryable.Paginate(paginationDTO).ToListAsync();
     }
 
     [HttpGet("{id}")]

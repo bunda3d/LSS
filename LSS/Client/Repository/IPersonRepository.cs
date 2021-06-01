@@ -1,4 +1,5 @@
-﻿using LSS.Shared.Entities;
+﻿using LSS.Shared.DTOs;
+using LSS.Shared.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,16 +9,13 @@ namespace LSS.Client.Repository
   {
     Task CreatePerson(Person person);
 
-
-    //Task<PaginatedResponse<List<Person>>> GetPeople(PaginationDTO paginationDTO);
-
     Task<Person> GetPersonById(int id);
 
-    Task UpdatePerson(Person person);
-
-    Task<List<Person>> GetPeople();
-
     Task<List<Person>> GetPeopleByName(string name);
+
+    Task<PaginatedResponse<List<Person>>> GetPeople(PaginationDTO paginationDTO);
+
+    Task UpdatePerson(Person person);
 
     Task DeletePerson(int Id);
 

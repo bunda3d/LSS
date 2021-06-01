@@ -1,4 +1,5 @@
 ﻿using LSS.Client.Helpers;
+using LSS.Shared.DTOs;
 using LSS.Shared.Entities;
 using System;
 using System.Collections.Generic;
@@ -20,21 +21,20 @@ namespace LSS.Client.Repository
     }
 
 
-    public async Task<List<Person>> GetPeople()
+    public async Task CreatePerson(Person person)
     {
-      var response = await httpService.Get<List<Person>>(url);
+      var response = await httpService.Post(url, person);
       if (!response.Success)
       {
         throw new ApplicationException(await response.GetBody());
       }
-      return response.Response;
     }
 
 
-    //public async Task<PaginatedResponse<List<Person>>> GetPeople(PaginationDTO paginationDTO)
-    //{
-    //  return await httpService.GetHelper<List<Person>>(url, paginationDTO);
-    //}
+    public async Task<Person> GetPersonById(int id)
+    {
+      return await httpService.GetHelper<Person>($"{url}/{id}");
+    }
 
 
     //USED BY SEARCH BOX TYPEAHEAD COMPONENT
@@ -49,19 +49,9 @@ namespace LSS.Client.Repository
     }
 
 
-    public async Task<Person> GetPersonById(int id)
+    public async Task<PaginatedResponse<List<Person>>> GetPeople(PaginationDTO paginationDTO)
     {
-      return await httpService.GetHelper<Person>($"{url}/{id}");
-    }
-
-
-    public async Task CreatePerson(Person person)
-    {
-      var response = await httpService.Post(url, person);
-      if (!response.Success)
-      {
-        throw new ApplicationException(await response.GetBody());
-      }
+      return await httpService.GetHelper<List<Person>>(url, paginationDTO);
     }
 
 
@@ -83,7 +73,5 @@ namespace LSS.Client.Repository
         throw new ApplicationException(await response.GetBody());
       }
     }
-
-
   }
 }
