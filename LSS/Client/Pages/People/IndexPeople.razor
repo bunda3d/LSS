@@ -7,7 +7,10 @@
 	<a class="btn btn-info" href="person/create">New Person</a>
 </div>
 
-<Pagination CurrentPage="@paginationDTO.Page" TotalAmountPages="totalAmountPages" SelectedPage="SelectedPage" />
+<Pagination 
+	CurrentPage="@paginationDTO.Page" 
+	TotalAmountPages="totalAmountPages" 
+	SelectedPage="SelectedPage" />
 
 
 <GenericList List="People">
@@ -47,11 +50,17 @@
 </GenericList>
 
 
+<Pagination 
+	CurrentPage="@paginationDTO.Page" 
+	TotalAmountPages="totalAmountPages" 
+	SelectedPage="SelectedPage" />
+
+
 @code {
 	List<Person> People;
-	PaginationDTO paginationDTO = new PaginationDTO() { RecordsPerPage = 1 };
+	PaginationDTO paginationDTO = new PaginationDTO() { RecordsPerPage = 10 };
 	private int totalAmountPages;
-
+	
 	protected override async Task OnInitializedAsync()
 	{
 		try
@@ -65,11 +74,11 @@
 	}
 
 	private async Task LoadPeople()
-  {
-      var paginatedResponse = await personRepository.GetPeople(paginationDTO);
-      People = paginatedResponse.Response;
-      totalAmountPages = paginatedResponse.TotalAmountPages;
-			Console.WriteLine(paginatedResponse.totalAmountPages);
+	{
+		var paginatedResponse = await personRepository.GetPeople(paginationDTO);
+		People = paginatedResponse.Response;
+		totalAmountPages = paginatedResponse.TotalAmountPages;
+		Console.WriteLine($"Total paginations: {totalAmountPages}");
   }
 
   private async Task SelectedPage(int page)

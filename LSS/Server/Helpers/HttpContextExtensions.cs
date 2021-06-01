@@ -14,12 +14,14 @@ namespace LSS.Server.Helpers
       IQueryable<T> queryable,
       int recordsPerPage)
     {
-      if (httpContext == null) { throw new ArgumentNullException(nameof(httpContext)); }
+      if (httpContext == null) 
+      { 
+        throw new ArgumentNullException(nameof(httpContext)); 
+      }
       
-
         double count = await queryable.CountAsync();
         double totalAmountPages = Math.Ceiling(count / recordsPerPage);
-      httpContext.Response.Headers.Add("totalAmountPages", totalAmountPages.ToString());
+        httpContext.Response.Headers.Add("totalAmountPages", totalAmountPages.ToString());
     }
   }
 }

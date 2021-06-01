@@ -33,13 +33,10 @@ namespace LSS.Server.Controllers
 
     [HttpGet]
     public async Task<ActionResult<List<Person>>> Get(
-      [FromQuery]PaginationDTO paginationDTO)
+      [FromQuery] PaginationDTO paginationDTO)
     {
       var queryable = context.People.AsQueryable();
-
-      await HttpContext.InsertPaginationParametersInResponse(
-        queryable, paginationDTO.RecordsPerPage);
-
+      await HttpContext.InsertPaginationParametersInResponse(queryable, paginationDTO.RecordsPerPage);
       return await queryable.Paginate(paginationDTO).ToListAsync();
     }
 
