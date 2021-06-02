@@ -11,6 +11,12 @@
       "type": "storage.azure",
       "connectionId": "AzureStorageConnection:blob",
       "secretStore": "AzureAppSettings"
+    },
+    "secrets1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.KeyVault/vaults/LSSServervault",
+      "type": "secrets.keyVault",
+      "connectionId": "AzureStorageConnection",
+      "secretStore": "AzureAppSettings"
     }
   }
 }

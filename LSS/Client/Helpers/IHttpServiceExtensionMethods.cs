@@ -32,7 +32,10 @@ namespace LSS.Client.Helpers
 
 
       var httpResponse = await httpService.Get<T>(newURL);
-      var totalAmountPages = int.Parse(httpResponse.HttpResponseMessage.Headers.GetValues("totalAmountPages").FirstOrDefault());
+      var totalAmountPages = int
+        .Parse(httpResponse.HttpResponseMessage.Headers
+        .GetValues("totalAmountPages")
+        .FirstOrDefault());
       var paginatedResponse = new PaginatedResponse<T>
       {
         Response = httpResponse.Response,

@@ -5,6 +5,7 @@ using LSS.Shared.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,7 +21,7 @@ namespace LSS.Server.Controllers
     private readonly string containerName = "products";
     private readonly string fileExtension = ".jpg";
     private readonly IMapper mapper;
-
+    private object productsqueryable;
 
     public ProductsController(ApplicationDbContext context,
       IFileStorageService fileStorageService,
@@ -196,6 +197,43 @@ namespace LSS.Server.Controllers
       return product.Id;
 
     }
+
+    [HttpPost("filter")]
+    public async Task<ActionResult<List<Product>>> Filter(ProductFilterDTO productFilterDTO)
+    {
+      var productsQueryable = context.Products.AsQueryable();
+
+      if (!string.IsNullOrWhiteSpace(productFilterDTO.Title))
+      {
+        productsQueryable = productsQueryable
+          .Where(x => x.Title.Contains(productFilterDTO.Title));
+      }
+      if (productFilterDTO.IsInStock)
+      {
+        productsQueryable = productsQueryable.Where(x => x.QtyInStock > 0);
+      }
+      if (productFilterDTO.IsTrending)
+      {
+        productsQueryable = productsQueryable.Where(x => x.IsTrending);
+      }
+      if (productFilterDTO.CategoryId != 0)
+      {
+        productsQueryable = productsQueryable
+          .Where(x => x.ProductsCategories
+          .Select(y => y.CategoryId)
+          .Contains(productFilterDTO.CategoryId));
+      }
+
+      await HttpContext.InsertPaginationParametersInResponse(productsQueryable,
+        productFilterDTO.RecordsPerPage);
+      
+      var products = await productsQueryable
+        .Paginate(productFilterDTO.Pagination)
+        .ToListAsync();
+
+      return products;
+    }
+
 
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete(int id)

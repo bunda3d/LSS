@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using Azure.Identity;
 using Microsoft.Extensions.Configuration;
+using System;
 
 namespace LSS.Server
 {

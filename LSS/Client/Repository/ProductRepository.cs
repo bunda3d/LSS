@@ -2,6 +2,8 @@
 using LSS.Shared.DTOs;
 using LSS.Shared.Entities;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LSS.Client.Repository
@@ -34,6 +36,24 @@ namespace LSS.Client.Repository
     public async Task<DetailsProductDTO> GetDetailsProductDTO(int id)
     {
       return await httpService.GetHelper<DetailsProductDTO>($"{url}/{id}");
+    }
+
+    public async Task<PaginatedResponse<List<Product>>> GetFilteredProducts(ProductFilterDTO productFilterDTO)
+    {
+      //.Post<datatype sending to server, datatype receiving>
+      var responseHTTP = await httpService
+        .Post<ProductFilterDTO, List<Product>>($"{url}/filter", productFilterDTO);
+      var totalAmountPages = int
+        .Parse(responseHTTP.HttpResponseMessage.Headers
+        .GetValues("totalAmountPages")
+        .FirstOrDefault());
+      var paginatedResponse = new PaginatedResponse<List<Product>>()
+      {
+        Response = responseHTTP.Response,
+        TotalAmountPages = totalAmountPages
+      };
+
+      return paginatedResponse;
     }
 
 
