@@ -138,10 +138,51 @@
 
   protected async override Task OnInitializedAsync()
   {
-    //var queryStrings = NavigationManager.GetQueryStrings(NavigationManager.Uri);
+    var queryStrings = navigationManager.GetQueryStrings(navigationManager.Uri);
     Categories = await categoryRepository.GetCategories();
+    if (queryStrings != null)
+    {
+      FillFilterWithQueryStrings(queryStrings);
+    }
     await LoadProducts();
+  }
 
+  private void FillFilterWithQueryStrings(Dictionary<string, string> queryStrings)
+  {
+    if (queryStrings.ContainsKey("categoryId"))
+    {
+      productFilterDTO.CategoryId = int.Parse(queryStrings["categoryId"]);
+    }
+
+    if (queryStrings.ContainsKey("title"))
+    {
+      productFilterDTO.Title = queryStrings["title"];
+    }
+    
+    if (queryStrings.ContainsKey("isInStock"))
+    {
+      productFilterDTO.IsInStock = bool.Parse(queryStrings["isInStock"]);
+    }
+
+    if (queryStrings.ContainsKey("isTrending"))
+    {
+      productFilterDTO.IsTrending = bool.Parse(queryStrings["isTrending"]);
+    }
+
+    if (queryStrings.ContainsKey("isOnSale"))
+    {
+      productFilterDTO.IsOnSale = bool.Parse(queryStrings["isOnSale"]);
+    }
+
+    if (queryStrings.ContainsKey("isOnClearance"))
+    {
+      productFilterDTO.IsOnClearance = bool.Parse(queryStrings["isOnClearance"]);
+    }
+
+    if (queryStrings.ContainsKey("page"))
+    {
+      productFilterDTO.Page = int.Parse(queryStrings["page"]);
+    }
   }
 
   private async Task SelectedPage(int page)
