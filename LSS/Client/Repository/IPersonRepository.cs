@@ -18,6 +18,6 @@ namespace LSS.Client.Repository
     Task UpdatePerson(Person person);
 
     Task DeletePerson(int Id);
-
+    Task<DetailsPersonDTO> GetDetailsPersonDTO(int id);
   }
 }

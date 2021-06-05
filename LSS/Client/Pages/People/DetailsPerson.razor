@@ -1,18 +1,99 @@
 ﻿@page "/person/{PersonId:int}"
 @page "/person/{PersonId:int}/{PersonName}"
+@inject IPersonRepository personRepository
+
+	@if (model == null)
+	{
+		<div class="container">
+			<div class="row text-center">
+				<text class="text-info">Loading...</text>
+			</div>
+			<div class="row">
+				<img src="/img/loading.gif" asp-append-version="true" width="300px"/>
+			</div>
+		</div>	
+	}
+	else
+	{
+		<h2>@model.Person.FullName (@model.Person.DateOfBirth.Value.ToString("yyyy"))</h2>
+		for (int i = 0; i < model.Categories.Count; i++)
+		{
+			if (i < model.Categories.Count - 1)
+			{
+				@linkCategory(model.Categories[i])<text>, </text>
+			}
+			else
+			{
+				@linkCategory(model.Categories[i])
+			}
+		}
+		<text> | </text> <span>@model.Person.DateOfBirth.Value.ToString("yyyy/MM/dd")</span>
+
+		<div class="row px-0 justify-content-start align-items-start marquis no-gutters">
+			@* works if want to display imgs as bg: class="col mr-sm-2 mb-2 px-0 product-poster-indiv-bg"
+			style="background:url('@model.Person.Poster'); background-position: top center; background-size: cover;"*@
+			<div class="col mr-0 mr-md-2 mb-2 px-0 product-poster-indiv" >
+				<img src="@model.Person.Photo" class="product-poster-indiv" />
+			</div>
+		</div>
+
+		<div class="col mt-3 p-0">
+			<h3>Summary</h3>
+			<div>
+				<RenderMarkdown MarkdownContent="@model.Person.Biography" />
+			</div>
+		</div>
 
 
-
-<h3>Person Details</h3>
+	@if(@model.People.Count > 0)
+	{
+		<div class="col mt-3 p-0">
+			<h3>People & Roles</h3>
+			<div class="col px-0">
+				<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Photo</th>
+						<th scope="col">Name</th>
+						<th scope="col">Role</th>
+					</tr>
+				</thead>
+				<tbody>
+				@foreach(var person in model.People)
+				{
+					<tr>
+					<td class="mb-1">
+						<img class="thumb" src="@person.Photo" />
+					</td>
+					<td>
+						<span class="d-inline-block">
+							<a href="/person/@person.Id/@person.FullName.Replace(" ", "-")">
+								@person.FullName
+							</a>
+						</span>
+					</td>
+					<td>
+						<span>@person.Role</span>
+					</td>
+					</tr>
+				}
+				</tbody>
+				</table>
+			</div>
+		</div>
+	}
+}
 
 @code {
 	[Parameter] public int PersonId { get; set; }
 	[Parameter] public string PersonName { get; set; }
+	private RenderFragment<Category> linkCategory = (category) =>
+			@<a href="products/search?categoryId=@category.Id">@category.Name</a>;
+	DetailsPersonDTO model;
 
 
-	protected override void OnInitialized()
+	protected async override Task OnInitializedAsync()
 	{
-		Console.WriteLine($"The person ID is: {PersonId}");
-		Console.WriteLine($"The person name is: {PersonName}");
+		model = await personRepository.GetDetailsPersonDTO(PersonId);
 	}
 }

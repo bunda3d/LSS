@@ -37,6 +37,7 @@ namespace LSS.Server
     public DbSet<About> About { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Color> Colors { get; set; }
+    public DbSet<Customer> Customers { get; set; }
     public DbSet<Employee> Employees { get; set; }
     public DbSet<PatternStyle> PatternStyles { get; set; }
     public DbSet<Person> People { get; set; }
@@ -45,6 +46,7 @@ namespace LSS.Server
     public DbSet<SizeType> SizeTypes { get; set; }
     public DbSet<StarRating> StarRatings { get; set; }
     public DbSet<Style> Styles { get; set; }
+    public DbSet<Vendor> Vendors { get; set; }
 
     //M:M Join Tables
     public DbSet<ProductsCategories> ProductsCategories { get; set; }

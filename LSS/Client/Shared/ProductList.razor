@@ -6,10 +6,11 @@
 	
 		@*pass any list (i.e. "Products" to generic list*@
 		<GenericList List="Products">
-			<ElementTemplate>
+			<ElementTemplate Context="product">
 				<IndividualProduct 
-					Product="context"
-					DeleteProduct="DeleteProduct" />
+					Product="product"
+					DeleteProduct="DeleteProduct" 
+					@key="product.Id" />
 			</ElementTemplate>
 		</GenericList>
 </div>

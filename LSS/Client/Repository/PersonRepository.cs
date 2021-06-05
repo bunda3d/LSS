@@ -48,6 +48,10 @@ namespace LSS.Client.Repository
       return response.Response;
     }
 
+    public async Task<DetailsPersonDTO> GetDetailsPersonDTO(int id)
+    {
+      return await httpService.GetHelper<DetailsPersonDTO>($"{url}/{id}");
+    }
 
     public async Task<PaginatedResponse<List<Person>>> GetPeople(PaginationDTO paginationDTO)
     {
