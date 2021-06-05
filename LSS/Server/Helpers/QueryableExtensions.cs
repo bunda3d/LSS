@@ -1,4 +1,5 @@
 ﻿using LSS.Shared.DTOs;
+using LSS.Shared.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,11 @@ namespace LSS.Server.Helpers
       return queryable
         .Skip((paginationDTO.Page - 1) * paginationDTO.RecordsPerPage)
         .Take(paginationDTO.RecordsPerPage);
+    }
+
+    public static bool IsBetween(this DateTime listDate, DateTime startDate, DateTime endDate)
+    {
+      return listDate >= startDate && listDate <= endDate;
     }
   }
 }

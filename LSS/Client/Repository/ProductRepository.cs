@@ -21,7 +21,7 @@ namespace LSS.Client.Repository
       this.httpService = httpService;
     }
 
-    //Using Data Transfer Objectss (DTOs)
+    //Using Data Transfer Objects (DTOs)
 
     public async Task<IndexPageDTO> GetIndexPageDTO()
     {
@@ -41,12 +41,8 @@ namespace LSS.Client.Repository
     public async Task<PaginatedResponse<List<Product>>> GetFilteredProducts(ProductFilterDTO productFilterDTO)
     {
       //.Post<datatype sending to server, datatype receiving>
-      var responseHTTP = await httpService
-        .Post<ProductFilterDTO, List<Product>>($"{url}/filter", productFilterDTO);
-      var totalAmountPages = int
-        .Parse(responseHTTP.HttpResponseMessage.Headers
-        .GetValues("totalAmountPages")
-        .FirstOrDefault());
+      var responseHTTP = await httpService.Post<ProductFilterDTO, List<Product>>($"{url}/filter", productFilterDTO);
+      var totalAmountPages = int.Parse(responseHTTP.HttpResponseMessage.Headers.GetValues("totalAmountPages").FirstOrDefault());
       var paginatedResponse = new PaginatedResponse<List<Product>>()
       {
         Response = responseHTTP.Response,

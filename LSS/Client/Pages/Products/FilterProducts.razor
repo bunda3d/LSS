@@ -2,6 +2,7 @@
 <!--inject IRepository repository-->
 @inject IProductRepository productRepository
 @inject ICategoryRepository categoryRepository
+@inject NavigationManager navigationManager
 
 <h3>Search Products</h3>
 
@@ -27,13 +28,10 @@
       <select 
         class="form-control" 
         id="select-category"
-        placeholder="--Select a Category--"
         @bind="productFilterDTO.CategoryId">
-        @*
         <option value="0">
           --Select a Category--
         </option>
-        *@
         @foreach (var category in Categories)
         {
           <option value="@category.Id">@category.Name</option>
@@ -45,13 +43,13 @@
 
     <div class="col-md form-group my-3">
       <div class="custom-control custom-switch">
-			  <input type="checkbox" 
+			  <input type="checkbox"
           @bind="@productFilterDTO.IsInStock"
           class="custom-control-input" 
           id="IsInStockFlag">
 
 			  <label class="custom-control-label" for="IsInStockFlag">
-          In Stock (In Stock items are available for purchase)
+          In Stock (available for purchase)
         </label>
       </div>
 		</div>
@@ -64,7 +62,7 @@
           id="IsTrendingFlag">
 
 			  <label class="custom-control-label" for="IsTrendingFlag">
-          Trending (trending items have nearly sold out)
+          Trending (nearly sold out)
         </label>
       </div>
 		</div>
@@ -72,12 +70,12 @@
 		<div class="col-md form-group my-3">
       <div class="custom-control custom-switch">
 			  <input type="checkbox" 
-          @bind="@isMarkedDownFlag" 
+          @bind="@productFilterDTO.IsOnSale" 
           class="custom-control-input" 
-          id="isMarkedDownFlag">
+          id="isOnSaleFlag">
 
-			  <label class="custom-control-label" for="isMarkedDownFlag">
-          Sale items
+			  <label class="custom-control-label" for="isOnSaleFlag">
+          Sale items (discounted up-to 25%)
         </label>
       </div>
 		</div>
@@ -85,16 +83,17 @@
     <div class="col-md form-group my-3">
       <div class="custom-control custom-switch">
 			  <input type="checkbox" 
-          @bind="@onClearanceFlag" 
+          @bind="@productFilterDTO.IsOnClearance" 
           class="custom-control-input" 
           id="onClearanceFlag">
 
 			  <label class="custom-control-label" for="onClearanceFlag">
-          Clearance items
+          Clearance items (over 25% off)
         </label>
       </div>
 		</div>
   </div>
+
   <div class="row my-3">
     <button type="button" 
       class="btn btn-outline-primary mb-2 mx-sm-3" 
@@ -113,35 +112,77 @@
 </div>
 </EditForm>
 
+<Pagination 
+  CurrentPage="productFilterDTO.Page" 
+  TotalAmountPages="totalAmountPages"
+  SelectedPage="SelectedPage"
+  />
+
 <!--display search results-->
 <ProductList Products="Products"></ProductList>
+
+
+<Pagination 
+  CurrentPage="productFilterDTO.Page" 
+  TotalAmountPages="totalAmountPages"
+  SelectedPage="SelectedPage"
+  />
+
 
 @code {
   //vars to display search results:
   private List<Product> Products;
-  private ProductFilterDTO productFilterDTO = new ProductFilterDTO();
-  //vars for search form:
-  string title = "";
-  string selectedCategory = "0";
-  bool isInStockFlag = true;
-  bool isTrendingFlag = false;
-  bool isMarkedDownFlag = false;
-  bool onClearanceFlag = false;
+  private ProductFilterDTO productFilterDTO = new ProductFilterDTO() { RecordsPerPage = 1 };
+  private int totalAmountPages;
   private List<Category> Categories = new List<Category>();
 
   protected async override Task OnInitializedAsync()
   {
+    //var queryStrings = NavigationManager.GetQueryStrings(NavigationManager.Uri);
     Categories = await categoryRepository.GetCategories();
+    await LoadProducts();
+
+  }
+
+  private async Task SelectedPage(int page)
+  {
+    productFilterDTO.Page = page;
     await LoadProducts();
   }
 
   private async Task LoadProducts()
   {
+    var queryString = GenerateQueryString();
+    if (!string.IsNullOrWhiteSpace(queryString))
+    {
+      queryString = $"?{queryString}";
+      navigationManager.NavigateTo($"product/search/{queryString}");
+    }
     var paginatedResponse = await productRepository.GetFilteredProducts(productFilterDTO);
     Products = paginatedResponse.Response;
+    totalAmountPages = paginatedResponse.TotalAmountPages;
   }
 
+  private string GenerateQueryString()
+  {
+    var queryStringsDict = new Dictionary<string, string>();
+    queryStringsDict["categoryId"] = productFilterDTO.CategoryId.ToString();
+    queryStringsDict["title"] = productFilterDTO.Title ?? "";
+    queryStringsDict["inStock"] = productFilterDTO.IsInStock.ToString();
+    queryStringsDict["onClearance"] = productFilterDTO.IsOnClearance.ToString();
+    queryStringsDict["onSale"] = productFilterDTO.IsOnSale.ToString();
+    queryStringsDict["trending"] = productFilterDTO.IsTrending.ToString();
+    queryStringsDict["page"] = productFilterDTO.Page.ToString();
 
+    var defaultValue = new List<string>() { "false", "", "0" };
+
+    // example result: categoryID=4&title=classic&inStock=true.......
+
+    return string.Join("&", queryStringsDict
+      .Where(x => !defaultValue.Contains(x.Value.ToLower()))
+      .Select(x => $"{x.Key}={System.Web.HttpUtility.UrlEncode(x.Value)}")
+      .ToArray());
+  }
 
 
 
@@ -151,31 +192,25 @@
   private async Task SearchForProducts()
   {
     await LoadProducts();
-
-    //console logging
-    Console.WriteLine($"title: {title}");
-    Console.WriteLine($"selectedCategory: {selectedCategory}");
-    Console.WriteLine($"isMarkedDownFlag: {isMarkedDownFlag}");
-    Console.WriteLine($"OnClearanceFlag: {onClearanceFlag}");
   }
   
   private async Task ClearSearch()
   {
     productFilterDTO.Title = "";
     productFilterDTO.CategoryId = 0;
-    productFilterDTO.IsInStock = false;
+    productFilterDTO.IsInStock = true;
     productFilterDTO.IsTrending = false;
-    @*productFilterDTO.isMarkedDownFlag = false;*@
-    @*productFilterDTO.onClearanceFlag = false;*@
+    productFilterDTO.IsOnSale = false;
+    productFilterDTO.IsOnClearance = false;
 
     await LoadProducts();
   }
 
-  private void TitleKeyPress(KeyboardEventArgs e)
+  private async Task TitleKeyPress(KeyboardEventArgs e)
   {
     if (e.Key == "Enter")
     {
-      SearchForProducts();
+      await SearchForProducts();
     }
   }
 }

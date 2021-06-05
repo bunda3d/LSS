@@ -21,7 +21,6 @@ namespace LSS.Server.Controllers
     private readonly string containerName = "products";
     private readonly string fileExtension = ".jpg";
     private readonly IMapper mapper;
-    private object productsqueryable;
 
     public ProductsController(ApplicationDbContext context,
       IFileStorageService fileStorageService,
@@ -35,33 +34,41 @@ namespace LSS.Server.Controllers
     [HttpGet]
     public async Task<ActionResult<IndexPageDTO>> Get()
     {
-      var limit = 6;
-      var todaysDate = DateTime.Today;
+      //limit = number of prods shown for ea filter on splash page
+      var limit = 12;
+      DateTime todaysDate = DateTime.Today;
+      DateTime newReleaseWindowStart = todaysDate.AddDays(-50);
 
+      //prod is featured if flagged, appears at top of splash page
       var productIsFeatured = await context.Products
         .Where(x => x.IsFeatured == true)
         .Take(limit).OrderByDescending(x => x.SellStartDate)
         .ToListAsync();
 
+      //prod considered new release if orig listing date was in last 50 days
       var productIsNewRelease = await context.Products
-        .Where(x => x.SellStartDate <= todaysDate.AddDays(50))
+        .Where(x => x.SellStartDate >= newReleaseWindowStart && x.SellStartDate <= todaysDate)
         .Take(limit).OrderByDescending(x => x.SellStartDate)
         .ToListAsync();
 
+      //prod is trending if flagged or stock unit qty (25% or less) of orig. PO unit qty
       var productIsTrending = await context.Products
         .Where(x => x.IsTrending == true ||
-                  ((x.QtyInStock / (x.QtyOrderedOnPO == 0 ? 0.1M : x.QtyOrderedOnPO) * 1M) < 0.25M))
+                  (((x.QtyInStock == 0 ? 0.01M : x.QtyInStock) / (x.QtyOrderedOnPO == 0 ? 0.01M : x.QtyOrderedOnPO) * 1M) < 0.26M))
         .Take(limit).OrderByDescending(x => x.SellStartDate)
         .ToListAsync();
 
+      //prod is on sale if flagged or is up-to 25% off PO's unit cost (inverted > 0.74)
       var productIsOnSale = await context.Products
-        .Where(x => x.IsOnSale == true)
+        .Where(x => x.IsOnSale == true || 
+                   ((((x.Price == 0 ? 0.01M : x.Price) / (x.UnitCostOnPO == 0 ? 0.01M : x.UnitCostOnPO)) > 0.74M) ? true : false))
         .Take(limit).OrderByDescending(x => x.SellStartDate)
         .ToListAsync();
 
+      //prod is on clearance if flagged or is over 25% off PO's unit cost (inverted < 0.75)
       var productIsOnClearance = await context.Products
         .Where(x => x.IsOnClearance == true ||
-                  ((x.Price / (x.UnitCostOnPO == 0 ? 0.1M : x.UnitCostOnPO)) < 0.75M))
+                  (((x.Price == 0 ? 0.01M : x.Price) / (x.UnitCostOnPO == 0 ? 0.01M : x.UnitCostOnPO)) < 0.75M))
         .Take(limit).OrderByDescending(x => x.SellStartDate)
         .ToListAsync();
 
@@ -154,7 +161,6 @@ namespace LSS.Server.Controllers
 
       if (product.ProductsPeople != null)
       {
-        //var productsPeople = (product.ProductsPeople).AsEnumerable().ToList();
         for (int i = 0; i < product.ProductsPeople.Count; i++)
         {
           product.ProductsPeople[i].Order = i + 1;
@@ -163,7 +169,6 @@ namespace LSS.Server.Controllers
 
       productDB.ProductsPeople = product.ProductsPeople;
       productDB.ProductsCategories = product.ProductsCategories;
-
 
       await context.SaveChangesAsync();
       return NoContent();
@@ -216,6 +221,14 @@ namespace LSS.Server.Controllers
       {
         productsQueryable = productsQueryable.Where(x => x.IsTrending);
       }
+      if (productFilterDTO.IsOnSale)
+      {
+        productsQueryable = productsQueryable.Where(x => x.IsOnSale);
+      }
+      if (productFilterDTO.IsOnClearance)
+      {
+        productsQueryable = productsQueryable.Where(x => x.IsOnClearance);
+      }
       if (productFilterDTO.CategoryId != 0)
       {
         productsQueryable = productsQueryable
@@ -227,9 +240,7 @@ namespace LSS.Server.Controllers
       await HttpContext.InsertPaginationParametersInResponse(productsQueryable,
         productFilterDTO.RecordsPerPage);
       
-      var products = await productsQueryable
-        .Paginate(productFilterDTO.Pagination)
-        .ToListAsync();
+      var products = await productsQueryable.Paginate(productFilterDTO.Pagination).ToListAsync();
 
       return products;
     }

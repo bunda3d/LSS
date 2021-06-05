@@ -32,7 +32,7 @@ namespace LSS.Server
 			services.AddRazorPages();
 
 			services.AddDbContext<ApplicationDbContext>(options =>
-				options.UseSqlServer(Configuration
+        options.UseSqlServer(Configuration
 				.GetConnectionString("DefaultConnection")));
 
 			services.AddAutoMapper(typeof(Startup));
