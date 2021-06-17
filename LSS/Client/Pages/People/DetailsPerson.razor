@@ -1,6 +1,8 @@
 ﻿@page "/person/{PersonId:int}"
 @page "/person/{PersonId:int}/{PersonName}"
 @inject IPersonRepository personRepository
+@inject NavigationManager navigationManager
+
 
 	@if (model == null)
 	{
@@ -16,17 +18,7 @@
 	else
 	{
 		<h2>@model.Person.FullName (@model.Person.DateOfBirth.Value.ToString("yyyy"))</h2>
-		for (int i = 0; i < model.Categories.Count; i++)
-		{
-			if (i < model.Categories.Count - 1)
-			{
-				@linkCategory(model.Categories[i])<text>, </text>
-			}
-			else
-			{
-				@linkCategory(model.Categories[i])
-			}
-		}
+
 		<text> | </text> <span>@model.Person.DateOfBirth.Value.ToString("yyyy/MM/dd")</span>
 
 		<div class="row px-0 justify-content-start align-items-start marquis no-gutters">
@@ -87,10 +79,8 @@
 @code {
 	[Parameter] public int PersonId { get; set; }
 	[Parameter] public string PersonName { get; set; }
-	private RenderFragment<Category> linkCategory = (category) =>
-			@<a href="products/search?categoryId=@category.Id">@category.Name</a>;
-	DetailsPersonDTO model;
 
+	 DetailsPersonDTO model;
 
 	protected async override Task OnInitializedAsync()
 	{

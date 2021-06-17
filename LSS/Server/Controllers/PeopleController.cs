@@ -30,7 +30,6 @@ namespace LSS.Server.Controllers
       this.mapper = mapper;
     }
 
-
     [HttpGet]
     public async Task<ActionResult<List<Person>>> Get(
       [FromQuery] PaginationDTO paginationDTO)
@@ -40,12 +39,41 @@ namespace LSS.Server.Controllers
       return await queryable.Paginate(paginationDTO).ToListAsync();
     }
 
+    //[HttpGet("{id}")]
+    //public async Task<ActionResult<Person>> Get(int id)
+    //{
+    //  var person = await context.People.FirstOrDefaultAsync(x => x.Id == id);
+    //  if (person == null) { return NotFound(); }
+    //  return person;
+    //}
+
     [HttpGet("{id}")]
-    public async Task<ActionResult<Person>> Get(int id)
+    public async Task<ActionResult<DetailsPersonDTO>> Get(int id)
     {
-      var person = await context.People.FirstOrDefaultAsync(x => x.Id == id);
+      var person = await context.People.Where(x => x.Id == id)
+        .Include(x => x.ProductsPeople).ThenInclude(x => x.Product)
+        .FirstOrDefaultAsync();
+
+      var name = person.FullName;
+
       if (person == null) { return NotFound(); }
-      return person; 
+
+      person.ProductsPeople = person.ProductsPeople.OrderBy(x => x.Order).ToList();
+
+      var model = new DetailsPersonDTO();
+      model.Person = person;
+
+      model.People = person.ProductsPeople.Select(x =>
+        new Person
+        {
+          NameFirst = x.Person.NameFirst,
+          NameLast = x.Person.NameLast,
+          Photo = x.Person.Photo,
+          Role = x.Role,
+          Id = x.PersonId
+        }).ToList();
+
+      return model;
     }
 
     //filtering multiple names, like 1st and last: https://bit.ly/3vgSCUj
@@ -56,8 +84,7 @@ namespace LSS.Server.Controllers
       if (string.IsNullOrWhiteSpace(searchText)) { return new List<Person>(); }
       return await context.People.Where(x => x.NameFirst.Contains(searchText)
         || x.NameLast.Contains(searchText)).Take(5).ToListAsync();
-    } 
-
+    }
 
     [HttpPost]
     public async Task<ActionResult<int>> Post(Person person)
@@ -74,7 +101,6 @@ namespace LSS.Server.Controllers
       return person.Id;
     }
 
-
     [HttpPut]
     public async Task<ActionResult> Put(Person person)
     {
@@ -89,15 +115,13 @@ namespace LSS.Server.Controllers
       if (!string.IsNullOrWhiteSpace(person.Photo))
       {
         var personPicture = Convert.FromBase64String(person.Photo);
-        personDB.Photo = await fileStorageService.EditFile(personPicture, 
+        personDB.Photo = await fileStorageService.EditFile(personPicture,
           fileExtension, containerName, personDB.Photo);
       }
 
       await context.SaveChangesAsync();
       return NoContent();
-
     }
-
 
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete(int id)
@@ -112,6 +136,5 @@ namespace LSS.Server.Controllers
       await context.SaveChangesAsync();
       return NoContent();
     }
-
   }
 }

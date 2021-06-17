@@ -15,8 +15,8 @@ namespace LSS.Client.Helpers
         throw new ApplicationException(await response.GetBody());
       }
       return response.Response;
-
     }
+
     public static async Task<PaginatedResponse<T>> GetHelper<T>(
       this IHttpService httpService, string url, PaginationDTO paginationDTO)
     {
@@ -30,7 +30,6 @@ namespace LSS.Client.Helpers
         newURL = $"{url}?page={paginationDTO.Page}&recordsPerPage={paginationDTO.RecordsPerPage}";
       }
 
-
       var httpResponse = await httpService.Get<T>(newURL);
       var totalAmountPages = int
         .Parse(httpResponse.HttpResponseMessage.Headers
@@ -43,8 +42,6 @@ namespace LSS.Client.Helpers
       };
 
       return paginatedResponse;
-
     }
-
   }
 }

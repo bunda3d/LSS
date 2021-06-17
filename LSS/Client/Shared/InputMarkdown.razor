@@ -9,20 +9,24 @@
 </div>
 
 <div class="row my-3 mx-0">
-  <div class="col-md-6 pl-0">
+  <div class="col-md-6 pr-md-2 px-0 mx-0">
     <p>
       <label>@LabelMarkup</label>
         <div>
-          <InputTextArea @bind-Value="CurrentValue" />
+          <InputTextArea 
+            @bind-Value="CurrentValue" />
           <ValidationMessage For="For" />
         </div>
     </p>
   </div>
-  <div class="col-md-6 pr-0">
-    <label>@LabelPreview</label>
-    <div class="markdown-container mr-0">
-      <RenderMarkdown MarkdownContent="@CurrentValue"/>
-    </div>
+  <div class="col-md-6 pl-md-2 px-0 mx-0">
+    <p>
+      <label>@LabelPreview</label>
+        <div class="markdown-container">
+          <RenderMarkdown 
+            MarkdownContent="@CurrentValue"/>
+        </div>
+    </p>
   </div>
 </div>
 

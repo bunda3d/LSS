@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace LSS.Client.Repository
 {
-
   public class PersonRepository : IPersonRepository
-  {  
-    
+  {
     private readonly IHttpService httpService;
+
     //controller's endpoint
     private string url = "api/people";
 
@@ -19,23 +18,6 @@ namespace LSS.Client.Repository
     {
       this.httpService = httpService;
     }
-
-
-    public async Task CreatePerson(Person person)
-    {
-      var response = await httpService.Post(url, person);
-      if (!response.Success)
-      {
-        throw new ApplicationException(await response.GetBody());
-      }
-    }
-
-
-    public async Task<Person> GetPersonById(int id)
-    {
-      return await httpService.GetHelper<Person>($"{url}/{id}");
-    }
-
 
     //USED BY SEARCH BOX TYPEAHEAD COMPONENT
     public async Task<List<Person>> GetPeopleByName(string name)
@@ -48,6 +30,8 @@ namespace LSS.Client.Repository
       return response.Response;
     }
 
+    //Using Data Transfer Objects (DTOs)
+
     public async Task<DetailsPersonDTO> GetDetailsPersonDTO(int id)
     {
       return await httpService.GetHelper<DetailsPersonDTO>($"{url}/{id}");
@@ -58,6 +42,21 @@ namespace LSS.Client.Repository
       return await httpService.GetHelper<List<Person>>(url, paginationDTO);
     }
 
+    //CRUD
+
+    public async Task CreatePerson(Person person)
+    {
+      var response = await httpService.Post(url, person);
+      if (!response.Success)
+      {
+        throw new ApplicationException(await response.GetBody());
+      }
+    }
+
+    public async Task<Person> GetPersonById(int id)
+    {
+      return await httpService.GetHelper<Person>($"{url}/{id}");
+    }
 
     public async Task UpdatePerson(Person person)
     {
@@ -67,7 +66,6 @@ namespace LSS.Client.Repository
         throw new ApplicationException(await response.GetBody());
       }
     }
-
 
     public async Task DeletePerson(int Id)
     {

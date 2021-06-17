@@ -8,11 +8,10 @@ using System.Threading.Tasks;
 
 namespace LSS.Client.Repository
 {
-
   public class ProductRepository : IProductRepository
-  {  
-    
+  {
     private readonly IHttpService httpService;
+
     //controller's endpoint
     private string url = "api/products";
 
@@ -52,8 +51,6 @@ namespace LSS.Client.Repository
       return paginatedResponse;
     }
 
-
-
     //CRUD
 
     public async Task<int> CreateProduct(Product product)
@@ -75,7 +72,6 @@ namespace LSS.Client.Repository
         throw new ApplicationException(await response.GetBody());
       }
     }
-
 
     public async Task DeleteProduct(int Id)
     {

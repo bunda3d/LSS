@@ -1,28 +1,28 @@
 ﻿@inject IPersonRepository personRepository
 
 
-<div class="form my-4">
-	<EditForm Model="Product" OnValidSubmit="OnDataAnnotationsValidated">
+<div class="form row my-4">
+	<EditForm Model="Product" 
+		OnValidSubmit="OnDataAnnotationsValidated"
+		class="col-xl-8" >
 		<DataAnnotationsValidator />
 
 		<!--IDs-->
 
-		<div class="form-row">
-			<div class="col form-group my-3">
-				<label for="ProductNumber">Product Number:
-					<InputNumber class="form-control" 
+		<div class="form-row g-5">
+			<div class="form-group col-md-6 my-3">
+				<label for="ProductNumber">Product Number:</label>
+					<InputNumber class="form-control col-11" 
 					@bind-Value="@Product.ProductNumber"
 					placeholder="123456" />
-				</label>
 					<ValidationMessage For="@(() => Product.ProductNumber)" />	 
 			</div>
 
-			<div class="col form-group my-3">
-				<label for="Title">Title:
-					<InputText class="form-control" 
+			<div class="form-group col-md-6 my-3">
+				<label for="Title">Title:</label>
+					<InputText class="form-control col-11" 
 					@bind-Value="@Product.Title"
-					placeholed="Descriptive sentence here" />
-				</label>
+					placeholder="Descriptive product sentence" />
 					<ValidationMessage For="@(() => Product.Title)" />	 
 			</div>
 		</div>
@@ -77,107 +77,86 @@
 
 		<!--Price-->
 
-		<div class="form-row">
-		  <div class="col form-group my-3">
-				<p>		 
-					<label for="Price">List Price:
-						<InputNumber step=".01" class="form-control form-control-xs" @bind-Value="@Product.Price"/>
-						<ValidationMessage For="@(() => Product.Price)" />	 
-					</label>
-				</p>
+		<div class="form-row g-5">
+		  <div class="form-group col-md-6 my-3">
+				<label for="Price">List Price:</label>
+					<InputNumber step=".01" class="form-control col-11" @bind-Value="@Product.Price"/>
+					<ValidationMessage For="@(() => Product.Price)" />	 
 			</div>
 
-		  <div class="col form-group my-3">
-				<p>		 
-					<label for="UnitCostOnPO">Unit Purchase Price (from PO):
-						<InputNumber step=".01" class="form-control form-control-xs" @bind-Value="@Product.UnitCostOnPO"/>
-						<ValidationMessage For="@(() => Product.UnitCostOnPO)" />	 
-					</label>
-				</p>
+		  <div class="form-group col-md-6 my-3">
+				<label for="UnitCostOnPO">Unit Purchase Price (from PO):</label>
+					<InputNumber step=".01" class="form-control col-11" @bind-Value="@Product.UnitCostOnPO"/>
+					<ValidationMessage For="@(() => Product.UnitCostOnPO)" />	 
 			</div>
 		</div>
 
-		<div class="form-row">
-			<div class="col form-group my-3 p-0">
-				<p>		 
-					<label for="ProductQtyOrdered">Product Quantity Ordered (from P.O.):
-						<InputNumber class="form-control" @bind-Value="@Product.QtyOrderedOnPO"/>
-						<ValidationMessage For="@(() => Product.QtyOrderedOnPO)" />	 
-					</label>
-				</p>
+		<!--Qty-->
+
+		<div class="form-row g-5">
+			<div class="form-group col-md-6 my-3">
+				<label for="ProductQtyOrdered">Product Quantity Ordered (from P.O.):</label>
+					<InputNumber class="form-control col-11" @bind-Value="@Product.QtyOrderedOnPO"/>
+					<ValidationMessage For="@(() => Product.QtyOrderedOnPO)" />	 
 			</div>
-			<div class="col form-group my-3 p-0">
-				<p>		 
-					<label for="ProductQtyInStock">Product Quantity In Stock:
-						<InputNumber class="form-control" @bind-Value="@Product.QtyInStock"/>
-						<ValidationMessage For="@(() => Product.QtyInStock)" />	 
-					</label>
-				</p>
+			<div class="form-group col-md-6 my-3">
+				<label for="ProductQtyInStock">Product Quantity In Stock:</label>
+					<InputNumber step="25" class="form-control col-11" @bind-Value="@Product.QtyInStock"/>
+					<ValidationMessage For="@(() => Product.QtyInStock)" />	 
 			</div>
 		</div>
 
-		<div class="form-row ">
-		  <div class="col form-group my-3">
-					<p>		 
-						<label for="SalesEventStartDate">Sales Event Start Date:
-							<InputDate class="form-control" @bind-Value="@Product.SalesEventStartDate"/>
-							<ValidationMessage For="@(() => Product.SalesEventStartDate)" />	 
-						</label>
-					</p>
+		<!--Sales Event details-->
+
+		<div class="form-row g-5">
+		  <div class="form-group col-md-6 my-3">
+				<label for="SalesEventStartDate">Sales Event Start Date:</label>
+					<InputDate class="form-control col-11" 
+						@bind-Value="@Product.SalesEventStartDate"/>
+					<ValidationMessage For="@(() => Product.SalesEventStartDate)" />	 
 			</div>
-			<div class="col form-group my-3 p-0">
-					<p>		 
-						<label for="DaysToManufacture">Sales Event Length (in Days):
-							<InputNumber class="form-control" 
-								@bind-Value="@Product.SaleLengthInDays"
-								DisplayName="Days To Manufacture"/>
-							<ValidationMessage For="@(() => Product.SaleLengthInDays)" />	 
-						</label>
-					</p>
+			<div class="form-group col-md-6 my-3">
+				<label for="DaysToManufacture">Sales Event Length (in Days):</label>
+					<InputNumber class="form-control col-11" 
+						@bind-Value="@Product.SaleLengthInDays"
+						DisplayName="Days To Manufacture"/>
+					<ValidationMessage For="@(() => Product.SaleLengthInDays)" />	 
 			</div>
 		</div>
 
 		<!--Dates-->
 	  
-		<div class="form-row">
-		  <div class="col-md-6 form-group my-3">
-					<p>		 
-						<label for="SellStartDate">1st Date Product is Sold:
-							<InputDate class="form-control" @bind-Value="@Product.SellStartDate"/>
-							<ValidationMessage For="@(() => Product.SellStartDate)" />	 
-						</label>
-					</p>
-				</div>
-
-			<div class="col-sm col-md-6 col-lg-4 col-xl-3 form-group my-3">
-					<p>		 
-						<label for="DiscontinuedDate">Product Discontinued Date:
-							<InputDate class="form-control" @bind-Value="@Product.DiscontinuedDate"/>
-							<ValidationMessage For="@(() => Product.DiscontinuedDate)" />	 
-						</label>
-					</p>
-				</div>
+		<div class="form-row g-5">
+		  <div class="form-group col-md-6 my-3">
+				<label for="SellStartDate">1st Date Product is Sold:</label>
+					<InputDate class="form-control col-11" @bind-Value="@Product.SellStartDate"/>
+					<ValidationMessage For="@(() => Product.SellStartDate)" />	 
 			</div>
 
+			<div class="form-group col-md-6 my-3">
+				<label for="DiscontinuedDate">Product Discontinued Date:</label>
+					<InputDate class="form-control col-11" @bind-Value="@Product.DiscontinuedDate"/>
+					<ValidationMessage For="@(() => Product.DiscontinuedDate)" />	 
+			</div>
+		</div>
+
 		<!--File upload-->
-	  
-		<div class="form-group">
-			<p>
-				<InputImg Label="Main Product Image Upload:" 
-					OnSelectedImage="PosterSelected" ImageURL="@imageURL" />
-				<ValidationMessage For="@(() => Product.Poster)" />	 
-			</p>
+
+		<div class="form-row g-5">
+			<InputImg Label="Main Product Image Upload:" 
+				OnSelectedImage="PosterSelected" ImageURL="@imageURL" />
+			<ValidationMessage For="@(() => Product.Poster)" />	 
 		</div>
 
 		<!--Product Video URL (YouTube)-->
-		
-		<div class="form-group">
-			<p>		 
-				<label for="Video">Product Video (YouTube URL):
-					<InputText class="form-control" @bind-Value="@Product.Video"/>
+		<div class="form-row g-5">
+			<div class="form-group col-lg-6 my-3">
+				<label for="Video">Product Video (YouTube URL):</label>
+					<InputText class="form-control col-lg-11" 
+						@bind-Value="@Product.Video"
+						placeholder="Last URL segment, i.e.: sqt0k-A6ZT4" />
 					<ValidationMessage For="@(() => Product.Video)" />	 
-				</label>
-			</p>
+			</div>
 		</div>
 		
 		<!--Summary Markdown-->

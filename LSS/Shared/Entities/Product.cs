@@ -23,7 +23,7 @@ namespace LSS.Shared.Entities
 		[Column(TypeName = "varchar(1024)")]
 		public string Summary {get; set;}
 
-    [DataType(DataType.Currency)]
+		[DataType(DataType.Currency)]
 		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "${0:c}")]
 		[Column(TypeName = "decimal(8,2)")]
 		public decimal Price { get; set; }
@@ -54,7 +54,6 @@ namespace LSS.Shared.Entities
 			ApplyFormatInEditMode = true)]
 		public DateTime? SalesEventStartDate { get; set; }
 
-    [Required(ErrorMessage = "List Date of product is required.")]
 		[DisplayFormat(DataFormatString = "{yyyy-MM-dd}", 
 			ApplyFormatInEditMode = true)]
 		public DateTime? SellStartDate { get; set; }

@@ -112,20 +112,23 @@ h3 {
 }
 
 /**for the Markdown components in forms*/
+
 .form-markdown {
-	display: flex;
+/*	display: flex; */
 }
 
 	.form-markdown textarea {
-		min-width: 18rem;
+		min-width: 14rem;
+		width: 100%;
 		min-height: 24rem;
-		margin-right: 1rem;
+		border-radius: 4px;
 	}
 
 	.form-markdown .markdown-container {
 		border: 1px dashed black;
-		width: 18rem;
+		min-width: 14rem;
 		min-height: 24rem;
+		border-radius: 4px;
 	}
 
 /**for multi-select list*/
@@ -141,6 +144,7 @@ h3 {
 	padding: 0;
 	border-radius: 3px;
 	border: 1px solid #ccc;
+	margin-bottom: 0;
 }
 
 	.selectable-ul li {

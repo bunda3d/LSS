@@ -13,11 +13,14 @@ namespace LSS.Client.Repository
 
     Task<List<Person>> GetPeopleByName(string name);
 
-    Task<PaginatedResponse<List<Person>>> GetPeople(PaginationDTO paginationDTO);
-
     Task UpdatePerson(Person person);
 
     Task DeletePerson(int Id);
+
+    //using Data Transfer Objects
+
     Task<DetailsPersonDTO> GetDetailsPersonDTO(int id);
+
+    Task<PaginatedResponse<List<Person>>> GetPeople(PaginationDTO paginationDTO);
   }
 }
