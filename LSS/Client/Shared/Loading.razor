@@ -1,0 +1,17 @@
+﻿<div class="container">
+	<div class="row text-center">
+		<text class="text-info">@InfoText</text>
+		<text class="text-info">@InfoMsg</text>
+	</div>
+	<div class="row">
+		<img src="/img/loading.gif" class="loading-gif" asp-append-version="true" />
+	</div>
+</div>	
+
+@code {
+	//typ. Loading... or Authorizing...
+	[Parameter] public string InfoText { get; set; } 
+	//complex messages, like 'Welcome back, @context.User.Identity.Name'
+	[Parameter] public RenderFragment InfoMsg { get; set; } 
+	
+}
