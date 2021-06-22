@@ -1,6 +1,7 @@
 ﻿@page "/category/edit/{CategoryId:int}"
 @inject ICategoryRepository categoryRepository
 @inject NavigationManager navigationManager
+@attribute [Authorize]
 
 <h3>Edit Product Category</h3>
 

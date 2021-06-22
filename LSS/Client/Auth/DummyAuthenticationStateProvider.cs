@@ -14,9 +14,10 @@ namespace LSS.Client.Auth
     {
       //await Task.Delay(3000);
       var anonymous = new ClaimsIdentity(new List<Claim>() {
+        new Claim("key1", "value1"),
         new Claim(ClaimTypes.Name, "Kris"),
         new Claim(ClaimTypes.Role, "Admin")
-      });
+      }, "test");  //adding Authentication Type name here allows access
       return await Task.FromResult(new AuthenticationState(new ClaimsPrincipal(anonymous)));
     }
   }

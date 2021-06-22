@@ -2,7 +2,7 @@
 @page "/person/{PersonId:int}/{PersonName}"
 @inject IPersonRepository personRepository
 @inject NavigationManager navigationManager
-
+@attribute [Authorize]
 
 	@if (model == null)
 	{

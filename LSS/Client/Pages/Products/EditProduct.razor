@@ -1,6 +1,7 @@
 ﻿@page "/product/edit/{ProductId:int}"
 @inject IProductRepository productRepository
 @inject NavigationManager navigationManager
+@attribute [Authorize]
 
 <h3>Edit Product</h3>
 

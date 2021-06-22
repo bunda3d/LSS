@@ -2,6 +2,7 @@
 @page "/product/{ProductId:int}/{ProductName}"
 @inject IProductRepository productRepository
 
+
 	@if (model == null)
 	{
 		<Loading InfoText="Loading..." />
