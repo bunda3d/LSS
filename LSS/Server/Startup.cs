@@ -15,6 +15,7 @@ using Azure.Storage.Queues;
 using Azure.Storage.Blobs;
 using Azure.Core.Extensions;
 using System;
+using Microsoft.AspNetCore.Identity;
 
 namespace LSS.Server
 {
@@ -34,6 +35,10 @@ namespace LSS.Server
 			services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(Configuration
 				.GetConnectionString("DefaultConnection")));
+
+			services.AddIdentity<IdentityUser, IdentityRole>()
+				.AddEntityFrameworkStores<ApplicationDbContext>()
+				.AddDefaultTokenProviders();
 
 			services.AddAutoMapper(typeof(Startup));
 

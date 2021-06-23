@@ -4,36 +4,30 @@ using System;
 using System.Threading.Tasks;
 using MathNet.Numerics.Statistics;
 using Microsoft.JSInterop.Implementation;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace LSS.Client.Pages
 {
   public partial class Counter
   {
-    [Inject] private IJSRuntime js { get; set; }
-
     private int currentCount = 0;
-    private static int currentCountStatic = 0;
-    private IJSObjectReference module;
 
-    [JSInvokable]
-    public async Task IncrementCountAsync()
+    [CascadingParameter] private Task<AuthenticationState> AuthenticationState { get; set; }
+
+    public async Task IncrementCount()
     {
-      var array = new double[] { 1, 2, 3, 4, 5 };
-      var max = array.Maximum();
-      var min = array.Minimum();
+      var authState = await AuthenticationState;
+      var user = authState.User;
 
-      module = await js.InvokeAsync<IJSObjectReference>("import", "./js/Counter.js");
-      await module.InvokeVoidAsync("displayAlert", $"Max is {max} and min is {min}");
-
-      currentCount++;
-      currentCountStatic++;
-      await js.InvokeVoidAsync("dotnetStaticInvocation");
+      if (user.Identity.IsAuthenticated)
+      {
+        currentCount++;
+      }
+      else
+      {
+        currentCount--;
+      }
     }
 
-    [JSInvokable]
-    public static Task<int> GetCurrentCount()
-    {
-      return Task.FromResult(currentCountStatic);
-    }
   }
 }
