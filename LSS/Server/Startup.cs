@@ -16,6 +16,9 @@ using Azure.Storage.Blobs;
 using Azure.Core.Extensions;
 using System;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace LSS.Server
 {
@@ -39,6 +42,20 @@ namespace LSS.Server
 			services.AddIdentity<IdentityUser, IdentityRole>()
 				.AddEntityFrameworkStores<ApplicationDbContext>()
 				.AddDefaultTokenProviders();
+
+			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+				.AddJwtBearer(options =>
+				options.TokenValidationParameters = new TokenValidationParameters
+				{
+					ValidateIssuer = false,
+					ValidateAudience = false,
+					ValidateLifetime = true,
+					ValidateIssuerSigningKey = true,
+					IssuerSigningKey = new SymmetricSecurityKey(
+          Encoding.UTF8.GetBytes(Configuration["jwt:key"])),
+					ClockSkew = TimeSpan.Zero
+				});
+
 
 			services.AddAutoMapper(typeof(Startup));
 
@@ -85,6 +102,8 @@ namespace LSS.Server
 			app.UseStaticFiles();
 
 			app.UseRouting();
+			app.UseAuthentication();
+			app.UseAuthorization();
 
 			app.UseEndpoints(endpoints =>
 			{

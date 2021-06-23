@@ -2,6 +2,8 @@
 using LSS.Server.Helpers;
 using LSS.Shared.DTOs;
 using LSS.Shared.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,7 +13,6 @@ using System.Threading.Tasks;
 
 namespace LSS.Server.Controllers
 {
-
   [ApiController]
   [Route("api/[controller]")]
   public class ProductsController : ControllerBase
@@ -32,40 +33,41 @@ namespace LSS.Server.Controllers
     }
 
     [HttpGet]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public async Task<ActionResult<IndexPageDTO>> Get()
     {
-      //limit = number of prods shown for ea filter on splash page
+      //limit = number of products shown for ea filter on page
       var limit = 12;
       DateTime todaysDate = DateTime.Today;
       DateTime newReleaseWindowStart = todaysDate.AddDays(-50);
 
-      //prod is featured if flagged, appears at top of splash page
+      //product is featured if flagged, appears at top of page
       var productIsFeatured = await context.Products
         .Where(x => x.IsFeatured == true)
         .Take(limit).OrderByDescending(x => x.SellStartDate)
         .ToListAsync();
 
-      //prod considered new release if orig listing date was in last 50 days
+      //product considered new release if orig listing date was in last 50 days
       var productIsNewRelease = await context.Products
         .Where(x => x.SellStartDate >= newReleaseWindowStart && x.SellStartDate <= todaysDate)
         .Take(limit).OrderByDescending(x => x.SellStartDate)
         .ToListAsync();
 
-      //prod is trending if flagged or stock unit qty (25% or less) of orig. PO unit qty
+      //product is trending if flagged or stock unit qty (25% or less) of orig. PO unit qty
       var productIsTrending = await context.Products
         .Where(x => x.IsTrending == true ||
                   (((x.QtyInStock == 0 ? 0.01M : x.QtyInStock) / (x.QtyOrderedOnPO == 0 ? 0.01M : x.QtyOrderedOnPO) * 1M) < 0.26M))
         .Take(limit).OrderByDescending(x => x.SellStartDate)
         .ToListAsync();
 
-      //prod is on sale if flagged or is up-to 25% off PO's unit cost (inverted > 0.74)
+      //product is on sale if flagged or is up-to 25% off PO's unit cost (inverted > 0.74)
       var productIsOnSale = await context.Products
-        .Where(x => x.IsOnSale == true || 
+        .Where(x => x.IsOnSale == true ||
                    ((((x.Price == 0 ? 0.01M : x.Price) / (x.UnitCostOnPO == 0 ? 0.01M : x.UnitCostOnPO)) > 0.74M) ? true : false))
         .Take(limit).OrderByDescending(x => x.SellStartDate)
         .ToListAsync();
 
-      //prod is on clearance if flagged or is over 25% off PO's unit cost (inverted < 0.75)
+      //product is on clearance if flagged or is over 25% off PO's unit cost (inverted < 0.75)
       var productIsOnClearance = await context.Products
         .Where(x => x.IsOnClearance == true ||
                   (((x.Price == 0 ? 0.01M : x.Price) / (x.UnitCostOnPO == 0 ? 0.01M : x.UnitCostOnPO)) < 0.75M))
@@ -108,7 +110,6 @@ namespace LSS.Server.Controllers
         }).ToList();
 
       return model;
-
     }
 
     [HttpGet("update/{id}")]
@@ -134,8 +135,6 @@ namespace LSS.Server.Controllers
 
       return model;
     }
-
-
 
     [HttpPut]
     public async Task<ActionResult> Put(Product product)
@@ -172,10 +171,7 @@ namespace LSS.Server.Controllers
 
       await context.SaveChangesAsync();
       return NoContent();
-
     }
-
-
 
     [HttpPost]
     public async Task<ActionResult<int>> Post(Product product)
@@ -200,7 +196,6 @@ namespace LSS.Server.Controllers
       await context.SaveChangesAsync();
 
       return product.Id;
-
     }
 
     [HttpPost("filter")]
@@ -239,12 +234,11 @@ namespace LSS.Server.Controllers
 
       await HttpContext.InsertPaginationParametersInResponse(productsQueryable,
         productFilterDTO.RecordsPerPage);
-      
+
       var products = await productsQueryable.Paginate(productFilterDTO.Pagination).ToListAsync();
 
       return products;
     }
-
 
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete(int id)
@@ -259,8 +253,6 @@ namespace LSS.Server.Controllers
       context.Remove(product);
       await context.SaveChangesAsync();
       return NoContent();
-
-
     }
   }
 }

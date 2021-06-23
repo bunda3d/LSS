@@ -18,6 +18,6 @@ namespace LSS.Server
 						.ConfigureWebHostDefaults(webBuilder =>
 						{
 							webBuilder.UseStartup<Startup>();
-						});
+            });
 	}
 }
