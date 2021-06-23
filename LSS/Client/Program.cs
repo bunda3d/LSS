@@ -34,7 +34,19 @@ namespace LSS.Client
       services.AddScoped<IProductRepository, ProductRepository>();
       services.AddAuthorizationCore();
 
-      services.AddScoped<AuthenticationStateProvider, DummyAuthenticationStateProvider>();
+      //when using SAME instance of JWTAuthStProv for multiple srvcs: 
+      services.AddScoped<JWTAuthenticationStateProvider>();
+      //srvc1
+      services.AddScoped<AuthenticationStateProvider, 
+        JWTAuthenticationStateProvider>(
+        provider => provider.GetRequiredService<JWTAuthenticationStateProvider>()
+        );
+      //srvc2
+      services.AddScoped<ILoginService, 
+        JWTAuthenticationStateProvider>(
+        provider => provider.GetRequiredService<JWTAuthenticationStateProvider>()
+        );
+
     }
   }
 }
