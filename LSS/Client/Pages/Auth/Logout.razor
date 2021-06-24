@@ -1,0 +1,29 @@
+﻿@page "/logout"
+@inject ILoginService loginService
+@inject NavigationManager navigationmanager
+
+@using LSS.Client.Auth
+
+<h3>Logout</h3>
+
+<Loading>
+  <InfoMsg>
+    <AuthorizeView>
+      <Authorized>
+        <span>
+          Logging out @context.User.Identity.Name
+        </span>
+      </Authorized>
+    </AuthorizeView>
+  </InfoMsg>
+</Loading> 
+
+
+@code {
+  protected async override Task OnInitializedAsync()
+  {
+    await loginService.Logout();
+    navigationmanager.NavigateTo("");
+  }
+
+}

@@ -2,6 +2,8 @@
 using LSS.Server.Helpers;
 using LSS.Shared.DTOs;
 using LSS.Shared.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,6 +15,7 @@ namespace LSS.Server.Controllers
 {
   [ApiController]
   [Route("api/[controller]")]
+  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
   public class PeopleController : ControllerBase
   {
     private readonly ApplicationDbContext context;
@@ -48,6 +51,7 @@ namespace LSS.Server.Controllers
     //}
 
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public async Task<ActionResult<DetailsPersonDTO>> Get(int id)
     {
       var person = await context.People.Where(x => x.Id == id)

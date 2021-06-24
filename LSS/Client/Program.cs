@@ -32,6 +32,7 @@ namespace LSS.Client
       services.AddScoped<ICategoryRepository, CategoryRepository>();
       services.AddScoped<IPersonRepository, PersonRepository>();
       services.AddScoped<IProductRepository, ProductRepository>();
+      services.AddScoped<IAccountsRepository, AccountsRepository>();
       services.AddAuthorizationCore();
 
       //when using SAME instance of JWTAuthStProv for multiple srvcs: 

@@ -15,6 +15,7 @@ namespace LSS.Server.Controllers
 {
   [ApiController]
   [Route("api/[controller]")]
+  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
   public class ProductsController : ControllerBase
   {
     private readonly ApplicationDbContext context;
@@ -33,7 +34,7 @@ namespace LSS.Server.Controllers
     }
 
     [HttpGet]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [AllowAnonymous]
     public async Task<ActionResult<IndexPageDTO>> Get()
     {
       //limit = number of products shown for ea filter on page
@@ -199,6 +200,7 @@ namespace LSS.Server.Controllers
     }
 
     [HttpPost("filter")]
+    [AllowAnonymous]
     public async Task<ActionResult<List<Product>>> Filter(ProductFilterDTO productFilterDTO)
     {
       var productsQueryable = context.Products.AsQueryable();

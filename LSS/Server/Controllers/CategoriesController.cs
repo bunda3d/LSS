@@ -1,4 +1,6 @@
 ﻿using LSS.Shared.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -8,6 +10,7 @@ namespace LSS.Server.Controllers
 {
   [ApiController]
   [Route("api/[controller]")]
+  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
   public class CategoriesController : ControllerBase
   {
 
@@ -19,6 +22,7 @@ namespace LSS.Server.Controllers
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult<List<Category>>> Get()
     {
       return await context.Categories.ToListAsync();
