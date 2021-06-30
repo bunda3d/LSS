@@ -13,21 +13,25 @@
 
     <h3>Register</h3>
 
-    <div class="form-row g-5">
+    <div class="form-row no-gutters">
       <div class="form-group col-md-6 my-3">
-        <label>Email:</label>
-          <InputText class="form-control" 
+        <div class="col-md-11 px-0">
+          <label>Email:</label>
+          <InputText class="form-control"
           @bind-Value="@userInfo.Email"
           placeholder="you@who.com" />
           <ValidationMessage For="@(() => userInfo.Email)" />
+        </div>
       </div>
 
       <div class="form-group col-md-6 my-3">
-        <label>Password:</label>
-          <InputPassword class="form-control" 
+        <div class="col-md-11 offset-md-1 px-0">
+          <label>Password:</label>
+          <InputPassword class="form-control"
           @bind-Value="@userInfo.Password" 
           placeholder="P@sSw0rd!" />
           <ValidationMessage For="@(() => userInfo.Password)" />
+         </div>
       </div>
       <div class="form-group col-md-6 my-3">
         <button type="submit" class="btn btn-outline-primary">Register</button>
