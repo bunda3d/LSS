@@ -9,19 +9,20 @@
 
 @if (Person != null)
 {
-	<PersonForm Person="Person"	OnValidSubmit="Edit" />
+	<PersonForm Person="Person"	
+		OnValidSubmit="Edit" />
 }
 
 
 @code {
 	[Parameter] public int PersonId { get; set; }
+	[Parameter] public string RoleFlags { get; set; }
 	//do not make 'new' entity on Edit (like on Create)
 	private Person Person;
 
-	
 	protected async override Task OnInitializedAsync()
 	{
-		Person = await personRepository.GetPersonById(PersonId);		
+		Person = await personRepository.GetPersonById(PersonId);
 	}
 
   private async Task Edit()
@@ -30,7 +31,6 @@
     navigationManager.NavigateTo("people");
 
 		Console.WriteLine("Editing the person: ");
-		Console.WriteLine($"{Person.FullName}");
+		Console.WriteLine($"ID: {Person.Id} - Full Name: {Person.FullName}");
 	}
-
 }

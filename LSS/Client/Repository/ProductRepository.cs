@@ -27,7 +27,7 @@ namespace LSS.Client.Repository
       return await httpService.GetHelper<IndexPageDTO>(url);
     }
 
-    public async Task<ProductUpdateDTO> GetProudctForUpdate(int id)
+    public async Task<ProductUpdateDTO> GetProductForUpdate(int id)
     {
       return await httpService.GetHelper<ProductUpdateDTO>($"{url}/update/{id}");
     }

@@ -18,7 +18,7 @@ namespace LSS.Client.Repository
 
     Task<DetailsProductDTO> GetDetailsProductDTO(int id);
 
-    Task<ProductUpdateDTO> GetProudctForUpdate(int id);
+    Task<ProductUpdateDTO> GetProductForUpdate(int id);
 
     Task<PaginatedResponse<List<Product>>> GetFilteredProducts(ProductFilterDTO productFilterDTO);
   }

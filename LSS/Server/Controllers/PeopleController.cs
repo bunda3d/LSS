@@ -42,13 +42,13 @@ namespace LSS.Server.Controllers
       return await queryable.Paginate(paginationDTO).ToListAsync();
     }
 
-    //[HttpGet("{id}")]
-    //public async Task<ActionResult<Person>> Get(int id)
-    //{
-    //  var person = await context.People.FirstOrDefaultAsync(x => x.Id == id);
-    //  if (person == null) { return NotFound(); }
-    //  return person;
-    //}
+    [HttpGet("update/{id}")]
+    public async Task<ActionResult<Person>> PutGet(int id)
+    {
+      var person = await context.People.FirstOrDefaultAsync(x => x.Id == id);
+      if (person == null) { return NotFound(); }
+      return person;
+    }
 
     [HttpGet("{id}")]
     [AllowAnonymous]

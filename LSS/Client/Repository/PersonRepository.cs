@@ -55,7 +55,7 @@ namespace LSS.Client.Repository
 
     public async Task<Person> GetPersonById(int id)
     {
-      return await httpService.GetHelper<Person>($"{url}/{id}");
+      return await httpService.GetHelper<Person>($"{url}/update/{id}");
     }
 
     public async Task UpdatePerson(Person person)

@@ -25,7 +25,7 @@
 
 	protected async override Task OnInitializedAsync()
 	{
-		var model = await productRepository.GetProudctForUpdate(ProductId);
+		var model = await productRepository.GetProductForUpdate(ProductId);
 		Product = model.Product;
 		SelectedPeople = model.People;
 		SelectedCategories = model.SelectedCategories;
