@@ -19,8 +19,7 @@ namespace LSS.Client.Repository
     public async Task<UserToken> Register(UserInfo userInfo)
     {
       //invokes Create method from accounts controller
-      var httpResponse = await httpService
-        .Post<UserInfo, UserToken>($"{baseURL}/create", userInfo);
+      var httpResponse = await httpService.Post<UserInfo, UserToken>($"{baseURL}/create", userInfo);
 
       if (!httpResponse.Success)
       {
@@ -33,8 +32,7 @@ namespace LSS.Client.Repository
     public async Task<UserToken> Login(UserInfo userInfo)
     {
       //invokes Create method from accounts controller
-      var httpResponse = await httpService
-        .Post<UserInfo, UserToken>($"{baseURL}/login", userInfo);
+      var httpResponse = await httpService.Post<UserInfo, UserToken>($"{baseURL}/login", userInfo);
 
       if (!httpResponse.Success)
       {

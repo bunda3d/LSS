@@ -86,6 +86,7 @@ namespace LSS.Server.Controllers
     }
 
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public async Task<ActionResult<DetailsProductDTO>> Get(int id)
     {
       var product = await context.Products.Where(x => x.Id == id)

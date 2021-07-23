@@ -17,9 +17,8 @@
       <div class="form-group col-md-6 my-3">
         <div class="col-md-11 px-0">
           <label>Email:</label>
-          <InputText class="form-control"
-          @bind-Value="@userInfo.Email"
-          placeholder="you@who.com" />
+          <InputText class="form-control" @bind-Value="@userInfo.Email" />
+          <!-- placeholder="you@who.com" -->
           <ValidationMessage For="@(() => userInfo.Email)" />
         </div>
       </div>
@@ -27,9 +26,8 @@
       <div class="form-group col-md-6 my-3">
         <div class="col-md-11 offset-md-1 px-0">
           <label>Password:</label>
-          <InputPassword class="form-control"
-          @bind-Value="@userInfo.Password" 
-          placeholder="P@sSw0rd!" />
+          <InputPassword class="form-control" @bind-Value="@userInfo.Password" />
+          <!-- placeholder="P@sSw0rd!" -->
           <ValidationMessage For="@(() => userInfo.Password)" />
         </div>
       </div>

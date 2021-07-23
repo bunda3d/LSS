@@ -4,8 +4,12 @@ using LSS.Client.Repository;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace LSS.Client
@@ -38,13 +42,11 @@ namespace LSS.Client
       //when using SAME instance of JWTAuthStProv for multiple srvcs: 
       services.AddScoped<JWTAuthenticationStateProvider>();
       //srvc1
-      services.AddScoped<AuthenticationStateProvider, 
-        JWTAuthenticationStateProvider>(
+      services.AddScoped<AuthenticationStateProvider, JWTAuthenticationStateProvider>(
         provider => provider.GetRequiredService<JWTAuthenticationStateProvider>()
         );
       //srvc2
-      services.AddScoped<ILoginService, 
-        JWTAuthenticationStateProvider>(
+      services.AddScoped<ILoginService, JWTAuthenticationStateProvider>(
         provider => provider.GetRequiredService<JWTAuthenticationStateProvider>()
         );
 
