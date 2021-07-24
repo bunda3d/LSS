@@ -3,11 +3,10 @@
 @inject IProductRepository productRepository
 @inject ICategoryRepository categoryRepository
 @inject NavigationManager navigationManager
-@attribute [Authorize]
+<!-- Use attribute to Require Authorization to view this page -->
+<!-- @* @attribute [Authorize] *@ -->
 
 <h3>Search Products</h3>
-
-
 
 <EditForm Model="productFilterDTO">
 <div class="col form col-xl-8 col-lg-10 col-md-12 py-3 px-0">
@@ -133,7 +132,7 @@
 @code {
   //vars to display search results:
   private List<Product> Products;
-  private ProductFilterDTO productFilterDTO = new ProductFilterDTO() { RecordsPerPage = 1 };
+  private ProductFilterDTO productFilterDTO = new ProductFilterDTO() { RecordsPerPage = 10 };
   private int totalAmountPages;
   private List<Category> Categories = new List<Category>();
 

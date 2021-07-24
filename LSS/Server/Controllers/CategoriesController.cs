@@ -29,6 +29,7 @@ namespace LSS.Server.Controllers
     }
 
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public async Task<ActionResult<Category>> Get(int id)
     {
       var genre = await context.Categories.FirstOrDefaultAsync(x => x.Id == id);
