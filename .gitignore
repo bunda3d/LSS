@@ -3,6 +3,23 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# https://www.humankode.com/asp-net-core/asp-net-core-configuration-best-practices-for-keeping-secrets-out-of-source-control
+# ignore appsettings configuration files
+**/appsettings.development.json
+**/appsettings.staging.json
+**/appsettings.production.json
+
+# ignore connectionstrings
+**/connectionstrings.development.json
+**/connectionstrings.staging.json
+**/connectionstrings.production.json
+
+# ignore mailsettings
+**/mailsettings.development.json
+**/mailsettings.staging.json
+**/mailsettings.production.json
+
+
 # User-specific files
 *.rsuser
 *.suo
